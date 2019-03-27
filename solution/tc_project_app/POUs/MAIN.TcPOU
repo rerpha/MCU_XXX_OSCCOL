@@ -71,7 +71,6 @@ VAR
 	
 (******Error Handling********)
 	fbErrorList: FB_ErrorList;
-	fbHome: MC_Home;
 	//fbEL3214: EL3214;
 	//fbEL1808: EL1808;
 	//fbEL2819: EL2819;
@@ -92,7 +91,7 @@ ERROR();]]></ST>
       <Implementation>
         <ST><![CDATA[
 FOR i:=1 TO gvl.axisNum DO
-	aFBAxes[i](stAxisStruct:=gvl.axes[i]);
+	aFBAxes[i](En:= TRUE, stAxisStruct:=gvl.axes[i]);
 END_FOR
 
 gvl.axes[1].bLimitFwd:=bLimitFwd1;
@@ -142,45 +141,6 @@ fbEL1808(
 //]]></ST>
       </Implementation>
     </Action>
-    <Action Name="test" Id="{15076cb2-147c-449c-9647-4174a90b8448}">
-      <Implementation>
-        <NWL>
-          <XmlArchive>
-            <Data>
-              <o xml:space="preserve" t="NWLImplementationObject">
-                <v n="NetworkListComment">""</v>
-                <v n="DefaultViewMode">"Fbd"</v>
-                <l2 n="NetworkList" cet="Network">
-                  <o>
-                    <v n="ILActive">false</v>
-                    <v n="FBDValid">false</v>
-                    <v n="ILValid">false</v>
-                    <l2 n="ILLines" />
-                    <v n="Comment">""</v>
-                    <v n="Title">""</v>
-                    <v n="Label">""</v>
-                    <v n="OutCommented">false</v>
-                    <l2 n="NetworkItems" />
-                    <l2 n="Connectors" />
-                    <v n="Id">1L</v>
-                  </o>
-                </l2>
-                <v n="BranchCounter">1</v>
-                <v n="ValidIds">true</v>
-              </o>
-            </Data>
-            <TypeList>
-              <Type n="Boolean">System.Boolean</Type>
-              <Type n="Int32">System.Int32</Type>
-              <Type n="Int64">System.Int64</Type>
-              <Type n="Network">{d9a99d73-b633-47db-b876-a752acb25871}</Type>
-              <Type n="NWLImplementationObject">{25e509de-33d4-4447-93f8-c9e4ea381c8b}</Type>
-              <Type n="String">System.String</Type>
-            </TypeList>
-          </XmlArchive>
-        </NWL>
-      </Implementation>
-    </Action>
     <LineIds Name="MAIN">
       <LineId Id="2" Count="0" />
       <LineId Id="81" Count="1" />
@@ -188,7 +148,8 @@ fbEL1808(
     <LineIds Name="MAIN.AXES">
       <LineId Id="3" Count="0" />
       <LineId Id="1" Count="0" />
-      <LineId Id="4" Count="1" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="10" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
