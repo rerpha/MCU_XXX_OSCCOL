@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4022.28">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4022.16">
 	<DataTypes>
 		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-000000000035}" TcBaseType="true" HideType="true">UINTARR2</Name>
@@ -1720,6 +1720,56 @@ External Setpoint Generation:
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
 						<Var>
+							<Name>MAIN.bLimitFwd1</Name>
+							<Comment>
+								<![CDATA[M1:FB_DriveVirtual;
+M2:FB_DriveVirtual;
+M3:FB_DriveVirtual;
+M4:FB_DriveVirtual;
+M5:FB_DriveVirtual;
+M6:FB_DriveVirtual;
+M7:FB_DriveVirtual;
+M8:FB_DriveVirtual;
+*****Inputs (Limit switches and Home Sensors*******]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bLimitBwd1</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bHomeSensor1</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bEncLAtch</Name>
+							<Comment>
+								<![CDATA[bLimitFwd2 AT %I*: BOOL;
+bLimitBwd2 AT %I*: BOOL;
+bHomeSensor2 AT %I*: BOOL;
+bLimitFwd3 AT %I*: BOOL;
+bLimitBwd3 AT %I*: BOOL;
+bHomeSensor3 AT %I*: BOOL;
+bLimitFwd4 AT %I*: BOOL;
+bLimitBwd4 AT %I*: BOOL;
+bHomeSensor4 AT %I*: BOOL;
+bLimitFwd5 AT %I*: BOOL;
+bLimitBwd5 AT %I*: BOOL;
+bHomeSensor5 AT %I*: BOOL;
+bLimitFwd6 AT %I*: BOOL;
+bLimitBwd6 AT %I*: BOOL;
+bHomeSensor6 AT %I*: BOOL;
+bLimitFwd7 AT %I*: BOOL;
+bLimitBwd7 AT %I*: BOOL;
+bHomeSensor7 AT %I*: BOOL;
+bLimitFwd8 AT %I*: BOOL;
+bLimitBwd8 AT %I*: BOOL;
+bHomeSensor8 AT %I*: BOOL;]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>GVL.axes[1].Axis.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
@@ -1769,29 +1819,6 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>MAIN.bLimitFwd1</Name>
-							<Comment>
-								<![CDATA[M1:FB_DriveVirtual;
-M2:FB_DriveVirtual;
-M3:FB_DriveVirtual;
-M4:FB_DriveVirtual;
-M5:FB_DriveVirtual;
-M6:FB_DriveVirtual;
-M7:FB_DriveVirtual;
-M8:FB_DriveVirtual;
-*****Inputs (Limit switches and Home Sensors*******]]>
-							</Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.bLimitBwd1</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.bHomeSensor1</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.aFBAxes[1].fbDriveVirtual.InfoData_State</Name>
 							<Type>UINT</Type>
 						</Var>
@@ -1799,34 +1826,9 @@ M8:FB_DriveVirtual;
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
 						<Var>
-							<Name>GVL.axes[1].Axis.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.bOutput1</Name>
 							<Comment>
-								<![CDATA[bLimitFwd2 AT %I*: BOOL;
-bLimitBwd2 AT %I*: BOOL;
-bHomeSensor2 AT %I*: BOOL;
-bLimitFwd3 AT %I*: BOOL;
-bLimitBwd3 AT %I*: BOOL;
-bHomeSensor3 AT %I*: BOOL;
-bLimitFwd4 AT %I*: BOOL;
-bLimitBwd4 AT %I*: BOOL;
-bHomeSensor4 AT %I*: BOOL;
-bLimitFwd5 AT %I*: BOOL;
-bLimitBwd5 AT %I*: BOOL;
-bHomeSensor5 AT %I*: BOOL;
-bLimitFwd6 AT %I*: BOOL;
-bLimitBwd6 AT %I*: BOOL;
-bHomeSensor6 AT %I*: BOOL;
-bLimitFwd7 AT %I*: BOOL;
-bLimitBwd7 AT %I*: BOOL;
-bHomeSensor7 AT %I*: BOOL;
-bLimitFwd8 AT %I*: BOOL;
-bLimitBwd8 AT %I*: BOOL;
-bHomeSensor8 AT %I*: BOOL;
-*****Outputs: Power for Limit switches and Home Sensors (every 4th output)*******]]>
+								<![CDATA[*****Outputs: Power for Limit switches and Home Sensors (every 4th output)*******]]>
 							</Comment>
 							<Type>BOOL</Type>
 						</Var>
@@ -1837,6 +1839,10 @@ bHomeSensor8 AT %I*: BOOL;
 						<Var>
 							<Name>MAIN.bOutput3</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.axes[1].Axis.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 					</Vars>
 					<TaskPouOids>
@@ -2082,13 +2088,13 @@ bHomeSensor8 AT %I*: BOOL;
 								<Entry Name="Status__Status of input A" Index="#x6010" Sub="#x09">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Status__Status of input B" Index="#x6010" Sub="#x0a">
+								<Entry Name="Status__Status of input B" Index="#x6010" Sub="#x0a" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__Status of input C" Index="#x6010" Sub="#x0b" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="Status__Status of input gate" Index="#x6010" Sub="#x0c">
+								<Entry Name="Status__Status of input gate" Index="#x6010" Sub="#x0c" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="Status__Status of extern latch" Index="#x6010" Sub="#x0d" Flags="#x00008020">
@@ -2881,9 +2887,10 @@ bHomeSensor8 AT %I*: BOOL;
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{05000010-2041-0850-3000-040340205008}" Id="#x02030020" Watchdog="04000000080000000400000004000000"/>
+		<MappingInfo Identifier="{08502041-0010-0304-4020-500810000403}" Id="#x02030040" Watchdog="00000000000000000000000000000000"/>
+		<MappingInfo Identifier="{05000010-2041-0850-3000-040340205008}" Id="#x02030030" Watchdog="04000000080000000400000004000000"/>
 		<MappingInfo Identifier="{00000000-0010-0304-3000-040310000403}" Id="#x02030010"/>
-		<MappingInfo Identifier="{00000000-2041-0850-4020-500841000403}" Id="#x02030030"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500841000403}" Id="#x02030020"/>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 4 (EL5101)">
 				<Link VarA="Enc^Inputs^In^nDataIn1[0]" VarB="ENC Status compact^Counter value"/>
@@ -2899,7 +2906,6 @@ bHomeSensor8 AT %I*: BOOL;
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of extern latch" Size="1" OffsA="4"/>
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input A"/>
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input B" Size="1" OffsA="1"/>
-				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input C" Size="1" OffsA="2"/>
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Status of input gate" Size="1" OffsA="3"/>
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^Sync error" Size="1" OffsA="5"/>
 				<Link VarA="Enc^Inputs^In^nState2" VarB="ENC Status compact^Status^TxPDO State" Size="1" OffsA="6"/>
@@ -2944,6 +2950,9 @@ bHomeSensor8 AT %I*: BOOL;
 				<Link VarA="PlcTask Outputs^MAIN.bOutput1" VarB="Channel 1^Output"/>
 				<Link VarA="PlcTask Outputs^MAIN.bOutput2" VarB="Channel 2^Output"/>
 				<Link VarA="PlcTask Outputs^MAIN.bOutput3" VarB="Channel 3^Output"/>
+			</OwnerB>
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 4 (EL5101)">
+				<Link VarA="PlcTask Inputs^MAIN.bEncLAtch" VarB="ENC Status compact^Status^Status of input C"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^GVL.axes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>

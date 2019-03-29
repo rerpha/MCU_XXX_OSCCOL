@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.17">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -51,6 +51,8 @@ VAR
 	//bLimitFwd8 AT %I*: BOOL;
 	//bLimitBwd8 AT %I*: BOOL;
 	//bHomeSensor8 AT %I*: BOOL;
+	bEncLAtch AT %I*: BOOL;
+
 	
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
 	
@@ -95,7 +97,11 @@ FOR i:=1 TO gvl.axisNum DO
 END_FOR
 
 gvl.axes[1].bLimitFwd:=bLimitFwd1;
-gvl.axes[1].bLimitBwd:=bLimitBwd1;]]></ST>
+gvl.axes[1].bLimitBwd:=bLimitBwd1;
+gvl.axes[1].bHomeSensor:=bHomeSensor1;
+gvl.axes[1].bEncLAtch:=bEncLatch;
+
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="ERROR" Id="{35f2cf38-f81e-4aa3-9534-be5fb417817d}">
@@ -153,6 +159,10 @@ fbEL1808(
       <LineId Id="7" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.ERROR">
       <LineId Id="31" Count="0" />
