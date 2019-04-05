@@ -1819,7 +1819,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>MAIN.aFBAxes[1].fbDriveVirtual.InfoData_State</Name>
+							<Name>MAIN.aFBAxes[1].InfoData_State</Name>
 							<Type>UINT</Type>
 						</Var>
 					</Vars>

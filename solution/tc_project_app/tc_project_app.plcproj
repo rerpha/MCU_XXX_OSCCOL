@@ -22,16 +22,16 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\AxisFunctions.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\MotionFunctions.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\CommStates.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\DUT_AxisStatus_v0_01.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\IndexerStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\GVLs\GVL.TcGVL">
@@ -65,12 +65,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\ST_ErrorSystem.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\FB_Axis.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\FB_Communication.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Analog_Inputs\EL3174_0002.TcPOU">
@@ -148,16 +142,7 @@
     <Compile Include="tc_mca_std_lib\POUs\Hardware\Other\EK1200.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_DriveVirtual.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_DriveVirtual_V2.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_HomingSeq.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_NcAxis.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeDirect.TcPOU">
