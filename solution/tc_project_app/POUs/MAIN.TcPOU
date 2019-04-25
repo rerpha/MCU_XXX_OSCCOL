@@ -4,61 +4,13 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	sVersion: STRING:='1.0.0';
-	
-(*(******FB_NcAxis Motor Links********)
-	M1Link:FB_NcAxis;
-	M2Link:FB_NcAxis;
-	//M3Link:FB_NcAxis;
-	//M4Link:FB_NcAxis;
-	//M5Link:FB_NcAxis;
-	//M6Link:FB_NcAxis;
-	//M7Link:FB_NcAxis;
-	//M8Link:FB_NcAxis;*)
-	
-(******FB_DriveVirtual Motors function blocks********)
-	aFBAxes: ARRAY [1..axisNum] OF FB_Axis;
-	//M1:FB_DriveVirtual;
-	//M2:FB_DriveVirtual;
-	//M3:FB_DriveVirtual;
-	//M4:FB_DriveVirtual;
-	//M5:FB_DriveVirtual;
-	//M6:FB_DriveVirtual;
-	//M7:FB_DriveVirtual;
-	//M8:FB_DriveVirtual;
-	
-(******Inputs (Limit switches and Home Sensors********)
-	bLimitFwd1 AT %I*: BOOL;
-	bLimitBwd1 AT %I*: BOOL;
-	bHomeSensor1 AT %I*: BOOL;
-	//bLimitFwd2 AT %I*: BOOL;
-	//bLimitBwd2 AT %I*: BOOL;
-	//bHomeSensor2 AT %I*: BOOL;
-	//bLimitFwd3 AT %I*: BOOL;
-	//bLimitBwd3 AT %I*: BOOL;
-	//bHomeSensor3 AT %I*: BOOL;
-	//bLimitFwd4 AT %I*: BOOL;
-	//bLimitBwd4 AT %I*: BOOL;
-	//bHomeSensor4 AT %I*: BOOL;
-	//bLimitFwd5 AT %I*: BOOL;
-	//bLimitBwd5 AT %I*: BOOL;
-	//bHomeSensor5 AT %I*: BOOL;
-	//bLimitFwd6 AT %I*: BOOL;
-	//bLimitBwd6 AT %I*: BOOL;
-	//bHomeSensor6 AT %I*: BOOL;
-	//bLimitFwd7 AT %I*: BOOL;
-	//bLimitBwd7 AT %I*: BOOL;
-	//bHomeSensor7 AT %I*: BOOL;
-	//bLimitFwd8 AT %I*: BOOL;
-	//bLimitBwd8 AT %I*: BOOL;
-	//bHomeSensor8 AT %I*: BOOL;
-	bEncLAtch AT %I*: BOOL;
-
-	
+	i : UINT; //index variable for AXES()
+	aFbAxes: ARRAY [1..gvl.axisNum] OF FB_Axis;
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
 	
 	bOutput1 AT %Q*: BOOL:= TRUE;
-	bOutput2 AT %Q*: BOOL:= TRUE;
-	bOutput3 AT %Q*: BOOL:= TRUE;
+	//bOutput2 AT %Q*: BOOL:= TRUE;
+	//bOutput3 AT %Q*: BOOL:= TRUE;
 	//bOutput4 AT %Q*: BOOL:= TRUE;
 	//bOutput5 AT %Q*: BOOL:= TRUE;
 	//bOutput6 AT %Q*: BOOL:= TRUE;
@@ -78,9 +30,6 @@ VAR
 	//fbEL2819: EL2819;
 	//fbEL9410: EL9410;
 	
-(*******New and specific application variables*********)
-eCommState : CommStates;
-	i: UINT;
 END_VAR
 
 ]]></Declaration>
@@ -93,13 +42,9 @@ ERROR();]]></ST>
       <Implementation>
         <ST><![CDATA[
 FOR i:=1 TO gvl.axisNum DO
-	aFBAxes[i](En:= TRUE, stAxisStruct:=gvl.axes[i]);
+	aFBAxes[i](stAxisStruct:=gvl.axes[i]);
 END_FOR
 
-gvl.axes[1].bLimitFwd:=bLimitFwd1;
-gvl.axes[1].bLimitBwd:=bLimitBwd1;
-gvl.axes[1].bHomeSensor:=bHomeSensor1;
-gvl.axes[1].bEncLAtch:=bEncLatch;
 
 ]]></ST>
       </Implementation>
@@ -157,10 +102,6 @@ fbEL1808(
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
