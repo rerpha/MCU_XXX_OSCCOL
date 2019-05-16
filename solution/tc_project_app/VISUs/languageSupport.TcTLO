@@ -17,7 +17,7 @@
               <v n="TextID">"velocity"</v>
               <v n="TextDefault">"Velocity:"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
-                <v>Geschwindigkeit:</v>
+                <v></v>
               </l>
             </o>
             <o>
@@ -99,7 +99,7 @@
             </o>
             <o>
               <v n="TextID">"bResetDone"</v>
-              <v n="TextDefault">"Reset Command Success"</v>
+              <v n="TextDefault">"Reset Complete"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
                 <v></v>
               </l>
@@ -113,14 +113,14 @@
             </o>
             <o>
               <v n="TextID">"bFwEnabled"</v>
-              <v n="TextDefault">"Forward movement enabled"</v>
+              <v n="TextDefault">"Fwd movement enabled"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
                 <v></v>
               </l>
             </o>
             <o>
               <v n="TextID">"bBwEnabled"</v>
-              <v n="TextDefault">"Backward movement enabled"</v>
+              <v n="TextDefault">"Bwd movement enabled"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
                 <v></v>
               </l>
@@ -136,19 +136,19 @@
               <v n="TextID">"fVelocity"</v>
               <v n="TextDefault">"Target Velocity:"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
-                <v></v>
+                <v>Geschwindigkeit:</v>
               </l>
             </o>
             <o>
               <v n="TextID">"fAcceleration"</v>
-              <v n="TextDefault">"Target Acceleration:"</v>
+              <v n="TextDefault">"Target Accel.:"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
                 <v></v>
               </l>
             </o>
             <o>
               <v n="TextID">"fDeceleration"</v>
-              <v n="TextDefault">"Target Deceleration:"</v>
+              <v n="TextDefault">"Target Decel.:"</v>
               <l n="LanguageTexts" t="ArrayList" cet="String">
                 <v></v>
               </l>
