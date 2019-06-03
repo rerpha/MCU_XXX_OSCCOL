@@ -28,6 +28,18 @@
     <Compile Include="tc_mca_std_lib\DUTs\MotionFunctions.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisControl.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStatus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -182,9 +194,6 @@
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\RecipeManager.TcRMO">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -213,11 +222,6 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="RecipeManagement">
-      <DefaultResolution>Recipe Management, 3.3.1.0 (System)</DefaultResolution>
-      <Namespace>Recipe_Management</Namespace>
-      <SystemLibrary>true</SystemLibrary>
-    </PlaceholderReference>
     <PlaceholderReference Include="System_VisuElemMeter">
       <DefaultResolution>VisuElemMeter, 3.5.10.0 (System)</DefaultResolution>
       <Namespace>VisuElemMeter</Namespace>
