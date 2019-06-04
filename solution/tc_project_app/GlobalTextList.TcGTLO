@@ -81,6 +81,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"295"</v>
+              <v n="TextDefault">"bGeared"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"42"</v>
               <v n="TextDefault">"bHomed"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -161,6 +166,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"507"</v>
+              <v n="TextDefault">"gearIn"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"938"</v>
+              <v n="TextDefault">"gearOut"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"26"</v>
               <v n="TextDefault">"jog+/- reset stop  home"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -173,6 +188,11 @@
             <o>
               <v n="TextID">"468"</v>
               <v n="TextDefault">"jogFw"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"493"</v>
+              <v n="TextDefault">"masterGear"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -242,9 +262,9 @@
             </o>
           </l>
           <l n="Languages" t="ArrayList" />
-          <v n="GuidInit">{d7005498-b4fa-4a56-8593-01efab31a22a}</v>
-          <v n="GuidReInit">{eb0543d6-24e5-4c0d-b12a-2b173f65a3e6}</v>
-          <v n="GuidExitX">{58c39072-3512-4d2d-9972-e2fb2a30b0d1}</v>
+          <v n="GuidInit">{946c8e6e-0a97-4d14-95ca-e8575d4b5b95}</v>
+          <v n="GuidReInit">{156c2383-e9aa-42c6-a12a-29764abb596e}</v>
+          <v n="GuidExitX">{cc9acff5-a471-4694-806c-07b8a247c706}</v>
         </o>
       </Data>
       <TypeList>

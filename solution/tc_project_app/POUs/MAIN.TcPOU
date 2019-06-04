@@ -43,8 +43,8 @@ ERROR();]]></ST>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
         <ST><![CDATA[
-FOR i:=1 TO gvl.axisNum DO
-	aFBAxes[i](stAxisStruct:=gvl.axes[i]);
+FOR GVL.iAxis:=1 TO gvl.axisNum DO
+	aFBAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR
 
 

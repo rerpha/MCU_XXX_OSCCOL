@@ -37,6 +37,9 @@
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_GearAxis.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStatus.TcDUT">
       <SubType>Code</SubType>
     </Compile>
