@@ -36,8 +36,7 @@
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStatus.TcDUT">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
+    </Compile>    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\GVLs\GVL.TcGVL">
@@ -181,11 +180,13 @@
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\VISUs\FbDriveVisual.TcVIS">
+    <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="tc_mca_std_lib\VISUs\Visualization.TcVIS">
+    <Compile Include="VISUs\languageSupport.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VISUs\MainVisu.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
@@ -213,7 +214,6 @@
     <Folder Include="tc_mca_std_lib\POUs\Hardware" />
     <Folder Include="tc_mca_std_lib\POUs\ErrorHandling" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
-    <Folder Include="tc_mca_std_lib\VISUs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -288,6 +288,10 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="VisuDialogs">
+      <DefaultResolution>VisuDialogs, * (System)</DefaultResolution>
+      <Namespace>VisuDialogs</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="tc_project_app.tmc">
@@ -311,7 +315,10 @@
         <o>
           <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
           <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>UnicodeStrings</v>
+            <v>False</v>
+          </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
         <o>
@@ -348,6 +355,7 @@
     </o>
         </Data>
         <TypeList>
+          <Type n="Boolean">System.Boolean</Type>
           <Type n="Hashtable">System.Collections.Hashtable</Type>
           <Type n="Int32">System.Int32</Type>
           <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
