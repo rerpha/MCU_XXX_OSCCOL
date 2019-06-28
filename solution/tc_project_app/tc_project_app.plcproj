@@ -36,7 +36,8 @@
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStatus.TcDUT">
       <SubType>Code</SubType>
-    </Compile>    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisStruct.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\GVLs\GVL.TcGVL">
@@ -57,16 +58,19 @@
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\DUT_ErrorState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\DUT_TerminalError.TcDUT">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_ErrorSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_ErrorList.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_GenericError.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_NC_Error.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_TerminalError.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\GVL_ErrorSystem.TcGVL">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\ST_ErrorEntry.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\ST_ErrorSystem.TcDUT">
