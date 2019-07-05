@@ -6,7 +6,7 @@
     <ProjectGuid>{fb261665-fd20-4bf2-97f8-2854c82b752d}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>tc_project_app</Name>
-    <ProgramVersion>3.1.4022.2</ProgramVersion>
+    <ProgramVersion>3.1.4022.6</ProgramVersion>
     <Application>{047dee04-c246-47b2-8ccc-a15e36987c43}</Application>
     <TypeSystem>{ae4eb5ee-6030-47a6-bf35-5a6afd9efeeb}</TypeSystem>
     <Implicit_Task_Info>{5ef19bd0-aca2-493f-b2a1-89e363647697}</Implicit_Task_Info>
@@ -217,6 +217,7 @@
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs\External_Types" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives" />
+    <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware" />
