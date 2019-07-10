@@ -6,7 +6,7 @@
     <ProjectGuid>{fb261665-fd20-4bf2-97f8-2854c82b752d}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>tc_project_app</Name>
-    <ProgramVersion>3.1.4022.2</ProgramVersion>
+    <ProgramVersion>3.1.4022.6</ProgramVersion>
     <Application>{047dee04-c246-47b2-8ccc-a15e36987c43}</Application>
     <TypeSystem>{ae4eb5ee-6030-47a6-bf35-5a6afd9efeeb}</TypeSystem>
     <Implicit_Task_Info>{5ef19bd0-aca2-493f-b2a1-89e363647697}</Implicit_Task_Info>
@@ -16,22 +16,19 @@
     <AutoUpdateVisuProfile>true</AutoUpdateVisuProfile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GlobalTextList.TcGTLO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\MotionFunctions.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisControl.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\MotionFunctions.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
@@ -64,16 +61,16 @@
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\DUT_ErrorState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\DUT_TerminalError.TcDUT">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_ErrorSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_ErrorList.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_GenericError.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_TerminalError.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\GVL_ErrorSystem.TcGVL">
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\ST_ErrorEntry.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\ST_ErrorSystem.TcDUT">
@@ -88,13 +85,13 @@
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Analog_Inputs\EL3255.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Analog_Inputs\FB_CalculateFrequency_3702_v0_01.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\EL1008.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\EL1018.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\EL1252.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\EL1808.TcPOU">
@@ -104,9 +101,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\EL1819.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs\FB_EL1252ASM_v1_00.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs\EL2014.TcPOU">
@@ -127,31 +121,43 @@
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs\External_Types\dutEL2521_Status.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Measuring_Terminals\EL5002.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL2522.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Measuring_Terminals\EL5021.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL4134.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Measuring_Terminals\EL5042.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7041_0052.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Measuring_Terminals\EL5101.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7211.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Motion\EL7211_v1_00.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals\EL5002.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Motion\EL9576_v1_00.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals\EL5021.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals\EL5042.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals\EL5101.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals\EL7201.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System\EK1100.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System\EK1110.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System\EL9410.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System\EL9505.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Hardware\Other\EK1200.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
@@ -213,10 +219,9 @@
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Inputs" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Digital_Outputs\External_Types" />
-    <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Measuring_Terminals" />
-    <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Motion" />
+    <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives" />
+    <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Feedback_Terminals" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\System" />
-    <Folder Include="tc_mca_std_lib\POUs\Hardware\Other" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware" />
     <Folder Include="tc_mca_std_lib\POUs\ErrorHandling" />
