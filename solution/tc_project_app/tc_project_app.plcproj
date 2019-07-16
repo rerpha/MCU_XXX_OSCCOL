@@ -70,6 +70,9 @@
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_GenericError.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_NC_Error.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\ErrorHandling\FB_TerminalError.TcPOU">
       <SubType>Code</SubType>
     </Compile>
