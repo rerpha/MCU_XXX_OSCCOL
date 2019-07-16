@@ -36,6 +36,7 @@ VAR
 	//fbEL7037	: EL7037;
 	//fbEK1110	: EK1110;
 	
+	
 END_VAR
 
 ]]></Declaration>
@@ -77,11 +78,12 @@ the variable "fbErrorSystem.pErrorSystem" to the input ErrorSystem in each FB E.
 fbEL1808(
 	En:= TRUE, 
 	iTerminal_ID:= 01, 
-	ErrorSystem:= fbErrorList.pErrorSystem, 
+	ErrorSystem:= fbErorSystem.pErrorSystem, 
 	EnO=> , 
-	bError=> );      *)
+	bError=> );     
+For axis add  *)
+	
 //
-
 ]]></ST>
       </Implementation>
     </Action>
@@ -112,8 +114,10 @@ fbEL1808(
       <LineId Id="1" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="44" Count="8" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="53" Count="0" />
       <LineId Id="14" Count="0" />
-      <LineId Id="32" Count="1" />
+      <LineId Id="33" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
       <LineId Id="2" Count="0" />

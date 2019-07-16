@@ -196,15 +196,22 @@
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Visualization Manager.TcVMO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VISUs\languageSupport.TcTLO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="VISUs\MainVisu.TcVIS">
+    <Compile Include="tc_mca_std_lib\POUs\VISUs\Error_Log_Visu.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\VISUs\languageSupport.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\VISUs\MainVisu.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\VISUs\visuTextLinks.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visualization Manager.TcVMO">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +236,7 @@
     <Folder Include="tc_mca_std_lib\POUs\Hardware" />
     <Folder Include="tc_mca_std_lib\POUs\ErrorHandling" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
+    <Folder Include="tc_mca_std_lib\POUs\VISUs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
