@@ -133,7 +133,13 @@
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL4134.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7037.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7041_0052.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7047.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Hardware\EtherCAT_Terminals\Drives\EL7211.TcPOU">
