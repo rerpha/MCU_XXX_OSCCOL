@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.17">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -26,11 +26,19 @@ VAR
 	//bOutput28 AT %Q*: BOOL:= TRUE; 
 	
 (******Error Handling********)
-	fbErrorList: FB_ErrorList;
-	//fbEL3214: EL3214;
-	//fbEL1808: EL1808;
-	//fbEL2819: EL2819;
-	//fbEL9410: EL9410;
+	fbErrorSystem: FB_ErrorSystem;
+	aFbAxesError: ARRAY [1..gvl.axisNum] OF FB_NC_Error;
+	
+	//fbEL1018	: EL1018;
+	//fbEL2808	: EL2808;
+	//fbEL5101	: EL5101;
+	//fbEL9505	: EL9505;
+	//fbEL1252	: EL1252;
+	//fbEL9410	: EL9410;
+	//fbEL7037	: EL7037;
+	//fbEK1110	: EK1110;
+	
+	
 	
 END_VAR
 
@@ -43,8 +51,8 @@ ERROR();]]></ST>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
         <ST><![CDATA[
-FOR i:=1 TO gvl.axisNum DO
-	aFBAxes[i](stAxisStruct:=gvl.axes[i]);
+FOR GVL.iAxis:=1 TO gvl.axisNum DO
+	aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR
 
 
@@ -56,34 +64,38 @@ END_FOR
         <ST><![CDATA[//
 (****FB containting the log of the errors****)
 //
-fbErrorList(
+fbErrorSystem(
 	En:= TRUE, 
 	bReset:= , 
-	lErrorID:= , 
+	nErrorNum:= , 
 	bACK:= , 
+	bValidSelection:= , 
+	nTableRowIndex:= , 
 	EnO=> , 
-	nNoError=> , 
-	nNoOverflow=> , 
+	nSelectedError=> , 
 	pErrorSystem=> );
+
+
+FOR GVL.iAxis:=1 TO gvl.axisNum DO
+	aFbAxesError[gvl.iAxis](EN:=TRUE, 
+	nNC_ErrorID:= gvl.axes[gvl.iAxis].status.nErrorID, 
+	nNC_AxisID:=gvl.axes[gvl.iAxis].Axis.NcToPlc.AxisId, 
+	ErrorSystem:= fbErrorSystem.pErrorSystem);
+END_FOR
+	
+
 	
 (*call all the necessary instance (input assistance F2 or right click) according to the terminals that you have in your hardware and
  add "TRUE" in the input En, the corresponding number of termianl to the iTerminal_ID and 
-the variable "fbErrorList.pErrorSystem" to the input ErrorSystem in each FB E. g. : 
+the variable "fbErrorSystem.pErrorSystem" to the input ErrorSystem in each FB E. g. : 
 fbEL1808(
 	En:= TRUE, 
-	iTerminal_ID:= 1, 
-	ErrorSystem:= fbErrorList.pErrorSystem, 
+	iTerminal_ID:= 01, 
+	ErrorSystem:= fbErorSystem.pErrorSystem, 
 	EnO=> , 
-	bDi_1=> , 
-	bDi_2=> , 
-	bDi_3=> , 
-	bDi_4=> , 
-	bDi_5=> , 
-	bDi_6=> , 
-	bDi_7=> , 
-	bDi_8=> , 
-	bError=> );      *)
-//
+	bError=> );    
+ *)
+
 ]]></ST>
       </Implementation>
     </Action>
@@ -110,13 +122,18 @@ fbEL1808(
     <LineIds Name="MAIN.ERROR">
       <LineId Id="31" Count="0" />
       <LineId Id="10" Count="1" />
-      <LineId Id="2" Count="7" />
+      <LineId Id="34" Count="8" />
       <LineId Id="1" Count="0" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="29" Count="1" />
-      <LineId Id="16" Count="12" />
+      <LineId Id="90" Count="1" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="44" Count="8" />
+      <LineId Id="62" Count="0" />
       <LineId Id="14" Count="0" />
-      <LineId Id="32" Count="1" />
+      <LineId Id="33" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
       <LineId Id="2" Count="0" />
