@@ -5,7 +5,7 @@
 VAR
 	sVersion: STRING:='1.0.0';
 	i : UINT; //index variable for AXES()
-	aFbAxes: ARRAY [1..gvl.axisNum] OF FB_Axis;
+	aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
 	hmiAxisSelection	:	INT:=1;		//Not possible to use local hmi variables for array indexes
 	
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
@@ -27,7 +27,7 @@ VAR
 	
 (******Error Handling********)
 	fbErrorSystem: FB_ErrorSystem;
-	aFbAxesError: ARRAY [1..gvl.axisNum] OF FB_NC_Error;
+	aFbAxesError: ARRAY [1..gvl_app.axisNum] OF FB_NC_Error;
 	
 	//fbEL1018	: EL1018;
 	//fbEL2808	: EL2808;
@@ -51,7 +51,7 @@ ERROR();]]></ST>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
         <ST><![CDATA[
-FOR GVL.iAxis:=1 TO gvl.axisNum DO
+FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
 	aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR
 
@@ -76,7 +76,7 @@ fbErrorSystem(
 	pErrorSystem=> );
 
 
-FOR GVL.iAxis:=1 TO gvl.axisNum DO
+FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
 	aFbAxesError[gvl.iAxis](EN:=TRUE, 
 	nNC_ErrorID:= gvl.axes[gvl.iAxis].status.nErrorID, 
 	nNC_AxisID:=gvl.axes[gvl.iAxis].Axis.NcToPlc.AxisId, 
