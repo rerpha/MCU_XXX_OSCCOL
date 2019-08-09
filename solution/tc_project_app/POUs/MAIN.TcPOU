@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.17">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -38,13 +38,37 @@ VAR
 	//fbEL7037	: EL7037;
 	//fbEK1110	: EK1110;
 	
-	
+(******Startup, Shutdown and UPS********)
+	iStartup               : UINT := 0;
+	bColdstartDone         : BOOL := FALSE;	
+	bExecuteReadEncRefSys  : BOOL := TRUE;	
+	tmrRetry               : TON;
+	iRetry                 : INT;
+	fbReadEncRefSys        : ARRAY [1..gvl_app.axisNum] OF MC_ReadParameter;
+	fbUPS                  : FB_S_UPS_CX51x0;			
+	eUpsMode               : E_S_UPS_Mode	:= eSUPS_WrPersistData_Shutdown;
+	fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;	
 	
 END_VAR
-
+VAR PERSISTENT
+	iPositionAtShutdown       : ARRAY [1..gvl_app.axisNum] OF LREAL;
+	bMovingAtShutdown      : ARRAY [1..gvl_app.axisNum] OF BOOL;
+END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[PROG();
+      <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
+
+IF eGlobalSUpsState = eSUPS_PowerFailure THEN
+	(* first cycle of powerfailure *)
+	(* execute code that should only be done once with each powerfailure, i.e. increase powerfailure counter *)	
+	SHUTDOWN();
+ELSIF eGlobalSUpsState > eSUPS_PowerFailure THEN
+	(* next cycles of powerfailure *)
+	(* skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown  ... *)
+	RETURN;
+END_IF
+
+PROG();
 AXES();
 ERROR();]]></ST>
     </Implementation>
@@ -106,8 +130,110 @@ fbEL1808(
 //]]></ST>
       </Implementation>
     </Action>
+    <Action Name="SHUTDOWN" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
+      <Implementation>
+        <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO
+	iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
+	bMovingAtShutdown[i]:=gvl.axes[i].Axis.Status.Moving;
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="STARTUP" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
+      <Implementation>
+        <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO	
+	fbReadEncRefSys[i](
+	 Axis:= gvl.axes[i].Axis, 
+	 Enable:= bExecuteReadEncRefSys, 
+	 ParameterNumber:= MC_AxisParameter.AxisEncoderReferenceSystem,
+	 Value=>,
+	 ReadMode:= E_READMODE.READMODE_ONCE);
+END_FOR
+
+FOR i:=1 TO gvl_app.axisNum DO
+	fbRestorePosition[i](
+	 Axis:= gvl.axes[i].Axis, 
+	 Execute:= , 
+	 Position:= iPositionAtShutdown[i]);
+END_FOR
+
+IF bColdstartDone = FALSE THEN
+	CASE iStartup OF
+	0: // First cycle 
+		IF NOT bColdstartDone THEN
+			iStartup:=iStartup+1;
+			iretry:=0;
+		END_IF
+	1: // Read Enc Ref Sys - incremental or absolute	
+		bExecuteReadEncRefSys:=TRUE;
+		iStartup:=iStartup+1;
+		tmrRetry(in:=FALSE);
+	2: // Check if Enc Ref Sys has been read for all axis -> if not read again
+		tmrRetry(in:=TRUE, pt:=T#100MS);
+		FOR i:=1 TO gvl_app.axisNum DO			
+			IF fbReadEncRefSys[i].Valid = FALSE THEN
+				IF tmrretry.Q THEN
+					bExecuteReadEncRefSys:=FALSE;
+					iStartup:=iStartup-1;
+					iRetry:=iRetry+1;
+				END_IF
+				RETURN;
+			ELSE
+				iStartup:=iStartup+1;
+				EXIT;
+			END_IF
+		END_FOR
+	3: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
+		FOR i:=1 TO gvl_app.axisNum DO	
+			IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) THEN
+				IF gvl.axes[i].config.iRestorePosition=2 THEN
+					gvl.axes[i].config.nHomeSeq:=15;
+					gvl.axes[i].control.eCommand:=10;
+					//Doesn't work yet because you can only home to zero position
+					//gvl.axes[i].config.######:=iPositionAtShutdown[i];
+				END_IF
+			END_IF
+		END_FOR
+		iStartup:=iStartup+1;
+	4: // Execute position restore with or without bHome set
+		FOR i:=1 TO gvl_app.axisNum DO	
+			IF fbReadEncRefSys[i].Value = 0 THEN
+				CASE GVL.axes[i].config.iRestorePosition OF
+				1: fbRestorePosition[i].Execute:=TRUE;
+				2: gvl.axes[i].control.bExecute:=TRUE;
+				END_CASE
+			END_IF
+		END_FOR
+		iStartup:=iStartup+1;
+	5: // Check set position or direct homing is finished on axes that were opt-in
+		FOR i:=1 TO gvl_app.axisNum DO
+			IF fbReadEncRefSys[i].Value = 0 THEN
+				CASE gvl.axes[i].config.iRestorePosition OF
+				1:
+					IF NOT fbRestorePosition[i].Done THEN
+						RETURN;
+					END_IF		
+				2: 
+					IF NOT gvl.axes[i].status.bHomed THEN
+						RETURN;
+					END_IF
+				END_CASE
+			END_IF
+		END_FOR
+		iStartup:=iStartup+1;		
+	6: // Reset set position FBs and Finish
+		FOR i:=1 TO gvl_app.axisNum DO
+			fbRestorePosition[i].Execute:=FALSE;
+		END_FOR
+		bColdstartDone:=TRUE;	
+	END_CASE
+END_IF]]></ST>
+      </Implementation>
+    </Action>
     <LineIds Name="MAIN">
+      <LineId Id="124" Count="9" />
       <LineId Id="2" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
@@ -139,6 +265,14 @@ fbEL1808(
       <LineId Id="2" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.SHUTDOWN">
+      <LineId Id="2" Count="2" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.STARTUP">
+      <LineId Id="2" Count="85" />
+      <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
