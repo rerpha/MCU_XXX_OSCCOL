@@ -1172,7 +1172,4 @@ External Setpoint Generation:
 			</Project>
 		</Plc>
 	</Project>
-	<Mappings>
-		<MappingInfo Identifier="{05000010-2041-0850-3000-040340205008}" Id="#x02030010" Watchdog="04000000080000000400000004000000"/>
-	</Mappings>
 </TcSmProject>

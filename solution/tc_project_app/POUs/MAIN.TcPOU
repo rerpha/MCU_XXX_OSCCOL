@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.17">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -68,6 +68,7 @@ ELSIF eGlobalSUpsState > eSUPS_PowerFailure THEN
 	RETURN;
 END_IF
 
+STARTUP();
 PROG();
 AXES();
 ERROR();]]></ST>
@@ -232,6 +233,7 @@ END_IF]]></ST>
     <LineIds Name="MAIN">
       <LineId Id="124" Count="9" />
       <LineId Id="2" Count="0" />
+      <LineId Id="189" Count="0" />
       <LineId Id="135" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
