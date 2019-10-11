@@ -1,6 +1,5 @@
 import glob
 import xml.etree.ElementTree as ET
-import os
 
 VERSION_TAGS = {"**/*.Tc*": "ProductVersion", "**/*.tsproj": "TcVersion"}
 CORRECT_VERSION = "3.1.4024.0"
@@ -33,4 +32,4 @@ if __name__ == "__main__":
     incorrect_files = check_versions()
     for file, version in incorrect_files.items():
         print("ERROR: {} has incorrect version {}, expected version {}".format(file, version, CORRECT_VERSION))
-    exit(0)  # Exit with non-zero if any bad versions were found
+    exit(len(incorrect_files))  # Exit with non-zero if any bad versions were found

@@ -1,11 +1,10 @@
 image: python:3.7.3
-
+options:
+  max-time: 1
 pipelines:
   custom:
-    check_version:
+    pull-requests:
       - step:
-          caches:
-            - pip
           script:
             - git submodule update --init
-            - python pipeline.py
+            - python twincat_version_manager.py
