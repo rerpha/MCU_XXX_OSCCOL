@@ -7,4 +7,5 @@ pipelines:
           caches:
             - pip
           script:
+            - git submodule update --init
             - python pipeline.py
