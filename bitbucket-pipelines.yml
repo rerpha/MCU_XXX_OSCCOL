@@ -2,8 +2,8 @@ image: python:3.7.3
 options:
   max-time: 1
 pipelines:
-  custom:
-    pull-requests:
+  pull-requests:
+    '**':
       - step:
           script:
             - git submodule update --init
