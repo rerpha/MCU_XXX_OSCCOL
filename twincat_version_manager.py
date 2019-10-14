@@ -29,7 +29,6 @@ def check_versions():
 
 
 if __name__ == "__main__":
-    exit(0)
     try:
         incorrect_files = check_versions()
         for file, version in incorrect_files.items():
