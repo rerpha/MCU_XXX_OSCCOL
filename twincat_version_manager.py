@@ -16,7 +16,7 @@ def check_versions():
     for file_path, version_attrib in VERSION_TAGS.items():
         found_files = glob.glob(file_path, recursive=True)
         if not found_files:
-            print("ERROR: No files of type {} found".format(file_path))
+            raise IOError("ERROR: No files of type {} found".format(file_path))
         for file in found_files:
             tree = ET.parse(file)
             try:
@@ -29,7 +29,12 @@ def check_versions():
 
 
 if __name__ == "__main__":
-    incorrect_files = check_versions()
-    for file, version in incorrect_files.items():
-        print("ERROR: {} has incorrect version {}, expected version {}".format(file, version, CORRECT_VERSION))
-    exit(len(incorrect_files))  # Exit with non-zero if any bad versions were found
+    try:
+        incorrect_files = check_versions()
+        for file, version in incorrect_files.items():
+            print("ERROR: {} has incorrect version {}, expected version {}".format(file, version, CORRECT_VERSION))
+        if incorrect_files:
+            exit(1)
+    except IOError as e:
+        print(e)  # Likely no files found
+        exit(2)
