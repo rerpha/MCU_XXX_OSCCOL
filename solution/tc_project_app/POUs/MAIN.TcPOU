@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -39,7 +39,7 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-    iStartup               : UINT := 0;
+    iStartup               : UINT := 0; // First cycle of the PLC after being reset/power cycled
     bColdstartDone         : BOOL := FALSE;
     bExecuteReadEncRefSys  : BOOL := TRUE;
     tmrRetry               : TON;
@@ -163,7 +163,7 @@ IF bColdstartDone = FALSE THEN
     0: // First cycle
         IF NOT bColdstartDone THEN
             iStartup:=iStartup+1;
-            iretry:=0;
+            iRetry:=0;
         END_IF
     1: // Read Enc Ref Sys - incremental or absolute
         bExecuteReadEncRefSys:=TRUE;
