@@ -1,8 +1,6 @@
 # end of line conversion CLRF -- LF
-# Default is no conversion (follow Visual Studio)
-* -text
+# Default is auto
+*              text=auto
 #
-.gitattributes text
-.gitignore text
-
-
+# Shell scripts must be line feed
+*.sh           text eol=lf
