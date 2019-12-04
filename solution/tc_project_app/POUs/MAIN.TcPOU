@@ -39,8 +39,8 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-    iStartup               : UINT := 0; // First cycle of the PLC after being reset/power cycled
-    bColdstartDone         : BOOL := FALSE;
+	eStartUp: (coldStart, readEncRefSys, checkRead, checkFeedbackType, executePosRestore, checkFinished, finsishSetPosition);
+    bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
     bExecuteReadEncRefSys  : BOOL := TRUE;
     tmrRetry               : TON;
     iRetry                 : INT;
@@ -157,44 +157,42 @@ FOR i:=1 TO gvl_app.axisNum DO
 END_FOR
 
 IF bColdstartDone = FALSE THEN
-    CASE iStartup OF
-    0: // First cycle
+    CASE eStartUp OF
+    coldStart: // First cycle
         IF NOT bColdstartDone THEN
-            iStartup:=iStartup+1;
+            eStartUp:=eStartUp+1;
             iRetry:=0;
         END_IF
-    1: // Read Enc Ref Sys - incremental or absolute
+    readEncRefSys: // Read Enc Ref Sys - incremental or absolute
         bExecuteReadEncRefSys:=TRUE;
-        iStartup:=iStartup+1;
+        eStartUp:=eStartUp+1;
         tmrRetry(in:=FALSE);
-    2: // Check if Enc Ref Sys has been read for all axis -> if not read again
+    checkRead: // Check if Enc Ref Sys has been read for all axis -> if not read again
         tmrRetry(in:=TRUE, pt:=T#100MS);
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Valid = FALSE THEN
                 IF tmrretry.Q THEN
                     bExecuteReadEncRefSys:=FALSE;
-                    iStartup:=iStartup-1;
+                    eStartUp:=eStartUp-1;
                     iRetry:=iRetry+1;
                 END_IF
                 RETURN;
             ELSE
-                iStartup:=iStartup+1;
+                eStartUp:=eStartUp+1;
                 EXIT;
             END_IF
         END_FOR
-    3: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
+    checkFeedbackType: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) THEN
                 IF gvl.axes[i].config.iRestorePosition=2 THEN
                     gvl.axes[i].config.nHomeSeq:=15;
                     gvl.axes[i].control.eCommand:=10;
-                    //Doesn't work yet because you can only home to zero position
-                    //gvl.axes[i].config.######:=iPositionAtShutdown[i];
                 END_IF
             END_IF
         END_FOR
-        iStartup:=iStartup+1;
-    4: // Execute position restore with or without bHome set
+        eStartUp:=eStartUp+1;
+    executePosRestore: // Execute position restore with or without bHome set
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE GVL.axes[i].config.iRestorePosition OF
@@ -203,8 +201,8 @@ IF bColdstartDone = FALSE THEN
                 END_CASE
             END_IF
         END_FOR
-        iStartup:=iStartup+1;
-    5: // Check set position or direct homing is finished on axes that were opt-in
+        eStartUp:=eStartUp+1;
+    checkFinished: // Check set position or direct homing is finished on axes that were opt-in
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE gvl.axes[i].config.iRestorePosition OF
@@ -219,8 +217,8 @@ IF bColdstartDone = FALSE THEN
                 END_CASE
             END_IF
         END_FOR
-        iStartup:=iStartup+1;
-    6: // Reset set position FBs and Finish
+        eStartUp:=eStartUp+1;
+    finsishSetPosition: // Reset set position FBs and Finish
         FOR i:=1 TO gvl_app.axisNum DO
             fbRestorePosition[i].Execute:=FALSE;
         END_FOR
@@ -272,7 +270,8 @@ END_IF]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STARTUP">
-      <LineId Id="2" Count="85" />
+      <LineId Id="2" Count="47" />
+      <LineId Id="52" Count="35" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
