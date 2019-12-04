@@ -3,43 +3,43 @@
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	sVersion: STRING:='1.0.0';
-	i : UINT; //index variable for AXES()
-	aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
-	hmiAxisSelection	:	INT:=1;		//Not possible to use local hmi variables for array indexes
-	
+    sVersion: STRING:='1.0.0';
+    i : UINT; //index variable for AXES()
+    aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
+    hmiAxisSelection    :   INT:=1;     //Not possible to use local hmi variables for array indexes
+
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
-	
-	bOutput1 AT %Q*: BOOL:= TRUE;
-	//bOutput2 AT %Q*: BOOL:= TRUE;
-	//bOutput3 AT %Q*: BOOL:= TRUE;
-	//bOutput4 AT %Q*: BOOL:= TRUE;
-	//bOutput5 AT %Q*: BOOL:= TRUE;
-	//bOutput6 AT %Q*: BOOL:= TRUE;
-	//bOutput7 AT %Q*: BOOL:= TRUE;
-	//bOutput8 AT %Q*: BOOL:= TRUE;
-	//bOutput9 AT %Q*: BOOL:= TRUE;
-	//bOutput13 AT %Q*: BOOL:= TRUE;
-	//bOutput17 AT %Q*: BOOL:= TRUE;
-	//bOutput21 AT %Q*: BOOL:= TRUE;
-	//bOutput24 AT %Q*: BOOL:= TRUE;
-	//bOutput28 AT %Q*: BOOL:= TRUE; 
-	
+
+    bOutput1 AT %Q*: BOOL:= TRUE;
+    //bOutput2 AT %Q*: BOOL:= TRUE;
+    //bOutput3 AT %Q*: BOOL:= TRUE;
+    //bOutput4 AT %Q*: BOOL:= TRUE;
+    //bOutput5 AT %Q*: BOOL:= TRUE;
+    //bOutput6 AT %Q*: BOOL:= TRUE;
+    //bOutput7 AT %Q*: BOOL:= TRUE;
+    //bOutput8 AT %Q*: BOOL:= TRUE;
+    //bOutput9 AT %Q*: BOOL:= TRUE;
+    //bOutput13 AT %Q*: BOOL:= TRUE;
+    //bOutput17 AT %Q*: BOOL:= TRUE;
+    //bOutput21 AT %Q*: BOOL:= TRUE;
+    //bOutput24 AT %Q*: BOOL:= TRUE;
+    //bOutput28 AT %Q*: BOOL:= TRUE;
+
 (******Error Handling********)
-	fbErrorSystem: FB_ErrorSystem;
-	aFbAxesError: ARRAY [1..gvl_app.axisNum] OF FB_NC_Error;
-	
-	//fbEL1018	: EL1018;
-	//fbEL2808	: EL2808;
-	//fbEL5101	: EL5101;
-	//fbEL9505	: EL9505;
-	//fbEL1252	: EL1252;
-	//fbEL9410	: EL9410;
-	//fbEL7037	: EL7037;
-	//fbEK1110	: EK1110;
-	
-	
-	
+    fbErrorSystem: FB_ErrorSystem;
+    aFbAxesError: ARRAY [1..gvl_app.axisNum] OF FB_NC_Error;
+
+    //fbEL1018  : EL1018;
+    //fbEL2808  : EL2808;
+    //fbEL5101  : EL5101;
+    //fbEL9505  : EL9505;
+    //fbEL1252  : EL1252;
+    //fbEL9410  : EL9410;
+    //fbEL7037  : EL7037;
+    //fbEK1110  : EK1110;
+
+
+
 END_VAR
 
 ]]></Declaration>
@@ -52,7 +52,7 @@ ERROR();]]></ST>
       <Implementation>
         <ST><![CDATA[
 FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
-	aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
+    aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR
 
 
@@ -65,35 +65,35 @@ END_FOR
 (****FB containting the log of the errors****)
 //
 fbErrorSystem(
-	En:= TRUE, 
-	bReset:= , 
-	nErrorNum:= , 
-	bACK:= , 
-	bValidSelection:= , 
-	nTableRowIndex:= , 
-	EnO=> , 
-	nSelectedError=> , 
-	pErrorSystem=> );
+    En:= TRUE,
+    bReset:= ,
+    nErrorNum:= ,
+    bACK:= ,
+    bValidSelection:= ,
+    nTableRowIndex:= ,
+    EnO=> ,
+    nSelectedError=> ,
+    pErrorSystem=> );
 
 
 FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
-	aFbAxesError[gvl.iAxis](EN:=TRUE, 
-	nNC_ErrorID:= gvl.axes[gvl.iAxis].status.nErrorID, 
-	nNC_AxisID:=gvl.axes[gvl.iAxis].Axis.NcToPlc.AxisId, 
-	ErrorSystem:= fbErrorSystem.pErrorSystem);
+    aFbAxesError[gvl.iAxis](EN:=TRUE,
+    nNC_ErrorID:= gvl.axes[gvl.iAxis].status.nErrorID,
+    nNC_AxisID:=gvl.axes[gvl.iAxis].Axis.NcToPlc.AxisId,
+    ErrorSystem:= fbErrorSystem.pErrorSystem);
 END_FOR
-	
 
-	
+
+
 (*call all the necessary instance (input assistance F2 or right click) according to the terminals that you have in your hardware and
- add "TRUE" in the input En, the corresponding number of termianl to the iTerminal_ID and 
-the variable "fbErrorSystem.pErrorSystem" to the input ErrorSystem in each FB E. g. : 
+ add "TRUE" in the input En, the corresponding number of termianl to the iTerminal_ID and
+the variable "fbErrorSystem.pErrorSystem" to the input ErrorSystem in each FB E. g. :
 fbEL1808(
-	En:= TRUE, 
-	iTerminal_ID:= 01, 
-	ErrorSystem:= fbErorSystem.pErrorSystem, 
-	EnO=> , 
-	bError=> );    
+    En:= TRUE,
+    iTerminal_ID:= 01,
+    ErrorSystem:= fbErorSystem.pErrorSystem,
+    EnO=> ,
+    bError=> );
  *)
 
 ]]></ST>
