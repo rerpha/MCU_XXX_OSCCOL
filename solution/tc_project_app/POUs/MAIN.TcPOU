@@ -49,13 +49,11 @@ VAR
     eUpsMode               : E_S_UPS_Mode   := eSUPS_WrPersistData_Shutdown;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
 
-
 END_VAR
 VAR PERSISTENT
     iPositionAtShutdown       : ARRAY [1..gvl_app.axisNum] OF LREAL;
     bMovingAtShutdown      : ARRAY [1..gvl_app.axisNum] OF BOOL;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
 
