@@ -1,6 +1,18 @@
 # end of line conversion CLRF -- LF
 # Default is auto
 *              text=auto
-#
-# Shell scripts must be line feed
+
+# Hidden .git files: CRLF for convenience
+.gitattributes text eol=crlf
+.gitignore     text eol=crlf
+
+# Shell scripts must be LF
 *.sh           text eol=lf
+
+# Tc files must be CRLF
+*.plcproj      text eol=crlf
+*.Tc*          text eol=crlf
+*.tsproj       text eol=crlf
+*.txt          text eol=crlf
+*.xml          text eol=crlf
+*.xti          text eol=crlf
