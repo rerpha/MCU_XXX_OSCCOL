@@ -44,7 +44,7 @@ def fix_white_space(debug, fix_files):
                 # Convert all TAB into SPACE
                 new_line = old_line.expandtabs(tabsize=tab_width)
                 if new_line != old_line:
-                   had_TAB = True 
+                   had_TAB = True
                 # Strip the CRLF
                 new_line = new_line.rstrip("\r\n")
                 # Strip trailing WS
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         if not fix_files:
             for file in incorrect_files:
                 message = incorrect_files[file]
-                print("ERROR: '{}' {}".format(file,message)) 
+                print("ERROR: '{}' {}".format(file,message))
         if incorrect_files:
             print('run %s --fix' % sys.argv[0])
             exit(1)
