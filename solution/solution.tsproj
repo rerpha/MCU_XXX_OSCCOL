@@ -3986,6 +3986,14 @@ External Setpoint Generation:
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIPC^tc_project_app^tc_project_app Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 2 (EL1018)">
+				<Link VarA="PlcTask Inputs^GVL.axes[1].inputs.bHomeSensor" VarB="Channel 3^Input"/>
+				<Link VarA="PlcTask Inputs^GVL.axes[1].inputs.bLimitBwd" VarB="Channel 1^Input"/>
+				<Link VarA="PlcTask Inputs^GVL.axes[1].inputs.bLimitFwd" VarB="Channel 2^Input"/>
+				<Link VarA="PlcTask Inputs^GVL.axes[2].inputs.bHomeSensor" VarB="Channel 7^Input"/>
+				<Link VarA="PlcTask Inputs^GVL.axes[2].inputs.bLimitBwd" VarB="Channel 5^Input"/>
+				<Link VarA="PlcTask Inputs^GVL.axes[2].inputs.bLimitFwd" VarB="Channel 6^Input"/>
+			</OwnerB>
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2808)">
 				<Link VarA="PlcTask Outputs^MAIN.bOutput1" VarB="Channel 1^Output"/>
 				<Link VarA="PlcTask Outputs^MAIN.bOutput2" VarB="Channel 2^Output"/>
