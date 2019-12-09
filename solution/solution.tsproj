@@ -2102,10 +2102,24 @@ External Setpoint Generation:
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.bOutput2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bOutput3</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.bOutput5</Name>
-							<Comment><![CDATA[bOutput2 AT %Q*: BOOL:= TRUE;
-bOutput3 AT %Q*: BOOL:= TRUE;
-bOutput4 AT %Q*: BOOL:= TRUE;]]></Comment>
+							<Comment><![CDATA[bOutput4 AT %Q*: BOOL:= TRUE;]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bOutput6</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.bOutput7</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -3880,6 +3894,7 @@ bOutput4 AT %Q*: BOOL:= TRUE;]]></Comment>
 		</Io>
 	</Project>
 	<Mappings>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500841000403}" Id="#x02030030"/>
 		<MappingInfo Identifier="{00000000-0010-0304-3000-040310000403}" Id="#x02030010"/>
 		<MappingInfo Identifier="{05000010-2041-0850-3000-040340205008}" Id="#x02030020" Watchdog="04000000080000000400000004000000"/>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
