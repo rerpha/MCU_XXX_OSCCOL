@@ -26,6 +26,8 @@ def fix_white_space(debug, fix_files):
 
         for pathname in found_files:
             dirty = False
+            had_TAB = False
+            had_trailing_WS = False
             new_lines = []
             if debug >= 1:
                 print("tab_with=%d pathname=%s" % (tab_width, pathname))
@@ -41,8 +43,16 @@ def fix_white_space(debug, fix_files):
                     had_crlf = 1 # LF
                 # Convert all TAB into SPACE
                 new_line = old_line.expandtabs(tabsize=tab_width)
-                # Strip of all trailing white space, including the CRLF
-                new_line = new_line.rstrip("\r\n ")
+                if new_line != old_line:
+                   had_TAB = True 
+                # Strip the CRLF
+                new_line = new_line.rstrip("\r\n")
+                # Strip trailing WS
+                tmp_line = new_line.rstrip(" ")
+                if tmp_line != new_line:
+                    had_trailing_WS = True
+                    new_line = tmp_line
+
                 if had_crlf == 2:
                     new_line = new_line + '\r\n'
                 elif had_crlf == 1:
@@ -61,7 +71,12 @@ def fix_white_space(debug, fix_files):
             if debug >= 1:
                 print("pathname=%s dirty=%d" % (pathname, dirty))
             if dirty:
-                incorrect_files[pathname] = True
+                if had_TAB and had_trailing_WS:
+                    incorrect_files[pathname] = 'has white space damage'
+                elif had_TAB:
+                    incorrect_files[pathname] = 'has TAB'
+                elif had_trailing_WS:
+                    incorrect_files[pathname] = 'has trailing whitespace'
                 if fix_files:
                     file = open(pathname, 'w', newline='', encoding="iso-8859-1")
                     file.writelines(new_lines)
@@ -88,7 +103,8 @@ if __name__ == "__main__":
         incorrect_files = fix_white_space(debug, fix_files)
         if not fix_files:
             for file in incorrect_files:
-                print("ERROR: '{}' has white space damage".format(file))
+                message = incorrect_files[file]
+                print("ERROR: '{}' {}".format(file,message)) 
         if incorrect_files:
             print('run %s --fix' % sys.argv[0])
             exit(1)
