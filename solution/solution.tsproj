@@ -2146,6 +2146,9 @@ bOutput4 AT %Q*: BOOL:= TRUE;]]></Comment>
 				<Image Id="1" AddrType="9" ImageType="3">
 					<Name>Image</Name>
 				</Image>
+				<Image Id="4" AddrType="10" ImageType="3">
+					<Name>Image-2</Name>
+				</Image>
 				<Box Id="1" BoxType="9099">
 					<Name>Term 1 (EK1200)</Name>
 					<ImageId>1000</ImageId>
@@ -3968,6 +3971,10 @@ bOutput4 AT %Q*: BOOL:= TRUE;]]></Comment>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TIPC^tc_project_app^tc_project_app Instance">
+			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2808)">
+				<Link VarA="PlcTask Outputs^MAIN.bOutput1" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.bOutput5" VarB="Channel 5^Output"/>
+			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^GVL.axes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
 				<Link VarA="PlcTask Outputs^GVL.axes[1].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
