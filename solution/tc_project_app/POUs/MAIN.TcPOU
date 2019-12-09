@@ -39,7 +39,7 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-    eStartUp: (coldStart, readEncRefSys, checkRead, checkFeedbackType, executePosRestore, checkFinished, finsishSetPosition);
+    eStartUp: (ColdStart, ReadEncRefSys, CheckRead, CheckFeedbackType, ExecutePosRestore, CheckFinished, FinsishSetPosition);
     bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
     bExecuteReadEncRefSys  : BOOL := TRUE;
     tmrRetry               : TON;
@@ -158,16 +158,16 @@ END_FOR
 
 IF bColdstartDone = FALSE THEN
     CASE eStartUp OF
-    coldStart: // First cycle
+    ColdStart: // First cycle
         IF NOT bColdstartDone THEN
             eStartUp:=eStartUp+1;
             iRetry:=0;
         END_IF
-    readEncRefSys: // Read Enc Ref Sys - incremental or absolute
+    ReadEncRefSys: // Read Enc Ref Sys - incremental or absolute
         bExecuteReadEncRefSys:=TRUE;
         eStartUp:=eStartUp+1;
         tmrRetry(in:=FALSE);
-    checkRead: // Check if Enc Ref Sys has been read for all axis -> if not read again
+    CheckRead: // Check if Enc Ref Sys has been read for all axis -> if not read again
         tmrRetry(in:=TRUE, pt:=T#100MS);
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Valid = FALSE THEN
@@ -182,7 +182,7 @@ IF bColdstartDone = FALSE THEN
                 EXIT;
             END_IF
         END_FOR
-    checkFeedbackType: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
+    CheckFeedbackType: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) THEN
                 IF gvl.axes[i].config.iRestorePosition=2 THEN
@@ -192,7 +192,7 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    executePosRestore: // Execute position restore with or without bHome set
+    ExecutePosRestore: // Execute position restore with or without bHome set
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE GVL.axes[i].config.iRestorePosition OF
@@ -202,7 +202,7 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    checkFinished: // Check set position or direct homing is finished on axes that were opt-in
+    CheckFinished: // Check set position or direct homing is finished on axes that were opt-in
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE gvl.axes[i].config.iRestorePosition OF
@@ -218,7 +218,7 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    finsishSetPosition: // Reset set position FBs and Finish
+    FinsishSetPosition: // Reset set position FBs and Finish
         FOR i:=1 TO gvl_app.axisNum DO
             fbRestorePosition[i].Execute:=FALSE;
         END_FOR
