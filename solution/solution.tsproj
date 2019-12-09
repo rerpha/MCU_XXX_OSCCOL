@@ -3988,7 +3988,11 @@ External Setpoint Generation:
 		<OwnerA Name="TIPC^tc_project_app^tc_project_app Instance">
 			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2808)">
 				<Link VarA="PlcTask Outputs^MAIN.bOutput1" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.bOutput2" VarB="Channel 2^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.bOutput3" VarB="Channel 3^Output"/>
 				<Link VarA="PlcTask Outputs^MAIN.bOutput5" VarB="Channel 5^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.bOutput6" VarB="Channel 6^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.bOutput7" VarB="Channel 7^Output"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
 				<Link VarA="PlcTask Inputs^GVL.axes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
