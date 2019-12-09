@@ -90,6 +90,7 @@ if __name__ == "__main__":
             for file in incorrect_files:
                 print("ERROR: '{}' has white space damage".format(file))
         if incorrect_files:
+            print('run %s --fix' % sys.argv[0])
             exit(1)
     except IOError as e:
         print(e)  # Likely no files found
