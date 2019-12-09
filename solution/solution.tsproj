@@ -1448,7 +1448,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
-						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="1000" MaxCount="#x0000ffff">
+						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" MaxCount="#x0000ffff">
 							<Inc RefSoftSyncMask="#x0000ffff"/>
 						</EncPara>
 						<Vars VarGrpType="1">
@@ -1663,7 +1663,7 @@ External Setpoint Generation:
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
-						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="1000" MaxCount="#x0000ffff">
+						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" MaxCount="#x0000ffff">
 							<Inc RefSoftSyncMask="#x0000ffff"/>
 						</EncPara>
 						<Vars VarGrpType="1">
