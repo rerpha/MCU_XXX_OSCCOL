@@ -39,7 +39,7 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-	eStartUp: (coldStart, readEncRefSys, checkRead, checkFeedbackType, executePosRestore, checkFinished, finsishSetPosition);
+    eStartUp: (coldStart, readEncRefSys, checkRead, checkFeedbackType, executePosRestore, checkFinished, finsishSetPosition);
     bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
     bExecuteReadEncRefSys  : BOOL := TRUE;
     tmrRetry               : TON;
