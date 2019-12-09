@@ -14,7 +14,7 @@ VAR
     //bOutput2 AT %Q*: BOOL:= TRUE;
     //bOutput3 AT %Q*: BOOL:= TRUE;
     //bOutput4 AT %Q*: BOOL:= TRUE;
-    //bOutput5 AT %Q*: BOOL:= TRUE;
+    bOutput5 AT %Q*: BOOL:= TRUE;
     //bOutput6 AT %Q*: BOOL:= TRUE;
     //bOutput7 AT %Q*: BOOL:= TRUE;
     //bOutput8 AT %Q*: BOOL:= TRUE;
