@@ -39,7 +39,7 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-    eStartUp: (ColdStart, ReadEncRefSys, CheckRead, CheckFeedbackType, ExecutePosRestore, CheckFinished, FinsishSetPosition);
+    eStartUp: (ColdStart, ReadAxisFeedbackType, CheckReadDone, PrepareToRestore, ExecuteRestore, CheckRestore, FinishRestore);
     bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
     bExecuteReadEncRefSys  : BOOL := TRUE;
     tmrRetry               : TON;
@@ -49,6 +49,7 @@ VAR
     eUpsMode               : E_S_UPS_Mode   := eSUPS_WrPersistData_Shutdown;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
 
+    counter: INT;
 END_VAR
 VAR PERSISTENT
     iPositionAtShutdown       : ARRAY [1..gvl_app.axisNum] OF LREAL;
@@ -174,45 +175,68 @@ FOR i:=1 TO gvl_app.axisNum DO
      Position:= iPositionAtShutdown[i]);
 END_FOR
 
-// Upon startup bColdStartDone will be set to FALSE, after the following initialisation it is set to TRUE 
+// Timer required so the FBs for all axes can process before checking.
+tmrRetry(in:=, pt:=T#200MS);
+
+// Upon startup bColdStartDone will be set to FALSE, after the following initialisation it is set to TRUE
 // and should stay TRUE for the rest of the time the PLC is operational, thus this routine should only be completed once
 IF bColdstartDone = FALSE THEN
     CASE eStartUp OF
-    ColdStart: // First cycle of the PLC, do nothing just give one cycle for variables to initialise
+
+    ColdStart:
+    // First cycle of the PLC, do nothing just give one cycle for variables to initialise
         IF NOT bColdstartDone THEN
             eStartUp:=eStartUp+1;
             iRetry:=0;
         END_IF
-    ReadEncRefSys: // Exectute the function blocks to read the encoder reference system (inc or abs)
+
+    ReadAxisFeedbackType:
+    // Exectute the function blocks to read the encoder reference system (inc or abs)
         bExecuteReadEncRefSys:=TRUE;
         eStartUp:=eStartUp+1;
-        tmrRetry(in:=FALSE);
-    CheckRead: // Check encoder reference system has been read for all axis -> if not read again
-        tmrRetry(in:=TRUE, pt:=T#100MS); // Timer gives the axis enough PLC cycles to initialise
+        tmrRetry(in:=TRUE);
+
+    CheckReadDone:
+    // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time
+    // If fbReadEncRefSys not started then go back a step
+        IF tmrretry.Q THEN
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Valid = FALSE THEN
-                IF tmrretry.Q THEN
+                IF fbReadEncRefSys[i].Busy = TRUE THEN
+                    // Exit MAIN.STARTUP Action and wait till next cycle, needs to cycle through whole program in order for data to update
+                    RETURN;
+                ELSE
+                    // Sometimes the code gets here and the fbReadEncRefSys[i] misses the rising edge.
+                    // If  it gets here it means .valid=FALSE, .error=FALSE and .busy=FALSE which indicateds the FB probably hasn't started
+                    // and thus needs to see a rising edge. Set execute to low and go back a step in the CASE.
                     bExecuteReadEncRefSys:=FALSE;
+                    tmrRetry(in:=TRUE);
                     eStartUp:=eStartUp-1;
                     iRetry:=iRetry+1;
+                    RETURN;
                 END_IF
-                RETURN;
-            ELSE
-                eStartUp:=eStartUp+1;
-                EXIT;
             END_IF
         END_FOR
-    CheckFeedbackType: // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
+        // If the code gets here all axes either have .valid=TRUE or .ERROR=TRUE
+        // We disregard errors so that the whole program isn't held up, if there is an error on a axis the value is not restored
+        eStartUp:=eStartUp+1;
+        END_IF
+
+    PrepareToRestore:
+    // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) AND gvl.axes[i].config.eRestorePosition=2 THEN
+                gvl.axes[i].control.eCommand:=MotionFunctions.Home;
                 gvl.axes[i].config.nHomeSeq:=15;
-                gvl.axes[i].control.eCommand:=10;
+                gvl.axes[i].config.fHomePosition:=iPositionAtShutdown[i];
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    ExecutePosRestore: // Execute position restore using either fbRestorePosition or normal direct homing (depending on mode)
+
+    ExecuteRestore:
+    // Execute position restore using either mode 1: fbRestorePosition or mode 2: normal direct homing (depending on mode)
         FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Value = 0 THEN
+            IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
                 CASE GVL.axes[i].config.eRestorePosition OF
                   RestorePosition.RestoreWithoutHome: fbRestorePosition[i].Execute:=TRUE;
                   RestorePosition.RestoreWithHome: gvl.axes[i].control.bExecute:=TRUE;
@@ -220,9 +244,13 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    CheckFinished: // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
+
+    CheckRestore:
+    // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
+    // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
+    // bColdStartDone will never get set to TRUE
         FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Value = 0 THEN
+            IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
                 CASE gvl.axes[i].config.eRestorePosition OF
                   RestorePosition.RestoreWithoutHome:
                     IF NOT fbRestorePosition[i].Done THEN
@@ -236,11 +264,13 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    FinsishSetPosition: // Remove execute = TRUE for fbRestorePosition
+
+    FinishRestore: // Remove execute = TRUE for fbRestorePosition
         FOR i:=1 TO gvl_app.axisNum DO
             fbRestorePosition[i].Execute:=FALSE;
         END_FOR
         bColdstartDone:=TRUE;
+
     END_CASE
 END_IF]]></ST>
       </Implementation>
@@ -306,12 +336,64 @@ END_IF]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="11" Count="5" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="194" Count="1" />
       <LineId Id="106" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="107" Count="0" />
-      <LineId Id="18" Count="28" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="53" Count="34" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="21" Count="3" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="26" Count="2" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="157" Count="2" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="150" Count="1" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="57" Count="8" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="204" Count="1" />
+      <LineId Id="67" Count="14" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="82" Count="4" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="87" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
