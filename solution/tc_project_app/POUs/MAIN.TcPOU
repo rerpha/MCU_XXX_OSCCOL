@@ -143,7 +143,20 @@ END_FOR]]></ST>
     </Action>
     <Action Name="STARTUP" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
       <Implementation>
-        <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO
+        <ST><![CDATA[///#########################################################
+// This module will restore the position of an incremental axis on startup with the act position it read before losing power.
+// It checks the type of axis, 0=incremental, and that the axis was stationary at shut down.
+// By default an axis will not restore the position unless it is set to opt-in, i.e. gvl.axes[i].config.eRestorePosition is non-zero.
+// There are two modes for position restore:
+// 1 'RestoreWithoutHome' -restores the position using a set position fb and does not set the home bit in the axis struct.
+// 2 'RestoreWithHome' -restores the position using a normal direct home routine and should set the home bit to TRUE in the axis struct.
+// Note: 0 'DontRestore'
+// Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
+///#########################################################
+
+// Cycle through function blocks that read the encoder reference system i.e. whether axis is incremental or absolute
+// Result stored in Value, 0=Inc 1=Abs, execute set during the case statement
+FOR i:=1 TO gvl_app.axisNum DO
     fbReadEncRefSys[i](
      Axis:= gvl.axes[i].Axis,
      Enable:= bExecuteReadEncRefSys,
@@ -152,6 +165,8 @@ END_FOR]]></ST>
      ReadMode:= E_READMODE.READMODE_ONCE);
 END_FOR
 
+// Cycle through set position function blocks for each axis
+// Only axes with RestorePosition=RestoreWithoutHome (mode 1) will be utilised
 FOR i:=1 TO gvl_app.axisNum DO
     fbRestorePosition[i](
      Axis:= gvl.axes[i].Axis,
@@ -159,19 +174,21 @@ FOR i:=1 TO gvl_app.axisNum DO
      Position:= iPositionAtShutdown[i]);
 END_FOR
 
+// Upon startup bColdStartDone will be set to FALSE, after the following initialisation it is set to TRUE 
+// and should stay TRUE for the rest of the time the PLC is operational, thus this routine should only be completed once
 IF bColdstartDone = FALSE THEN
     CASE eStartUp OF
-    ColdStart: // First cycle
+    ColdStart: // First cycle of the PLC, do nothing just give one cycle for variables to initialise
         IF NOT bColdstartDone THEN
             eStartUp:=eStartUp+1;
             iRetry:=0;
         END_IF
-    ReadEncRefSys: // Read Enc Ref Sys - incremental or absolute
+    ReadEncRefSys: // Exectute the function blocks to read the encoder reference system (inc or abs)
         bExecuteReadEncRefSys:=TRUE;
         eStartUp:=eStartUp+1;
         tmrRetry(in:=FALSE);
-    CheckRead: // Check if Enc Ref Sys has been read for all axis -> if not read again
-        tmrRetry(in:=TRUE, pt:=T#100MS);
+    CheckRead: // Check encoder reference system has been read for all axis -> if not read again
+        tmrRetry(in:=TRUE, pt:=T#100MS); // Timer gives the axis enough PLC cycles to initialise
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Valid = FALSE THEN
                 IF tmrretry.Q THEN
@@ -185,17 +202,15 @@ IF bColdstartDone = FALSE THEN
                 EXIT;
             END_IF
         END_FOR
-    CheckFeedbackType: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
+    CheckFeedbackType: // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
         FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) THEN
-                IF gvl.axes[i].config.eRestorePosition=2 THEN
-                    gvl.axes[i].config.nHomeSeq:=15;
-                    gvl.axes[i].control.eCommand:=10;
-                END_IF
+            IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) AND gvl.axes[i].config.eRestorePosition=2 THEN
+                gvl.axes[i].config.nHomeSeq:=15;
+                gvl.axes[i].control.eCommand:=10;
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    ExecutePosRestore: // Execute position restore with or without bHome set
+    ExecutePosRestore: // Execute position restore using either fbRestorePosition or normal direct homing (depending on mode)
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE GVL.axes[i].config.eRestorePosition OF
@@ -205,7 +220,7 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    CheckFinished: // Check set position or direct homing is finished on axes that were opt-in
+    CheckFinished: // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
                 CASE gvl.axes[i].config.eRestorePosition OF
@@ -221,7 +236,7 @@ IF bColdstartDone = FALSE THEN
             END_IF
         END_FOR
         eStartUp:=eStartUp+1;
-    FinsishSetPosition: // Reset set position FBs and Finish
+    FinsishSetPosition: // Remove execute = TRUE for fbRestorePosition
         FOR i:=1 TO gvl_app.axisNum DO
             fbRestorePosition[i].Execute:=FALSE;
         END_FOR
@@ -275,8 +290,28 @@ END_IF]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STARTUP">
-      <LineId Id="2" Count="47" />
-      <LineId Id="52" Count="35" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="101" Count="1" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="91" Count="1" />
+      <LineId Id="2" Count="7" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="11" Count="5" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="18" Count="28" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="53" Count="34" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
