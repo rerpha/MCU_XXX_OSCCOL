@@ -74,7 +74,9 @@ ERROR();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[gvl.axes[1].config.eRestorePosition:=1;
+gvl.axes[2].config.eRestorePosition:=2;
+
 FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
     aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR
@@ -127,6 +129,7 @@ fbEL1808(
       <Implementation>
         <ST><![CDATA[//
 (* Program any sequence, safety or feature (if necessary) application specific in thsi section*)
+
 //]]></ST>
       </Implementation>
     </Action>
@@ -185,7 +188,7 @@ IF bColdstartDone = FALSE THEN
     CheckFeedbackType: // Check if axis is incremental, opt-in/restore home and not moving at shutdown -> if so restore
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) THEN
-                IF gvl.axes[i].config.iRestorePosition=2 THEN
+                IF gvl.axes[i].config.eRestorePosition=2 THEN
                     gvl.axes[i].config.nHomeSeq:=15;
                     gvl.axes[i].control.eCommand:=10;
                 END_IF
@@ -195,9 +198,9 @@ IF bColdstartDone = FALSE THEN
     ExecutePosRestore: // Execute position restore with or without bHome set
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
-                CASE GVL.axes[i].config.iRestorePosition OF
-                1: fbRestorePosition[i].Execute:=TRUE;
-                2: gvl.axes[i].control.bExecute:=TRUE;
+                CASE GVL.axes[i].config.eRestorePosition OF
+                  1: fbRestorePosition[i].Execute:=TRUE;
+                  2: gvl.axes[i].control.bExecute:=TRUE;
                 END_CASE
             END_IF
         END_FOR
@@ -205,12 +208,12 @@ IF bColdstartDone = FALSE THEN
     CheckFinished: // Check set position or direct homing is finished on axes that were opt-in
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Value = 0 THEN
-                CASE gvl.axes[i].config.iRestorePosition OF
-                1:
+                CASE gvl.axes[i].config.eRestorePosition OF
+                  1:
                     IF NOT fbRestorePosition[i].Done THEN
                         RETURN;
                     END_IF
-                2:
+                  2:
                     IF NOT gvl.axes[i].status.bHomed THEN
                         RETURN;
                     END_IF
@@ -236,6 +239,8 @@ END_IF]]></ST>
       <LineId Id="81" Count="1" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
+      <LineId Id="19" Count="0" />
+      <LineId Id="18" Count="0" />
       <LineId Id="3" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
@@ -263,6 +268,7 @@ END_IF]]></ST>
     <LineIds Name="MAIN.PROG">
       <LineId Id="2" Count="0" />
       <LineId Id="1" Count="0" />
+      <LineId Id="5" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SHUTDOWN">
