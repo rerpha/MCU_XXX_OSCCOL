@@ -1446,15 +1446,10 @@ External Setpoint Generation:
 					<Name>Axis 1</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="100" DecelerationMaximum="100" Acceleration="100" Deceleration="100" Jerk="200"/>
-						<Velo RefSearch="5" RefSync="2" SlowManual="2" FastManual="5" Maximum="15"/>
+						<Velo RefSearch="10" RefSync="5" SlowManual="5" FastManual="10" Maximum="15"/>
 						<PositionAreaControl Range="0.05"/>
 						<TargetPosControl Range="0.1" Time="0.5"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
-						<ParameterChanged>22</ParameterChanged>
-						<ParameterChanged>19</ParameterChanged>
-						<ParameterChanged>16</ParameterChanged>
-						<ParameterChanged>18</ParameterChanged>
-						<ParameterChanged>23</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
 						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" MaxCount="#x0000ffff">
@@ -1671,15 +1666,10 @@ External Setpoint Generation:
 					<Name>Axis 2</Name>
 					<AxisPara>
 						<Dynamic AccelerationMaximum="100" DecelerationMaximum="100" Acceleration="100" Deceleration="100" Jerk="200"/>
-						<Velo RefSearch="5" RefSync="2" SlowManual="2" FastManual="5" Maximum="15"/>
+						<Velo RefSearch="10" RefSync="5" SlowManual="5" FastManual="10" Maximum="15"/>
 						<PositionAreaControl Range="0.05"/>
 						<TargetPosControl Range="0.1" Time="0.5"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
-						<ParameterChanged>22</ParameterChanged>
-						<ParameterChanged>19</ParameterChanged>
-						<ParameterChanged>16</ParameterChanged>
-						<ParameterChanged>18</ParameterChanged>
-						<ParameterChanged>23</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
 						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" Inverse="true" MaxCount="#x0000ffff">
