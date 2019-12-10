@@ -1447,7 +1447,14 @@ External Setpoint Generation:
 					<AxisPara>
 						<Dynamic AccelerationMaximum="100" DecelerationMaximum="100" Acceleration="100" Deceleration="100" Jerk="200"/>
 						<Velo RefSearch="5" RefSync="2" SlowManual="2" FastManual="5" Maximum="15"/>
+						<PositionAreaControl Range="0.05"/>
+						<TargetPosControl Range="0.1" Time="0.5"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
+						<ParameterChanged>22</ParameterChanged>
+						<ParameterChanged>19</ParameterChanged>
+						<ParameterChanged>16</ParameterChanged>
+						<ParameterChanged>18</ParameterChanged>
+						<ParameterChanged>23</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
 						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" MaxCount="#x0000ffff">
@@ -1520,7 +1527,6 @@ External Setpoint Generation:
 						<DrvPara Inverse="true">
 							<Analog VeloReferenz="600" TorqueScale="10" ScaleFactorActTorque="0.1"/>
 							<TimeComp TaskDelayCycles="1"/>
-							<ParameterChanged>6</ParameterChanged>
 						</DrvPara>
 						<Vars VarGrpType="1">
 							<Name>Inputs</Name>
@@ -1603,6 +1609,7 @@ Drive Status 4 (manually linked):
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="1" Time="0.5"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
@@ -1665,7 +1672,14 @@ External Setpoint Generation:
 					<AxisPara>
 						<Dynamic AccelerationMaximum="100" DecelerationMaximum="100" Acceleration="100" Deceleration="100" Jerk="200"/>
 						<Velo RefSearch="5" RefSync="2" SlowManual="2" FastManual="5" Maximum="15"/>
+						<PositionAreaControl Range="0.05"/>
+						<TargetPosControl Range="0.1" Time="0.5"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
+						<ParameterChanged>22</ParameterChanged>
+						<ParameterChanged>19</ParameterChanged>
+						<ParameterChanged>16</ParameterChanged>
+						<ParameterChanged>18</ParameterChanged>
+						<ParameterChanged>23</ParameterChanged>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="4">
 						<EncPara ScaleFactorNumerator="60" ScaleFactorDenominator="2000" Inverse="true" MaxCount="#x0000ffff">
@@ -1820,6 +1834,7 @@ Drive Status 4 (manually linked):
 					</Drive>
 					<Controller Name="Ctrl" CtrType="1">
 						<CtrPara PriorControlFactor="1">
+							<PosDiffControl Range="1" Time="0.5"/>
 							<Observer BandWidth="20"/>
 						</CtrPara>
 					</Controller>
