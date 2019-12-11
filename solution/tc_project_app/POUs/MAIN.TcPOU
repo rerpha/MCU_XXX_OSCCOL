@@ -133,15 +133,15 @@ fbEL1808(
     <Action Name="SHUTDOWN" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
       <Implementation>
         <ST><![CDATA[IF bPositionRestoreDone = TRUE THEN
-	FOR i:=1 TO gvl_app.axisNum DO
-		iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
-		IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
-			bMovingAtShutdown[i]:=TRUE;
-		ELSE
-			bMovingAtShutdown[i]:=FALSE;
-		END_IF
-		bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
-	END_FOR
+    FOR i:=1 TO gvl_app.axisNum DO
+        iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
+        IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
+            bMovingAtShutdown[i]:=TRUE;
+        ELSE
+            bMovingAtShutdown[i]:=FALSE;
+        END_IF
+        bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
+    END_FOR
 END_IF]]></ST>
       </Implementation>
     </Action>
