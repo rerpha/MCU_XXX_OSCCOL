@@ -69,7 +69,8 @@ END_IF
 STARTUP();
 PROG();
 AXES();
-ERROR();]]></ST>
+ERROR();
+SHUTDOWN();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
@@ -136,7 +137,12 @@ fbEL1808(
       <Implementation>
         <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO
     iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
-    bMovingAtShutdown[i]:=gvl.axes[i].Axis.Status.Moving;
+    IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
+        bMovingAtShutdown[i]:=TRUE;
+    ELSE
+        bMovingAtShutdown[i]:=FALSE;
+    END_IF
+    bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
 END_FOR]]></ST>
       </Implementation>
     </Action>
@@ -145,6 +151,7 @@ END_FOR]]></ST>
         <ST><![CDATA[///#########################################################
 // This module will restore the position of an incremental axis on startup with the act position it read before losing power.
 // It checks the type of axis, 0=incremental, and that the axis was stationary at shut down.
+// Because 0 equates to incremental we also need to check that the data is valid, otherwise by default it would restore all axes.
 // By default an axis will not restore the position unless it is set to opt-in, i.e. gvl.axes[i].config.eRestorePosition is non-zero.
 // There are two modes for position restore:
 // 1 'RestoreWithoutHome' -restores the position using a set position fb and does not set the home bit in the axis struct.
@@ -186,22 +193,23 @@ IF bPositionRestoreDone = FALSE THEN
             END_IF
 
         ReadAxisFeedbackType:
-        // Exectute the FUNCTION blocks TO read the encoder REFERENCE system (inc OR ABS)
+        // Exectute the FUNCTION blocks to read the encoder reference system (0=inc OR 1=ABS)
             bExecuteReadEncRefSys:=TRUE;
             eStartUp:=eStartUp+1;
 
         CheckReadDone:
-        // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time
-        // If fbReadEncRefSys not started then go back a step
+        // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time.
+        // If fbReadEncRefSys not started then go back a step.
+        // If any axes result in an error the code will get stuck here, this happens if gvl_app.axisNum is not set correctly
             FOR i:=1 TO gvl_app.axisNum DO
                 IF fbReadEncRefSys[i].Valid = FALSE THEN
                     IF fbReadEncRefSys[i].Busy = TRUE THEN
                         // Exit MAIN.STARTUP Action and wait till next cycle, needs to cycle through whole program in order for data to update
                         RETURN;
                     ELSE
-                        // Sometimes the code gets here and the fbReadEncRefSys[i] misses the rising edge.
-                        // If  the code gets here it means .valid=FALSE and .busy=FALSE which indicateds the FB probably hasn't started
-                        // and thus needs to see a rising edge. Set execute to low and go back a step in the CASE.
+                        // Sometimes the code gets here and the fbReadEncRefSys[i] misses the rising edge. If  the code gets here it means
+                        // .valid=FALSE and .busy=FALSE which indicateds the FB probably hasn't started and thus needs to see a rising edge.
+                        // Set execute to low, Exit MAIN.STARTUP and go back a step in the CASE statement.
                         bExecuteReadEncRefSys:=FALSE;
                         eStartUp:=eStartUp-1;
                         iRetry:=iRetry+1; // counter used for troubleshooting to see how many cycles it takes before fbReadEncRefSys function blocks are read correctly
@@ -238,7 +246,7 @@ IF bPositionRestoreDone = FALSE THEN
         CheckRestore:
         // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
         // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
-        // bPositionRestoreDone will never get set to TRUE
+        // bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR i:=1 TO gvl_app.axisNum DO
                 IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
                     CASE gvl.axes[i].config.eRestorePosition OF
@@ -271,6 +279,7 @@ END_IF]]></ST>
       <LineId Id="135" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
+      <LineId Id="241" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="19" Count="1" />
@@ -305,13 +314,18 @@ END_IF]]></ST>
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SHUTDOWN">
-      <LineId Id="2" Count="2" />
+      <LineId Id="2" Count="1" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STARTUP">
       <LineId Id="99" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="98" Count="0" />
+      <LineId Id="213" Count="0" />
       <LineId Id="101" Count="1" />
       <LineId Id="104" Count="0" />
       <LineId Id="103" Count="0" />
@@ -339,13 +353,15 @@ END_IF]]></ST>
       <LineId Id="29" Count="0" />
       <LineId Id="179" Count="0" />
       <LineId Id="163" Count="0" />
+      <LineId Id="212" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="139" Count="0" />
       <LineId Id="131" Count="0" />
       <LineId Id="155" Count="0" />
       <LineId Id="190" Count="0" />
       <LineId Id="140" Count="0" />
-      <LineId Id="157" Count="2" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="210" Count="1" />
       <LineId Id="187" Count="0" />
       <LineId Id="150" Count="1" />
       <LineId Id="200" Count="0" />
