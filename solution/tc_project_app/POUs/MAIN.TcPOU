@@ -40,7 +40,7 @@ VAR
 
 (******Startup, Shutdown and UPS********)
     eStartUp: (ColdStart, ReadAxisFeedbackType, CheckReadDone, PrepareToRestore, ExecuteRestore, CheckRestore, FinishRestore);
-    bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
+    bPositionRestoreDone   : BOOL := FALSE;
     bExecuteReadEncRefSys  : BOOL := TRUE;
     iRetry                 : INT;
     fbReadEncRefSys        : ARRAY [1..gvl_app.axisNum] OF MC_ReadParameter;
@@ -153,116 +153,114 @@ END_FOR]]></ST>
 // Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
 ///#########################################################
 
-// Cycle through function blocks that read the encoder reference system i.e. whether axis is incremental or absolute
-// Result stored in Value, 0=Inc 1=Abs, execute set during the case statement
-FOR i:=1 TO gvl_app.axisNum DO
-    fbReadEncRefSys[i](
-     Axis:= gvl.axes[i].Axis,
-     Enable:= bExecuteReadEncRefSys,
-     ParameterNumber:= MC_AxisParameter.AxisEncoderReferenceSystem,
-     Value=>,
-     ReadMode:= E_READMODE.READMODE_ONCE);
-END_FOR
+// Upon startup bPositionRestoreDone will be set to FALSE, after successfully completing the following code it will be set TRUE
+// and should stay TRUE for the rest of the time the PLC is operational, thus this routine should only be completed once.
+IF bPositionRestoreDone = FALSE THEN
 
-// Cycle through set position function blocks for each axis
-// Only axes with RestorePosition=RestoreWithoutHome (mode 1) will be utilised
-FOR i:=1 TO gvl_app.axisNum DO
-    fbRestorePosition[i](
-     Axis:= gvl.axes[i].Axis,
-     Execute:= ,
-     Position:= iPositionAtShutdown[i]);
-END_FOR
+	// Cycle through function blocks that read the encoder reference system i.e. whether axis is incremental or absolute
+    // Result stored in Value, 0=Inc 1=Abs, execute set during the case statement
+	FOR i:=1 TO gvl_app.axisNum DO
+    	fbReadEncRefSys[i](
+     	  Axis:= gvl.axes[i].Axis,
+     	  Enable:= bExecuteReadEncRefSys,
+     	  ParameterNumber:= MC_AxisParameter.AxisEncoderReferenceSystem,
+     	  Value=>,
+    	  ReadMode:= E_READMODE.READMODE_ONCE);
+	END_FOR
 
-// Upon startup bColdStartDone will be set to FALSE, after the following initialisation it is set to TRUE
-// and should stay TRUE for the rest of the time the PLC is operational, thus this routine should only be completed once
-IF bColdstartDone = FALSE THEN
+	// Cycle through set position function blocks for each axis
+	// Only axes with RestorePosition=RestoreWithoutHome (mode 1) will be utilised
+	FOR i:=1 TO gvl_app.axisNum DO
+		fbRestorePosition[i](
+		 Axis:= gvl.axes[i].Axis,
+		 Execute:= ,
+		 Position:= iPositionAtShutdown[i]);
+	END_FOR
+
     CASE eStartUp OF
-
-    ColdStart:
-    // First cycle of the PLC, do nothing just give one cycle for variables to initialise
-        IF NOT bColdstartDone THEN
-            eStartUp:=eStartUp+1;
-            iRetry:=0;
-        END_IF
-
-    ReadAxisFeedbackType:
-    // Exectute the function blocks to read the encoder reference system (inc or abs)
-        bExecuteReadEncRefSys:=TRUE;
-        eStartUp:=eStartUp+1;
-
-    CheckReadDone:
-    // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time
-    // If fbReadEncRefSys not started then go back a step
-        FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Valid = FALSE THEN
-                IF fbReadEncRefSys[i].Busy = TRUE THEN
-                    // Exit MAIN.STARTUP Action and wait till next cycle, needs to cycle through whole program in order for data to update
-                    RETURN;
-                ELSE
-                    // Sometimes the code gets here and the fbReadEncRefSys[i] misses the rising edge.
-                    // If  it gets here it means .valid=FALSE, .error=FALSE and .busy=FALSE which indicateds the FB probably hasn't started
-                    // and thus needs to see a rising edge. Set execute to low and go back a step in the CASE.
-                    bExecuteReadEncRefSys:=FALSE;
-                    eStartUp:=eStartUp-1;
-                    iRetry:=iRetry+1;
-                    RETURN;
-                END_IF
-            END_IF
-        END_FOR
-        // If the code gets here all axes either have .valid=TRUE or .ERROR=TRUE
-        // We disregard errors so that the whole program isn't held up, if there is an error on a axis the value is not restored
-        eStartUp:=eStartUp+1;
-
-    PrepareToRestore:
-    // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
-        FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) AND gvl.axes[i].config.eRestorePosition=2 THEN
-                gvl.axes[i].control.eCommand:=MotionFunctions.Home;
-                gvl.axes[i].config.nHomeSeq:=15;
-                gvl.axes[i].config.fHomePosition:=iPositionAtShutdown[i];
-            END_IF
-        END_FOR
-        eStartUp:=eStartUp+1;
-
-    ExecuteRestore:
-    // Execute position restore using either mode 1: fbRestorePosition or mode 2: normal direct homing (depending on mode)
-        FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
-                CASE GVL.axes[i].config.eRestorePosition OF
-                  RestorePosition.RestoreWithoutHome: fbRestorePosition[i].Execute:=TRUE;
-                  RestorePosition.RestoreWithHome: gvl.axes[i].control.bExecute:=TRUE;
-                END_CASE
-            END_IF
-        END_FOR
-        eStartUp:=eStartUp+1;
-
-    CheckRestore:
-    // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
-    // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
-    // bColdStartDone will never get set to TRUE
-        FOR i:=1 TO gvl_app.axisNum DO
-            IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
-                CASE gvl.axes[i].config.eRestorePosition OF
-                  RestorePosition.RestoreWithoutHome:
-                    IF NOT fbRestorePosition[i].Done THEN
-                        RETURN;
-                    END_IF
-                  RestorePosition.RestoreWithHome:
-                    IF NOT gvl.axes[i].status.bHomed THEN
-                        RETURN;
-                    END_IF
-                END_CASE
-            END_IF
-        END_FOR
-        eStartUp:=eStartUp+1;
-
-    FinishRestore: // Remove execute = TRUE for fbRestorePosition
-        FOR i:=1 TO gvl_app.axisNum DO
-            fbRestorePosition[i].Execute:=FALSE;
-        END_FOR
-        bColdstartDone:=TRUE;
-
-    END_CASE
+		ColdStart:
+		// First cycle of the PLC, do nothing just give one cycle for variables to initialise
+			IF NOT bPositionRestoreDone THEN
+				eStartUp:=eStartUp+1;
+				iRetry:=0;
+			END_IF
+	
+		ReadAxisFeedbackType:
+		// Exectute the FUNCTION blocks TO read the encoder REFERENCE system (inc OR ABS)
+			bExecuteReadEncRefSys:=TRUE;
+			eStartUp:=eStartUp+1;
+	
+		CheckReadDone:
+		// Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time
+		// If fbReadEncRefSys not started then go back a step
+			FOR i:=1 TO gvl_app.axisNum DO
+				IF fbReadEncRefSys[i].Valid = FALSE THEN
+					IF fbReadEncRefSys[i].Busy = TRUE THEN
+						// Exit MAIN.STARTUP Action and wait till next cycle, needs to cycle through whole program in order for data to update
+						RETURN;
+					ELSE
+						// Sometimes the code gets here and the fbReadEncRefSys[i] misses the rising edge.
+						// If  the code gets here it means .valid=FALSE and .busy=FALSE which indicateds the FB probably hasn't started
+						// and thus needs to see a rising edge. Set execute to low and go back a step in the CASE.
+						bExecuteReadEncRefSys:=FALSE;
+						eStartUp:=eStartUp-1;
+						iRetry:=iRetry+1; // counter used for troubleshooting to see how many cycles it takes before fbReadEncRefSys function blocks are read correctly
+						RETURN;
+					END_IF
+				END_IF
+			END_FOR
+			// If the code gets here all axes either have .valid=TRUE for all axes
+			eStartUp:=eStartUp+1;
+	
+		PrepareToRestore:
+		// Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
+			FOR i:=1 TO gvl_app.axisNum DO
+				IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) AND gvl.axes[i].config.eRestorePosition=2 THEN
+					gvl.axes[i].control.eCommand:=MotionFunctions.Home;
+					gvl.axes[i].config.nHomeSeq:=15;
+					gvl.axes[i].config.fHomePosition:=iPositionAtShutdown[i];
+				END_IF
+			END_FOR
+			eStartUp:=eStartUp+1;
+	
+		ExecuteRestore:
+		// Execute position restore using either mode 1: fbRestorePosition or mode 2: normal direct homing (depending on mode)
+			FOR i:=1 TO gvl_app.axisNum DO
+				IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
+					CASE GVL.axes[i].config.eRestorePosition OF
+					  RestorePosition.RestoreWithoutHome: fbRestorePosition[i].Execute:=TRUE;
+					  RestorePosition.RestoreWithHome: gvl.axes[i].control.bExecute:=TRUE;
+					END_CASE
+				END_IF
+			END_FOR
+			eStartUp:=eStartUp+1;
+	
+		CheckRestore:
+		// Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
+		// Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
+		// bPositionRestoreDone will never get set to TRUE
+			FOR i:=1 TO gvl_app.axisNum DO
+				IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
+					CASE gvl.axes[i].config.eRestorePosition OF
+					  RestorePosition.RestoreWithoutHome:
+						IF NOT fbRestorePosition[i].Done THEN
+							RETURN;
+						END_IF
+					  RestorePosition.RestoreWithHome:
+						IF NOT gvl.axes[i].status.bHomed THEN
+							RETURN;
+						END_IF
+					END_CASE
+				END_IF
+			END_FOR
+			eStartUp:=eStartUp+1;
+	
+		FinishRestore: // Remove execute = TRUE for fbRestorePosition
+			FOR i:=1 TO gvl_app.axisNum DO
+				fbRestorePosition[i].Execute:=FALSE;
+			END_FOR
+			bPositionRestoreDone:=TRUE;
+    END_CASE	
 END_IF]]></ST>
       </Implementation>
     </Action>
@@ -320,6 +318,9 @@ END_IF]]></ST>
       <LineId Id="105" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="95" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="208" Count="1" />
+      <LineId Id="207" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="91" Count="1" />
       <LineId Id="2" Count="7" />
@@ -327,12 +328,7 @@ END_IF]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="11" Count="5" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="172" Count="0" />
-      <LineId Id="20" Count="0" />
+      <LineId Id="18" Count="2" />
       <LineId Id="177" Count="0" />
       <LineId Id="21" Count="3" />
       <LineId Id="171" Count="0" />
@@ -357,7 +353,6 @@ END_IF]]></ST>
       <LineId Id="141" Count="0" />
       <LineId Id="166" Count="0" />
       <LineId Id="203" Count="0" />
-      <LineId Id="202" Count="0" />
       <LineId Id="201" Count="0" />
       <LineId Id="169" Count="0" />
       <LineId Id="44" Count="0" />
@@ -377,9 +372,7 @@ END_IF]]></ST>
       <LineId Id="204" Count="1" />
       <LineId Id="67" Count="14" />
       <LineId Id="175" Count="0" />
-      <LineId Id="82" Count="4" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="87" Count="0" />
+      <LineId Id="82" Count="5" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
