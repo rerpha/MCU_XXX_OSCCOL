@@ -69,19 +69,17 @@ END_IF
 STARTUP();
 PROG();
 AXES();
-ERROR();]]></ST>
+ERROR();
+SHUTDOWN();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[gvl.axes[1].config.eRestorePosition:=RestorePosition.DontRestore;
-gvl.axes[2].config.eRestorePosition:=RestorePosition.RestoreWithoutHome;
+        <ST><![CDATA[gvl.axes[1].config.eRestorePosition:=RestorePosition.RestoreWithoutHome;
+gvl.axes[2].config.eRestorePosition:=RestorePosition.DontRestore;
 
 FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
     aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
-END_FOR
-
-
-]]></ST>
+END_FOR]]></ST>
       </Implementation>
     </Action>
     <Action Name="ERROR" Id="{35f2cf38-f81e-4aa3-9534-be5fb417817d}">
@@ -134,15 +132,17 @@ fbEL1808(
     </Action>
     <Action Name="SHUTDOWN" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
       <Implementation>
-        <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO
-    iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
-    IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
-        bMovingAtShutdown[i]:=TRUE;
-    ELSE
-        bMovingAtShutdown[i]:=FALSE;
-    END_IF
-    bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
-END_FOR]]></ST>
+        <ST><![CDATA[IF bPositionRestoreDone = TRUE THEN
+	FOR i:=1 TO gvl_app.axisNum DO
+		iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
+		IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
+			bMovingAtShutdown[i]:=TRUE;
+		ELSE
+			bMovingAtShutdown[i]:=FALSE;
+		END_IF
+		bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
+	END_FOR
+END_IF]]></ST>
       </Implementation>
     </Action>
     <Action Name="STARTUP" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
@@ -278,6 +278,7 @@ END_IF]]></ST>
       <LineId Id="135" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
+      <LineId Id="293" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="19" Count="1" />
@@ -285,9 +286,6 @@ END_IF]]></ST>
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.ERROR">
       <LineId Id="31" Count="0" />
@@ -312,12 +310,15 @@ END_IF]]></ST>
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SHUTDOWN">
-      <LineId Id="2" Count="1" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="3" Count="0" />
       <LineId Id="5" Count="1" />
       <LineId Id="8" Count="1" />
       <LineId Id="7" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="1" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STARTUP">
       <LineId Id="99" Count="0" />
