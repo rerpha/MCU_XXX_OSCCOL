@@ -42,14 +42,12 @@ VAR
     eStartUp: (ColdStart, ReadAxisFeedbackType, CheckReadDone, PrepareToRestore, ExecuteRestore, CheckRestore, FinishRestore);
     bColdstartDone         : BOOL := FALSE; // First cycle of the PLC after being reset/power cycled
     bExecuteReadEncRefSys  : BOOL := TRUE;
-    tmrRetry               : TON;
     iRetry                 : INT;
     fbReadEncRefSys        : ARRAY [1..gvl_app.axisNum] OF MC_ReadParameter;
     fbUPS                  : FB_S_UPS_CX51x0;
     eUpsMode               : E_S_UPS_Mode   := eSUPS_WrPersistData_Shutdown;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
-
-    counter: INT;
+	
 END_VAR
 VAR PERSISTENT
     iPositionAtShutdown       : ARRAY [1..gvl_app.axisNum] OF LREAL;
@@ -175,9 +173,6 @@ FOR i:=1 TO gvl_app.axisNum DO
      Position:= iPositionAtShutdown[i]);
 END_FOR
 
-// Timer required so the FBs for all axes can process before checking.
-tmrRetry(in:=, pt:=T#200MS);
-
 // Upon startup bColdStartDone will be set to FALSE, after the following initialisation it is set to TRUE
 // and should stay TRUE for the rest of the time the PLC is operational, thus this routine should only be completed once
 IF bColdstartDone = FALSE THEN
@@ -194,12 +189,10 @@ IF bColdstartDone = FALSE THEN
     // Exectute the function blocks to read the encoder reference system (inc or abs)
         bExecuteReadEncRefSys:=TRUE;
         eStartUp:=eStartUp+1;
-        tmrRetry(in:=TRUE);
 
     CheckReadDone:
     // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time
     // If fbReadEncRefSys not started then go back a step
-        IF tmrretry.Q THEN
         FOR i:=1 TO gvl_app.axisNum DO
             IF fbReadEncRefSys[i].Valid = FALSE THEN
                 IF fbReadEncRefSys[i].Busy = TRUE THEN
@@ -210,7 +203,6 @@ IF bColdstartDone = FALSE THEN
                     // If  it gets here it means .valid=FALSE, .error=FALSE and .busy=FALSE which indicateds the FB probably hasn't started
                     // and thus needs to see a rising edge. Set execute to low and go back a step in the CASE.
                     bExecuteReadEncRefSys:=FALSE;
-                    tmrRetry(in:=TRUE);
                     eStartUp:=eStartUp-1;
                     iRetry:=iRetry+1;
                     RETURN;
@@ -220,7 +212,6 @@ IF bColdstartDone = FALSE THEN
         // If the code gets here all axes either have .valid=TRUE or .ERROR=TRUE
         // We disregard errors so that the whole program isn't held up, if there is an error on a axis the value is not restored
         eStartUp:=eStartUp+1;
-        END_IF
 
     PrepareToRestore:
     // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
@@ -336,8 +327,6 @@ END_IF]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="11" Count="5" />
-      <LineId Id="196" Count="0" />
-      <LineId Id="194" Count="1" />
       <LineId Id="106" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="107" Count="0" />
@@ -349,12 +338,11 @@ END_IF]]></ST>
       <LineId Id="171" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="178" Count="0" />
-      <LineId Id="26" Count="2" />
+      <LineId Id="26" Count="1" />
       <LineId Id="170" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="179" Count="0" />
       <LineId Id="163" Count="0" />
-      <LineId Id="198" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="139" Count="0" />
       <LineId Id="131" Count="0" />
@@ -363,7 +351,6 @@ END_IF]]></ST>
       <LineId Id="140" Count="0" />
       <LineId Id="157" Count="2" />
       <LineId Id="187" Count="0" />
-      <LineId Id="197" Count="0" />
       <LineId Id="150" Count="1" />
       <LineId Id="200" Count="0" />
       <LineId Id="145" Count="0" />
@@ -372,7 +359,6 @@ END_IF]]></ST>
       <LineId Id="203" Count="0" />
       <LineId Id="202" Count="0" />
       <LineId Id="201" Count="0" />
-      <LineId Id="199" Count="0" />
       <LineId Id="169" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="180" Count="0" />
