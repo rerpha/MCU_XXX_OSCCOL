@@ -48,10 +48,6 @@ VAR
     eUpsMode               : E_S_UPS_Mode   := eSUPS_WrPersistData_Shutdown;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
 
-END_VAR
-VAR PERSISTENT
-    iPositionAtShutdown       : ARRAY [1..gvl_app.axisNum] OF LREAL;
-    bMovingAtShutdown      : ARRAY [1..gvl_app.axisNum] OF BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
@@ -59,18 +55,18 @@ END_VAR]]></Declaration>
 IF eGlobalSUpsState = eSUPS_PowerFailure THEN
     (* first cycle of powerfailure *)
     (* execute code that should only be done once with each powerfailure, i.e. increase powerfailure counter *)
-    SHUTDOWN();
+    STORE_PERSISTENT();
 ELSIF eGlobalSUpsState > eSUPS_PowerFailure THEN
     (* next cycles of powerfailure *)
     (* skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown  ... *)
     RETURN;
 END_IF
 
-STARTUP();
+RESTORE_POSITIONS();
 PROG();
 AXES();
 ERROR();
-SHUTDOWN();]]></ST>
+STORE_PERSISTENT();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
@@ -130,22 +126,7 @@ fbEL1808(
 //]]></ST>
       </Implementation>
     </Action>
-    <Action Name="SHUTDOWN" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
-      <Implementation>
-        <ST><![CDATA[IF bPositionRestoreDone = TRUE THEN
-    FOR i:=1 TO gvl_app.axisNum DO
-        iPositionAtShutdown[i]:=gvl.axes[i].Axis.NcToPlc.ActPos;
-        IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
-            bMovingAtShutdown[i]:=TRUE;
-        ELSE
-            bMovingAtShutdown[i]:=FALSE;
-        END_IF
-        bMovingAtShutdown[i]:=bMovingAtShutdown[i] OR gvl.axes[i].Axis.Status.Moving;
-    END_FOR
-END_IF]]></ST>
-      </Implementation>
-    </Action>
-    <Action Name="STARTUP" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
+    <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
       <Implementation>
         <ST><![CDATA[///#########################################################
 // This module will restore the position of an incremental axis on startup with the act position it read before losing power.
@@ -180,7 +161,7 @@ IF bPositionRestoreDone = FALSE THEN
         fbRestorePosition[i](
          Axis:= gvl.axes[i].Axis,
          Execute:= ,
-         Position:= iPositionAtShutdown[i]);
+         Position:= axesPersistent[i].iPositionAtShutdown);
     END_FOR
 
     CASE eStartUp OF
@@ -222,10 +203,10 @@ IF bPositionRestoreDone = FALSE THEN
         PrepareToRestore:
         // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
             FOR i:=1 TO gvl_app.axisNum DO
-                IF fbReadEncRefSys[i].Value=0 AND NOT(bMovingAtShutdown[i]) AND gvl.axes[i].config.eRestorePosition=RestorePosition.RestoreWithHome THEN
+                IF fbReadEncRefSys[i].Value=0 AND NOT(axesPersistent[i].bMovingAtShutdown) AND gvl.axes[i].config.eRestorePosition=RestorePosition.RestoreWithHome THEN
                     gvl.axes[i].control.eCommand:=MotionFunctions.Home;
                     gvl.axes[i].config.nHomeSeq:=15;
-                    gvl.axes[i].config.fHomePosition:=iPositionAtShutdown[i];
+                    gvl.axes[i].config.fHomePosition:=axesPersistent[i].iPositionAtShutdown;
                 END_IF
             END_FOR
             eStartUp:=eStartUp+1;
@@ -233,7 +214,7 @@ IF bPositionRestoreDone = FALSE THEN
         ExecuteRestore:
         // Execute position restore using either mode 1: fbRestorePosition or mode 2: normal direct homing (depending on mode)
             FOR i:=1 TO gvl_app.axisNum DO
-                IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
+                IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
                     CASE GVL.axes[i].config.eRestorePosition OF
                       RestorePosition.RestoreWithoutHome: fbRestorePosition[i].Execute:=TRUE;
                       RestorePosition.RestoreWithHome: gvl.axes[i].control.bExecute:=TRUE;
@@ -247,7 +228,7 @@ IF bPositionRestoreDone = FALSE THEN
         // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
         // bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR i:=1 TO gvl_app.axisNum DO
-                IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 THEN
+                IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
                     CASE gvl.axes[i].config.eRestorePosition OF
                       RestorePosition.RestoreWithoutHome:
                         IF NOT fbRestorePosition[i].Done THEN
@@ -268,6 +249,21 @@ IF bPositionRestoreDone = FALSE THEN
             END_FOR
             bPositionRestoreDone:=TRUE;
     END_CASE
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
+      <Implementation>
+        <ST><![CDATA[IF bPositionRestoreDone = TRUE THEN
+    FOR i:=1 TO gvl_app.axisNum DO
+        axesPersistent[i].iPositionAtShutdown:=gvl.axes[i].Axis.NcToPlc.ActPos;
+        IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
+            axesPersistent[i].bMovingAtShutdown:=TRUE;
+        ELSE
+            axesPersistent[i].bMovingAtShutdown:=FALSE;
+        END_IF
+        axesPersistent[i].bMovingAtShutdown:=axesPersistent[i].bMovingAtShutdown OR gvl.axes[i].Axis.Status.Moving;
+    END_FOR
 END_IF]]></ST>
       </Implementation>
     </Action>
@@ -309,18 +305,7 @@ END_IF]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
-    <LineIds Name="MAIN.SHUTDOWN">
-      <LineId Id="2" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="3" Count="0" />
-      <LineId Id="5" Count="1" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.STARTUP">
+    <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="99" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="98" Count="0" />
@@ -389,6 +374,17 @@ END_IF]]></ST>
       <LineId Id="175" Count="0" />
       <LineId Id="82" Count="5" />
       <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.STORE_PERSISTENT">
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
