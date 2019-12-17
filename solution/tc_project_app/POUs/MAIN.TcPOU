@@ -11,12 +11,12 @@ VAR
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
 
     bOutput1 AT %Q*: BOOL:= TRUE;
-    bOutput2 AT %Q*: BOOL:= TRUE;
-    bOutput3 AT %Q*: BOOL:= TRUE;
+    //bOutput2 AT %Q*: BOOL:= TRUE;
+    //bOutput3 AT %Q*: BOOL:= TRUE;
     //bOutput4 AT %Q*: BOOL:= TRUE;
-    bOutput5 AT %Q*: BOOL:= TRUE;
-    bOutput6 AT %Q*: BOOL:= TRUE;
-    bOutput7 AT %Q*: BOOL:= TRUE;
+    //bOutput5 AT %Q*: BOOL:= TRUE;
+    //bOutput6 AT %Q*: BOOL:= TRUE;
+    //bOutput7 AT %Q*: BOOL:= TRUE;
     //bOutput8 AT %Q*: BOOL:= TRUE;
     //bOutput9 AT %Q*: BOOL:= TRUE;
     //bOutput13 AT %Q*: BOOL:= TRUE;
@@ -76,8 +76,7 @@ ERROR();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[gvl.axes[1].config.eRestorePosition:=RestorePosition.RestoreWithoutHome;
-FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
+        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
     aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR]]></ST>
       </Implementation>
@@ -268,7 +267,6 @@ END_FOR]]></ST>
       <LineId Id="81" Count="1" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
-      <LineId Id="11" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
