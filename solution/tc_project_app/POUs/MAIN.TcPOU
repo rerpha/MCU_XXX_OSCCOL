@@ -169,7 +169,7 @@ IF bPositionRestoreDone = FALSE THEN
             END_IF
 
         ReadAxisFeedbackType:
-        // Exectute the FUNCTION blocks to read the encoder reference system (0=inc OR 1=ABS)
+        // Exectute the function blocks to read the encoder reference system (0=inc OR 1=ABS)
             bExecuteReadEncRefSys:=TRUE;
             eStartUp:=eStartUp+1;
 
