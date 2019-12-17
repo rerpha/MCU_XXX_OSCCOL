@@ -39,7 +39,7 @@ VAR
     //fbEK1110  : EK1110;
 
 (******Startup, Shutdown and UPS********)
-    eStartUp: (ColdStart, ReadAxisFeedbackType, CheckReadDone, PrepareToRestore, ExecuteRestore, CheckRestore, FinishRestore);
+    eStartUp: (ColdStart, ReadAxisFeedbackType, CheckReadDone, ExecuteRestore, CheckRestore, FinishRestore);
     bPositionRestoreDone   : BOOL := FALSE;
     bExecuteReadEncRefSys  : BOOL := TRUE;
     iRetry                 : INT;
@@ -70,10 +70,7 @@ STORE_PERSISTENT();]]></ST>
     </Implementation>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[gvl.axes[1].config.eRestorePosition:=RestorePosition.RestoreWithoutHome;
-gvl.axes[2].config.eRestorePosition:=RestorePosition.DontRestore;
-
-FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
+        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
     aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR]]></ST>
       </Implementation>
@@ -129,14 +126,13 @@ fbEL1808(
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
       <Implementation>
         <ST><![CDATA[///#########################################################
-// This module will restore the position of an incremental axis on startup with the act position it read before losing power.
+// This ACT will restore the position of an incremental axis on startup with the act position it read before losing power.
 // It checks the type of axis, 0=incremental, and that the axis was stationary at shut down.
 // Because 0 equates to incremental we also need to check that the data is valid, otherwise by default it would restore all axes.
 // By default an axis will not restore the position unless it is set to opt-in, i.e. gvl.axes[i].config.eRestorePosition is non-zero.
-// There are two modes for position restore:
+// There is a enum to allow for different types of restore modes, currently only one is implemented.
+// 0 'DontRestore'
 // 1 'RestoreWithoutHome' -restores the position using a set position fb and does not set the home bit in the axis struct.
-// 2 'RestoreWithHome' -restores the position using a normal direct home routine and should set the home bit to TRUE in the axis struct.
-// Note: 0 'DontRestore'
 // Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
 ///#########################################################
 
@@ -200,45 +196,24 @@ IF bPositionRestoreDone = FALSE THEN
             // If the code gets here all axes either have .valid=TRUE for all axes
             eStartUp:=eStartUp+1;
 
-        PrepareToRestore:
-        // Prepare to home for axes that opt in for mode 2 RestoreWithHome i.e. normal direct home
-            FOR i:=1 TO gvl_app.axisNum DO
-                IF fbReadEncRefSys[i].Value=0 AND NOT(axesPersistent[i].bMovingAtShutdown) AND gvl.axes[i].config.eRestorePosition=RestorePosition.RestoreWithHome THEN
-                    gvl.axes[i].control.eCommand:=MotionFunctions.Home;
-                    gvl.axes[i].config.nHomeSeq:=15;
-                    gvl.axes[i].config.fHomePosition:=axesPersistent[i].iPositionAtShutdown;
-                END_IF
-            END_FOR
-            eStartUp:=eStartUp+1;
-
         ExecuteRestore:
-        // Execute position restore using either mode 1: fbRestorePosition or mode 2: normal direct homing (depending on mode)
+        // Execute position restore by setting fbRestorePosition.execute = TRUE
             FOR i:=1 TO gvl_app.axisNum DO
                 IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
-                    CASE GVL.axes[i].config.eRestorePosition OF
-                      RestorePosition.RestoreWithoutHome: fbRestorePosition[i].Execute:=TRUE;
-                      RestorePosition.RestoreWithHome: gvl.axes[i].control.bExecute:=TRUE;
-                    END_CASE
+                    fbRestorePosition[i].Execute:=TRUE;
                 END_IF
             END_FOR
             eStartUp:=eStartUp+1;
 
         CheckRestore:
-        // Check mode 1: fbRestorePosition or mode 2: direct homing is finished on axes that were opt-in
+        // Check the set position fbs are finished
         // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
         // bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR i:=1 TO gvl_app.axisNum DO
                 IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
-                    CASE gvl.axes[i].config.eRestorePosition OF
-                      RestorePosition.RestoreWithoutHome:
-                        IF NOT fbRestorePosition[i].Done THEN
+                    IF NOT fbRestorePosition[i].Done THEN
                             RETURN;
-                        END_IF
-                      RestorePosition.RestoreWithHome:
-                        IF NOT gvl.axes[i].status.bHomed THEN
-                            RETURN;
-                        END_IF
-                    END_CASE
+                    END_IF
                 END_IF
             END_FOR
             eStartUp:=eStartUp+1;
@@ -277,8 +252,6 @@ END_IF]]></ST>
       <LineId Id="293" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
-      <LineId Id="19" Count="1" />
-      <LineId Id="3" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
@@ -311,9 +284,8 @@ END_IF]]></ST>
       <LineId Id="98" Count="0" />
       <LineId Id="213" Count="0" />
       <LineId Id="101" Count="1" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="105" Count="0" />
+      <LineId Id="215" Count="0" />
+      <LineId Id="214" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="206" Count="0" />
@@ -354,23 +326,19 @@ END_IF]]></ST>
       <LineId Id="166" Count="0" />
       <LineId Id="203" Count="0" />
       <LineId Id="201" Count="0" />
-      <LineId Id="169" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="180" Count="0" />
-      <LineId Id="45" Count="1" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="154" Count="0" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="53" Count="2" />
       <LineId Id="173" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="181" Count="0" />
-      <LineId Id="57" Count="8" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="63" Count="2" />
       <LineId Id="174" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="182" Count="0" />
       <LineId Id="204" Count="1" />
-      <LineId Id="67" Count="14" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="71" Count="2" />
+      <LineId Id="79" Count="2" />
       <LineId Id="175" Count="0" />
       <LineId Id="82" Count="5" />
       <LineId Id="1" Count="0" />
