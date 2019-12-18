@@ -14,6 +14,7 @@
     <Implicit_Jitter_Distribution>{26d08e27-a705-49a9-95de-a3a0b6ea049c}</Implicit_Jitter_Distribution>
     <LibraryReferences>{577f21c4-8eb2-4f2c-a24e-4c3f62ca96d2}</LibraryReferences>
     <AutoUpdateVisuProfile>true</AutoUpdateVisuProfile>
+    <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -29,6 +30,9 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\RestorePosition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +43,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisPersistent.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_GearAxis.TcDUT">
@@ -307,6 +314,10 @@
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_SUPS">
+      <DefaultResolution>Tc2_SUPS, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_SUPS</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
