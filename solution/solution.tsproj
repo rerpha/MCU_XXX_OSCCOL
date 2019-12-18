@@ -884,7 +884,7 @@ External Setpoint Generation:
 				<Task Id="2" Priority="26" CycleTime="10000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTaskCom</Name>
 				</Task>
-				<Task Id="4" Priority="20" CycleTime="10000" AmsPort="351" AdtTasks="true">
+				<Task Id="4" Priority="20" CycleTime="100000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
 			</Tasks>
