@@ -6,7 +6,7 @@
     <ProjectGuid>{fb261665-fd20-4bf2-97f8-2854c82b752d}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>tc_project_app</Name>
-    <ProgramVersion>3.1.4022.6</ProgramVersion>
+    <ProgramVersion>3.1.4023.0</ProgramVersion>
     <Application>{047dee04-c246-47b2-8ccc-a15e36987c43}</Application>
     <TypeSystem>{ae4eb5ee-6030-47a6-bf35-5a6afd9efeeb}</TypeSystem>
     <Implicit_Task_Info>{5ef19bd0-aca2-493f-b2a1-89e363647697}</Implicit_Task_Info>
@@ -14,7 +14,6 @@
     <Implicit_Jitter_Distribution>{26d08e27-a705-49a9-95de-a3a0b6ea049c}</Implicit_Jitter_Distribution>
     <LibraryReferences>{577f21c4-8eb2-4f2c-a24e-4c3f62ca96d2}</LibraryReferences>
     <AutoUpdateVisuProfile>true</AutoUpdateVisuProfile>
-    <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -344,6 +343,11 @@
     <None Include="tc_project_app.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="Tc2_MC2">
+      <Resolution>Tc2_MC2, 3.3.28.0 (Beckhoff Automation GmbH)</Resolution>
+    </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
