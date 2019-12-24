@@ -22,7 +22,6 @@ END_VAR
 
 VAR_GLOBAL
     iAxis: INT;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

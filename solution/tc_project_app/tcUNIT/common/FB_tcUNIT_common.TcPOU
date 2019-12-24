@@ -5,8 +5,7 @@
 FUNCTION_BLOCK FB_tcUNIT_common
 
 VAR
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
@@ -18,26 +17,22 @@ END_VAR
 
 VAR
     i: INT := 0;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[WHILE i < iCycles DO
     i := i + 1;
-END_WHILE
-]]></ST>
+END_WHILE]]></ST>
       </Implementation>
     </Method>
     <Method Name="Execute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
       <Declaration><![CDATA[METHOD Execute : BOOL
 VAR_IN_OUT
     Axis: ST_AxisStruct;  // The axis to set execute TRUE
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[Axis.control.bExecute := TRUE;
 
-Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
-]]></ST>
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken]]></ST>
       </Implementation>
     </Method>
     <Method Name="PrepareDefaultMove" Id="{4fe16ff1-3a9f-464c-997c-83ca1a3b1d50}">
@@ -48,8 +43,7 @@ END_VAR
 
 VAR_INPUT
    MotionStrategy: MotionFunctions;  // The motion strategy to be used in the move
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed
 
@@ -70,8 +64,7 @@ IF Axis.config.fPosition = tcUNIT_GVL.fDEFAULT_POSITION THEN
 ELSE  Axis.config.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;
 END_IF
 
-Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
-]]></ST>
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken]]></ST>
       </Implementation>
     </Method>
     <Method Name="PrepareMove" Id="{589a25a0-6147-4b15-99b0-2e3d988c1f1b}">
@@ -86,8 +79,7 @@ VAR_INPUT
     fTargetDeceleration: LREAL;
     fTargetPosition: LREAL;
     eMotionStrategy: MotionFunctions; 
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move when executed
 
@@ -102,16 +94,14 @@ Axis.config.fAcceleration := fTargetAcceleration;
 Axis.config.fDeceleration := fTargetDeceleration;
 Axis.config.fPosition := fTargetPosition;
 
-Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
-]]></ST>
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetDefaults" Id="{ec904510-9ac0-4de0-a743-94bb6933a54f}">
       <Declaration><![CDATA[METHOD SetDefaults : BOOL
 VAR_IN_OUT
     Axis: ST_AxisStruct;  // The Axis to set defaults
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Set PLC default values for the provided axis
 
@@ -135,8 +125,7 @@ Axis.inputs.bLimitFwd := FALSE;
 Axis.inputs.bEncLAtch := FALSE;
 Axis.inputs.bHomeSensor := FALSE;
 
-Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
-]]></ST>
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_tcUNIT_common">
@@ -144,13 +133,12 @@ Cycle(1);    // Cycle the PLC to ensure the values have been set and results can
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.Cycle">
       <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="2" />
+      <LineId Id="10" Count="1" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.Execute">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.PrepareDefaultMove">
       <LineId Id="122" Count="3" />
@@ -163,14 +151,12 @@ Cycle(1);    // Cycle the PLC to ensure the values have been set and results can
       <LineId Id="143" Count="0" />
       <LineId Id="147" Count="0" />
       <LineId Id="146" Count="0" />
-      <LineId Id="138" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.PrepareMove">
       <LineId Id="122" Count="3" />
       <LineId Id="134" Count="0" />
       <LineId Id="126" Count="6" />
       <LineId Id="135" Count="1" />
-      <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.SetDefaults">
       <LineId Id="7" Count="0" />
@@ -187,7 +173,6 @@ Cycle(1);    // Cycle the PLC to ensure the values have been set and results can
       <LineId Id="15" Count="1" />
       <LineId Id="22" Count="1" />
       <LineId Id="36" Count="1" />
-      <LineId Id="28" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

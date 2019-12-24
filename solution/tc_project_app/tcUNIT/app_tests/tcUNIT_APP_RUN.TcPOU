@@ -8,15 +8,12 @@ PROGRAM tcUNIT_APP_RUN
 VAR
     (* Declare standard library POU tests to be run
        E.g. fbMoveNonLinearSlits: FB_MoveNonLinearSlits_Test; *)
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[TcUnit.RUN();
-]]></ST>
+      <ST><![CDATA[TcUnit.RUN();]]></ST>
     </Implementation>
     <LineIds Name="tcUNIT_APP_RUN">
       <LineId Id="45" Count="0" />
-      <LineId Id="43" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
