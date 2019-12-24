@@ -7,6 +7,9 @@
     <PouCall>
       <Name>MAIN</Name>
     </PouCall>
+    <PouCall>
+      <Name>tcUNIT_STD_LIB_RUN</Name>
+    </PouCall>
     <TaskFBGuid>{26d89752-95b4-4b52-80c0-c79242bc34d7}</TaskFBGuid>
     <Fb_init>{137c4fd1-c794-4dee-a041-b4fea1d22866}</Fb_init>
     <Fb_exit>{2478772d-357b-433f-886f-15340bef9bdf}</Fb_exit>

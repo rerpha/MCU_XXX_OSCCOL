@@ -29,6 +29,15 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test\app_tests\tcUNIT_APP_RUN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\common\FB_tcUNIT_common.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\common\tcUNIT_GVL.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\RestorePosition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -229,6 +238,12 @@
     <Compile Include="tc_mca_std_lib\POUs\VISUs\visuTextLinks.TcTLO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test\standard_library_tests\FB_Axis_TEST.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\standard_library_tests\tcUNIT_STD_LIB_RUN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
@@ -236,6 +251,9 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="Test" />
+    <Folder Include="Test\app_tests" />
+    <Folder Include="Test\common" />
     <Folder Include="tc_mca_std_lib" />
     <Folder Include="tc_mca_std_lib\DUTs" />
     <Folder Include="tc_mca_std_lib\GVLs" />
@@ -256,6 +274,7 @@
     <Folder Include="tc_mca_std_lib\POUs\ErrorHandling" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\POUs\VISUs" />
+    <Folder Include="Test\standard_library_tests" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -334,6 +353,10 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="VisuDialogs">
       <DefaultResolution>VisuDialogs, * (System)</DefaultResolution>
       <Namespace>VisuDialogs</Namespace>
@@ -346,7 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="Tc2_MC2">
-      <Resolution>Tc2_MC2, 3.3.28.0 (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_MC2, * (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>

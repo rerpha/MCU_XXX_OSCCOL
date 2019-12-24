@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_Axis_TEST" Id="{3bfca2b4-3b3f-48f2-9900-9d4cd3404e9e}" SpecialFunc="None">
+    <Declaration><![CDATA[// Test suite for the FB_Axis POU
+{attribute 'call_after_init'}
+FUNCTION_BLOCK FB_Axis_TEST EXTENDS tcUnit.FB_TestSuite
+VAR
+    fbCommon: FB_tcUNIT_common;
+    Axis: POINTER TO ST_AxisStruct := ADR(GVL.axes[1]);
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Declare methods defined in the FB_Axis_TEST POU to be included (executed) in the test suite
+SetAxisEnabled();
+SetAxisMoving();
+SetAxisAcceleration();
+SetAxisPosition();
+SetAxisVelocity();]]></ST>
+    </Implementation>
+    <Method Name="SetAxisAcceleration" Id="{2efd2402-6ad3-455d-a703-347847c98522}">
+      <Declaration><![CDATA[METHOD SetAxisAcceleration
+VAR
+    InitialValue: LREAL;
+    Result: LREAL;
+    ExpectedResult: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('test_GIVEN_new_axis_acceleration_set_WHEN_executed_THEN_new_axis_acceleration_set');
+
+// example of direct GVL axis reference
+
+ExpectedResult := tcUNIT_gvl.fDEFAULT_TARGET_ACCELERATION;
+fbCommon.PrepareDefaultMove(GVL.Axes[1], MotionFunctions.MoveAbsolute);
+
+Result := GVL.Axes[1].config.fAcceleration;
+
+AssertEquals(Expected := ExpectedResult,
+             Actual := Result,
+             Message := 'fAcceleration of the axis is different.');
+
+fbCommon.SetDefaults(GVL.Axes[1]);
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetAxisEnabled" Id="{749049e6-6152-4a23-ac76-75883bd089b7}">
+      <Declaration><![CDATA[METHOD SetAxisEnabled
+VAR
+    Result: BOOL;
+    ExpectedResult: BOOL;
+    i: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('test_GIVEN_prepare_default_move_WHEN_move_prepared_THEN_axis_enabled');
+
+// example of pointer reference to axis structure
+
+ExpectedResult := TRUE;
+
+fbCommon.PrepareDefaultMove(Axis^, MotionFunctions.MoveAbsolute);
+
+Result := Axis^.status.bEnabled; 
+
+
+AssertEquals(Expected := ExpectedResult,
+             Actual := Result,
+             Message := 'Axis is not enabled.');
+
+fbCommon.SetDefaults(Axis^);
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetAxisMoving" Id="{f7dcf822-91ec-4555-918f-e2487353578a}">
+      <Declaration><![CDATA[METHOD SetAxisMoving
+VAR
+    Result: BOOL;
+    ExpectedResult: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('test_GIVEN_new_axis_position_WHEN_execute_move_THEN_axis_moves');
+
+ExpectedResult := TRUE;
+
+fbCommon.PrepareDefaultMove(GVL.Axes[1], MotionFunctions.MoveAbsolute);
+fbCommon.Execute(GVL.Axes[1]);
+
+IF GVL.Axes[1].control.bEnable THEN
+    Result := GVL.Axes[1].status.bBusy;
+
+    AssertEquals(Expected := ExpectedResult,
+                 Actual := Result,
+                 Message := 'Axis is not moving.');
+END_IF
+
+fbCommon.SetDefaults(GVL.Axes[1]);
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetAxisPosition" Id="{604b9446-af57-41db-afac-f53f5b12cc2c}">
+      <Declaration><![CDATA[METHOD SetAxisPosition
+VAR
+    InitialValue: LREAL;
+    Result: LREAL;
+    ExpectedResult: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('test_GIVEN_new_axis_position_set_WHEN_executed_THEN_new_axis_position_set');
+
+InitialValue := Axis^.config.fPosition;
+ExpectedResult := InitialValue + 10;
+Axis^.config.fPosition := ExpectedResult;
+
+Axis^.control.eCommand := MotionFunctions.MoveAbsolute;
+Axis^.control.bExecute := TRUE;
+
+Result := Axis^.config.fPosition;
+
+fbCommon.Cycle(2);
+
+AssertEquals(Expected := ExpectedResult,
+             Actual := Result,
+             Message := 'fPosition of the axis is different.');
+
+//fbCommon.SetDefaults(GVL.Axes[1]);
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetAxisVelocity" Id="{f87270b6-fb94-4214-bb13-17f22f6ab8f5}">
+      <Declaration><![CDATA[METHOD SetAxisVelocity
+VAR
+    InitialValue: LREAL;
+    Result: LREAL;
+    ExpectedResult: LREAL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TEST('test_GIVEN_new_axis_velocity_set_WHEN_executed_THEN_new_axis_velocity_set');
+
+InitialValue := GVL.Axes[1].config.fVelocity;
+ExpectedResult := InitialValue + 0.5;
+GVL.Axes[1].config.fVelocity := ExpectedResult;
+
+GVL.Axes[1].control.eCommand := MotionFunctions.MoveAbsolute;
+GVL.Axes[1].control.bExecute := TRUE;
+
+Result := GVL.Axes[1].config.fVelocity;
+
+AssertEquals(Expected := ExpectedResult,
+             Actual := Result,
+             Message := 'fVelocity of the axis is different.');
+
+fbCommon.SetDefaults(GVL.Axes[1]);
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Axis_TEST">
+      <LineId Id="37" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="40" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Axis_TEST.SetAxisAcceleration">
+      <LineId Id="5" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="25" Count="3" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Axis_TEST.SetAxisEnabled">
+      <LineId Id="24" Count="0" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="15" Count="5" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Axis_TEST.SetAxisMoving">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="57" Count="2" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Axis_TEST.SetAxisPosition">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="25" Count="3" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Axis_TEST.SetAxisVelocity">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="41" Count="4" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
