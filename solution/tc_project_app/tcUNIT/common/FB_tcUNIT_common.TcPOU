@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_tcUNIT_common" Id="{0f757d3d-99b7-46eb-bdc6-03aa126689f4}" SpecialFunc="None">
+    <Declaration><![CDATA[//  tcUNIT Common function block: Contains helper methods for tcUNIT
+FUNCTION_BLOCK FB_tcUNIT_common
+
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Cycle" Id="{664ce267-e020-4cb0-b408-882e70cdbead}">
+      <Declaration><![CDATA[METHOD Cycle : BOOL
+VAR_INPUT
+    iCycles: INT;  // Number of cycles to process
+END_VAR
+
+VAR
+    i: INT := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[WHILE i < iCycles DO
+    i := i + 1;
+END_WHILE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
+      <Declaration><![CDATA[METHOD Execute : BOOL
+VAR_IN_OUT
+    Axis: ST_AxisStruct;  // The axis to set execute TRUE
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Axis.control.bExecute := TRUE;
+
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PrepareDefaultMove" Id="{4fe16ff1-3a9f-464c-997c-83ca1a3b1d50}">
+      <Declaration><![CDATA[METHOD PrepareDefaultMove : BOOL
+VAR_IN_OUT
+    Axis: ST_AxisStruct;  // The axis to be driven
+END_VAR
+
+VAR_INPUT
+   MotionStrategy: MotionFunctions;  // The motion strategy to be used in the move
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed
+
+Axis.control.bEnable := TRUE;
+Axis.control.eCommand := MotionStrategy;
+
+Axis.inputs.bLimitBwd := TRUE;
+Axis.inputs.bLimitFwd := TRUE;
+
+Axis.config.fVelocity := tcUNIT_GVL.fDEFAULT_TARGET_VELOCITY;
+Axis.config.fAcceleration := tcUNIT_GVL.fDEFAULT_TARGET_ACCELERATION;
+Axis.config.fDeceleration := tcUNIT_GVL.fDEFAULT_TARGET_DECCELERATION;
+Axis.config.fOverride := tcUNIT_GVL.fDEFAULT_TARGET_OVERRIDE;
+
+// Drive up and down the axis during tests over a range of (-target, target.)
+IF Axis.config.fPosition = tcUNIT_GVL.fDEFAULT_POSITION THEN
+    Axis.config.fPosition := tcUNIT_GVL.fDEFAULT_TARGET_POSITION * -1;
+ELSE  Axis.config.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;
+END_IF
+
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PrepareMove" Id="{589a25a0-6147-4b15-99b0-2e3d988c1f1b}">
+      <Declaration><![CDATA[METHOD PrepareMove : BOOL
+VAR_IN_OUT
+    Axis: ST_AxisStruct;  // The axis to be driven
+END_VAR
+
+VAR_INPUT
+    fTargetVelocity: LREAL;
+    fTargetAcceleration: LREAL;
+    fTargetDeceleration: LREAL;
+    fTargetPosition: LREAL;
+    eMotionStrategy: MotionFunctions; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Prepare an axis so it is ready to action a move when executed
+
+Axis.control.bEnable := FALSE;
+Axis.control.eCommand := eMotionStrategy;
+
+Axis.inputs.bLimitBwd := TRUE;
+Axis.inputs.bLimitFwd := TRUE;
+
+Axis.config.fVelocity := fTargetVelocity;
+Axis.config.fAcceleration := fTargetAcceleration;
+Axis.config.fDeceleration := fTargetDeceleration;
+Axis.config.fPosition := fTargetPosition;
+
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetDefaults" Id="{ec904510-9ac0-4de0-a743-94bb6933a54f}">
+      <Declaration><![CDATA[METHOD SetDefaults : BOOL
+VAR_IN_OUT
+    Axis: ST_AxisStruct;  // The Axis to set defaults
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Set PLC default values for the provided axis
+
+Axis.control.bEnable := FALSE;
+Axis.control.bExecute := FALSE;
+Axis.control.bReset := FALSE;
+Axis.control.bJogFwd := FALSE;
+Axis.control.bJogBwd := FALSE;
+Axis.control.bStop := FALSE;
+Axis.control.eCommand := MotionFunctions.MoveAbsolute;
+
+Axis.config.fVelocity := 0.0;
+Axis.config.fAcceleration := 0.0;
+Axis.config.fDeceleration := 0.0;
+Axis.config.fPosition := 0;
+Axis.config.fOverride := 0.0;
+Axis.config.nHomeSeq := 0;
+
+Axis.inputs.bLimitBwd := FALSE;
+Axis.inputs.bLimitFwd := FALSE;
+Axis.inputs.bEncLAtch := FALSE;
+Axis.inputs.bHomeSensor := FALSE;
+
+Cycle(1);    // Cycle the PLC to ensure the values have been set and results can be taken
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_tcUNIT_common">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.Cycle">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.Execute">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.PrepareDefaultMove">
+      <LineId Id="122" Count="3" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="126" Count="5" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="140" Count="2" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="138" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.PrepareMove">
+      <LineId Id="122" Count="3" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="126" Count="6" />
+      <LineId Id="135" Count="1" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.SetDefaults">
+      <LineId Id="7" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="30" Count="5" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
