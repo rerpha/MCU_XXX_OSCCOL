@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="1cbcbdc6-2eff-474d-81ad-52783ff4b2a4">TCUNIT_RUN</Type>
+      <From>tcUNIT_STD_LIB_1</From>
+      <To>tcUNIT_APP_RUN</To>
+    </RenamedType>
+    <RenamedSymbol>
+      <Type guid="589a25a0-6147-4b15-99b0-2e3d988c1f1b">PrepareMove</Type>
+      <From>motionStrategy</From>
+      <To>eMotionStrategy</To>
+    </RenamedSymbol>
+  </Renames>
+</Refactors>
