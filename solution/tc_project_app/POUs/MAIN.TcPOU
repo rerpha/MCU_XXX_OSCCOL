@@ -55,7 +55,7 @@ VAR PERSISTENT
     bRestoreOnStartup : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
+      <ST><![CDATA[(*fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
 
 IF eGlobalSUpsState = eSUPS_PowerFailure THEN
     (* first cycle of powerfailure *)
@@ -67,7 +67,7 @@ ELSIF eGlobalSUpsState > eSUPS_PowerFailure THEN
     (* next cycles of powerfailure *)
     (* skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown  ... *)
     RETURN;
-END_IF
+END_IF*)
 
 RESTORE_POSITIONS();
 PROG();
