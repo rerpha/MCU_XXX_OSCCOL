@@ -48,7 +48,7 @@ VAR
     iRetry                 : INT;
     fbReadEncRefSys        : ARRAY [1..gvl_app.axisNum] OF MC_ReadParameter;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
-	fbGetDeviceIdentification : FB_GetDeviceIdentification;
+    fbGetDeviceIdentification : FB_GetDeviceIdentification;
 
 END_VAR
 
@@ -130,8 +130,8 @@ fbEL1808(
       <Implementation>
         <ST><![CDATA[fbGetDeviceIdentification(bExecute:=TRUE);
 IF (fbGetDeviceIdentification.stDevIdent.strHardwareSerialNo <> '0') THEN
-	CHECK_UPS();
-	RESTORE_POSITIONS();
+    CHECK_UPS();
+    RESTORE_POSITIONS();
 END_IF]]></ST>
       </Implementation>
     </Action>
