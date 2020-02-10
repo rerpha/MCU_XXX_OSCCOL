@@ -7,7 +7,7 @@ VAR_GLOBAL
 END_VAR
 
 VAR_GLOBAL CONSTANT
-    axisNum :   UINT:=2;
+    axisNum :   UINT:=0;
     //axisCoupleMax :   UINT:=4;
 END_VAR]]></Declaration>
   </GVL>
