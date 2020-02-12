@@ -6,7 +6,7 @@ VAR
     sVersion: STRING:='1.0.0';
     i : UINT; //index variable for AXES()
     aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
-	
+
     hmiAxisSelection    :   INT:=1;     //Not possible to use local hmi variables for array indexes
 
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
