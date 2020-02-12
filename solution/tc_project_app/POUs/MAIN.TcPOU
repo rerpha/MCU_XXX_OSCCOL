@@ -6,6 +6,7 @@ VAR
     sVersion: STRING:='1.0.0';
     i : UINT; //index variable for AXES()
     aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
+
     hmiAxisSelection    :   INT:=1;     //Not possible to use local hmi variables for array indexes
 
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
@@ -48,6 +49,7 @@ VAR
     iRetry                 : INT;
     fbReadEncRefSys        : ARRAY [1..gvl_app.axisNum] OF MC_ReadParameter;
     fbRestorePosition      : ARRAY [1..GVL_app.axisNum] OF MC_SetPosition;
+    fbGetDeviceIdentification : FB_GetDeviceIdentification;
 
 END_VAR
 
@@ -55,7 +57,22 @@ VAR PERSISTENT
     bRestoreOnStartup : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
+      <ST><![CDATA[POSITION_RECOVERY();
+PROG();
+AXES();
+ERROR();]]></ST>
+    </Implementation>
+    <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
+    <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
+      <Implementation>
+        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
+    aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="CHECK_UPS" Id="{f0f28f50-53b8-4f73-b0f5-6d7ce4c1636f}" FolderPath="POSITION_RECOVERY\">
+      <Implementation>
+        <ST><![CDATA[fbUPS(eUpsMode := eUpsMode); (* call UPS-FB instance in first lines of the fastest PLC Task *)
 
 IF eGlobalSUpsState = eSUPS_PowerFailure THEN
     (* first cycle of powerfailure *)
@@ -63,22 +80,11 @@ IF eGlobalSUpsState = eSUPS_PowerFailure THEN
     bRestoreOnStartup:=TRUE;
     STORE_PERSISTENT();
     RETURN;
-ELSIF eGlobalSUpsState > eSUPS_PowerFailure THEN
+ELSIF eGlobalSUpsState <> eSUPS_PowerOK THEN
     (* next cycles of powerfailure *)
     (* skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown  ... *)
     RETURN;
-END_IF
-
-RESTORE_POSITIONS();
-PROG();
-AXES();
-ERROR();]]></ST>
-    </Implementation>
-    <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
-      <Implementation>
-        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
-    aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
-END_FOR]]></ST>
+END_IF]]></ST>
       </Implementation>
     </Action>
     <Action Name="ERROR" Id="{35f2cf38-f81e-4aa3-9534-be5fb417817d}">
@@ -121,6 +127,15 @@ fbEL1808(
 ]]></ST>
       </Implementation>
     </Action>
+    <Action Name="POSITION_RECOVERY" Id="{28e203b7-aea5-42d0-980d-12a6841f9d22}" FolderPath="POSITION_RECOVERY\">
+      <Implementation>
+        <ST><![CDATA[fbGetDeviceIdentification(bExecute:=TRUE);
+IF (fbGetDeviceIdentification.stDevIdent.strHardwareSerialNo <> '0') THEN
+    CHECK_UPS();
+    RESTORE_POSITIONS();
+END_IF]]></ST>
+      </Implementation>
+    </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
         <ST><![CDATA[//
@@ -129,7 +144,7 @@ fbEL1808(
 //]]></ST>
       </Implementation>
     </Action>
-    <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}">
+    <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
       <Implementation>
         <ST><![CDATA[///#########################################################
 // This ACT will restore the position of an incremental axis on startup with the act position it read before losing power.
@@ -144,7 +159,7 @@ fbEL1808(
 // Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
 ///#########################################################
 
-IF bRestoreOnStartup THEN
+IF bRestoreOnStartup AND eGlobalSUpsState = eSUPS_PowerOK THEN
     bRestoreOnStartup:=FALSE;
     bRestoreExecute:=TRUE;
 END_IF
@@ -176,14 +191,14 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         ColdStart:
         // First cycle of the PLC, do nothing just give one cycle for variables to initialise
             IF NOT bPositionRestoreDone THEN
-                eStartUp:=eStartUp+1;
+                eStartUp:= ReadAxisFeedbackType;
                 iRetry:=0;
             END_IF
 
         ReadAxisFeedbackType:
         // Exectute the function blocks to read the encoder reference system (0=inc OR 1=ABS)
             bExecuteReadEncRefSys:=TRUE;
-            eStartUp:=eStartUp+1;
+            eStartUp:=CheckReadDone;
 
         CheckReadDone:
         // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time.
@@ -199,14 +214,14 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
                         // .valid=FALSE and .busy=FALSE which indicateds the FB probably hasn't started and thus needs to see a rising edge.
                         // Set execute to low, Exit MAIN.STARTUP and go back a step in the CASE statement.
                         bExecuteReadEncRefSys:=FALSE;
-                        eStartUp:=eStartUp-1;
+                        eStartUp:=ReadAxisFeedbackType;
                         iRetry:=iRetry+1; // counter used for troubleshooting to see how many cycles it takes before fbReadEncRefSys function blocks are read correctly
                         RETURN;
                     END_IF
                 END_IF
             END_FOR
             // If the code gets here all axes either have .valid=TRUE for all axes
-            eStartUp:=eStartUp+1;
+            eStartUp:= ExecuteRestore;
 
         ExecuteRestore:
         // Execute position restore by setting fbRestorePosition.execute = TRUE
@@ -217,7 +232,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
                     END_IF
                 END_IF
             END_FOR
-            eStartUp:=eStartUp+1;
+            eStartUp:= CheckRestore;
 
         CheckRestore:
         // Check the set position fbs are finished
@@ -232,7 +247,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
                     END_IF
                 END_IF
             END_FOR
-            eStartUp:=eStartUp+1;
+            eStartUp:= FinishRestore;
 
         FinishRestore:
         // Remove execute = TRUE for fbRestorePosition
@@ -245,7 +260,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}">
+    <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}" FolderPath="POSITION_RECOVERY\">
       <Implementation>
         <ST><![CDATA[FOR i:=1 TO gvl_app.axisNum DO
     axesPersistent[i].iPositionAtShutdown:=gvl.axes[i].Axis.NcToPlc.ActPos;
@@ -259,10 +274,7 @@ END_FOR]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="376" Count="11" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="135" Count="0" />
+      <LineId Id="505" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
     </LineIds>
@@ -270,6 +282,10 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.CHECK_UPS">
+      <LineId Id="2" Count="11" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.ERROR">
       <LineId Id="31" Count="0" />
@@ -286,6 +302,10 @@ END_FOR]]></ST>
       <LineId Id="62" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="33" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.POSITION_RECOVERY">
+      <LineId Id="2" Count="3" />
+      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
       <LineId Id="2" Count="0" />
