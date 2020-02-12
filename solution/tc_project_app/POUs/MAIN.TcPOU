@@ -6,6 +6,7 @@ VAR
     sVersion: STRING:='1.0.0';
     i : UINT; //index variable for AXES()
     aFbAxes: ARRAY [1..gvl_app.axisNum] OF FB_Axis;
+	
     hmiAxisSelection    :   INT:=1;     //Not possible to use local hmi variables for array indexes
 
 (******Outputs: Power for Limit switches and Home Sensors (every 4th output)********)
@@ -158,7 +159,7 @@ END_IF]]></ST>
 // Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
 ///#########################################################
 
-IF bRestoreOnStartup THEN
+IF bRestoreOnStartup AND eGlobalSUpsState = eSUPS_PowerOK THEN
     bRestoreOnStartup:=FALSE;
     bRestoreExecute:=TRUE;
 END_IF
@@ -273,7 +274,7 @@ END_FOR]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="444" Count="0" />
+      <LineId Id="505" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="81" Count="1" />
     </LineIds>
