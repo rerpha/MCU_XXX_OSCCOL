@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedSymbol>
+      <Type guid="749049e6-6152-4a23-ac76-75883bd089b7">SetAxisControl_Enabled</Type>
+      <From>i</From>
+      <To>nCycle</To>
+    </RenamedSymbol>
+    <RenamedSymbol>
+      <Type guid="749049e6-6152-4a23-ac76-75883bd089b7">SetAxisControl_Enabled</Type>
+      <From>iMaxCount</From>
+      <To>nMaxCycles</To>
+    </RenamedSymbol>
+    <RenamedSymbol>
+      <Type guid="604b9446-af57-41db-afac-f53f5b12cc2c">CheckAxisStatus_NewPosition</Type>
+      <From>iCount</From>
+      <To>nCycle</To>
+    </RenamedSymbol>
+    <RenamedSymbol>
+      <Type guid="604b9446-af57-41db-afac-f53f5b12cc2c">CheckAxisStatus_NewPosition</Type>
+      <From>iMaxCount</From>
+      <To>nCycleMax</To>
+    </RenamedSymbol>
+  </Renames>
+</Refactors>
