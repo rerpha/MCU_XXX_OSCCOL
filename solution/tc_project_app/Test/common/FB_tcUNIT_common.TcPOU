@@ -79,7 +79,7 @@ GVL.axes[iAxisIndex].config.fPosition := fTargetPosition;]]></ST>
       <Declaration><![CDATA[METHOD mSetAxisDefaults
 
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on. 
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Set PLC default values for the axis. Note: Status values can take multiple cycles to updated. This is not an instant reset.
