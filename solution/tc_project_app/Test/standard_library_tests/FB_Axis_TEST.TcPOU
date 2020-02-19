@@ -140,24 +140,26 @@ VAR
     InitialValue: LREAL;
     Result: LREAL;
     ExpectedResult: LREAL;
+
+    fDelta: REAL := 0.01;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('test_GIVEN_new_axis_velocity_set_WHEN_executed_THEN_new_axis_velocity_set');
+
+// Example of using a tcUNIT assert for a specific type (in this case LREAL).
 
 InitialValue := GVL.axes[iTargetAxis].config.fVelocity;
 ExpectedResult := InitialValue + 0.5;
 GVL.Axes[iTargetAxis].config.fVelocity := ExpectedResult;
 
-GVL.Axes[iTargetAxis].control.eCommand := MotionFunctions.MoveAbsolute;
-GVL.Axes[iTargetAxis].control.bExecute := TRUE;
-
 Result := GVL.axes[iTargetAxis].config.fVelocity;
 
-AssertEquals(Expected := ExpectedResult,
-             Actual := Result,
-             Message := 'fVelocity of the axis is different.');
-
-TEST_FINISHED();]]></ST>
+AssertEquals_LREAL(Expected := ExpectedResult,
+                   Actual := Result,
+                   Delta := fDelta,
+                   Message := 'fVelocity of the axis is different.');
+    TEST_FINISHED();
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetAxisInputs_bLimitFwd" Id="{6304c3b1-9e72-403e-9ae2-a5609b1efe92}">
@@ -220,10 +222,17 @@ END_IF]]></ST>
     </LineIds>
     <LineIds Name="FB_Axis_TEST.SetAxisControl_Velocity">
       <LineId Id="5" Count="0" />
+      <LineId Id="92" Count="1" />
       <LineId Id="10" Count="0" />
-      <LineId Id="61" Count="11" />
-      <LineId Id="74" Count="0" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="72" Count="0" />
       <LineId Id="24" Count="0" />
+      <LineId Id="86" Count="0" />
     </LineIds>
     <LineIds Name="FB_Axis_TEST.SetAxisInputs_bLimitFwd">
       <LineId Id="24" Count="0" />
