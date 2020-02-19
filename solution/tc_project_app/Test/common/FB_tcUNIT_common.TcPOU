@@ -12,11 +12,10 @@ END_VAR]]></Declaration>
     <Method Name="mEnableAxis" Id="{12e91532-7139-4c17-998e-4c670b584b9d}">
       <Declaration><![CDATA[METHOD mEnableAxis : BOOL
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GVL.axes[iAxisIndex].control.bEnable := TRUE;
-]]></ST>
+        <ST><![CDATA[GVL.axes[iAxisIndex].control.bEnable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mExecute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
@@ -25,8 +24,7 @@ VAR_INPUT
     iAxisIndex: INT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GVL.axes[iAxisIndex].control.bExecute := TRUE;
-]]></ST>
+        <ST><![CDATA[GVL.axes[iAxisIndex].control.bExecute := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mPrepareDefaultMove" Id="{c23244d5-896c-49ad-8d8a-19390856e4dc}">
@@ -34,8 +32,7 @@ END_VAR]]></Declaration>
 
 VAR_INPUT
     iAxisIndex: INT;  // The idex of the axis to action the method on.
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
 
@@ -75,8 +72,7 @@ GVL.axes[iAxisIndex].inputs.bLimitFwd := TRUE;
 GVL.axes[iAxisIndex].config.fVelocity := fTargetVelocity;
 GVL.axes[iAxisIndex].config.fAcceleration := fTargetAcceleration;
 GVL.axes[iAxisIndex].config.fDeceleration := fTargetDeceleration;
-GVL.axes[iAxisIndex].config.fPosition := fTargetPosition;
-]]></ST>
+GVL.axes[iAxisIndex].config.fPosition := fTargetPosition;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mSetAxisDefaults" Id="{5b9336be-4414-4858-a614-0fdb2847e171}">
@@ -116,8 +112,7 @@ GVL.axes[iAxisIndex].config.nHomeSeq := 0;
 GVL.axes[iAxisIndex].inputs.bLimitBwd := FALSE;
 GVL.axes[iAxisIndex].inputs.bLimitFwd := FALSE;
 GVL.axes[iAxisIndex].inputs.bEncLAtch := FALSE;
-GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;
-]]></ST>
+GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_tcUNIT_common">
@@ -125,11 +120,9 @@ GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mEnableAxis">
       <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mExecute">
       <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mPrepareDefaultMove">
       <LineId Id="6" Count="0" />
@@ -141,7 +134,6 @@ GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mPrepareMove">
       <LineId Id="17" Count="11" />
-      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mSetAxisDefaults">
       <LineId Id="6" Count="0" />
@@ -152,7 +144,6 @@ GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;
       <LineId Id="43" Count="0" />
       <LineId Id="36" Count="2" />
       <LineId Id="7" Count="19" />
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
