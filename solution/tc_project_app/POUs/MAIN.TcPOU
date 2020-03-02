@@ -26,19 +26,6 @@ VAR
     //bOutput24 AT %Q*: BOOL:= TRUE;
     //bOutput28 AT %Q*: BOOL:= TRUE;
 
-(******Error Handling********)
-    fbErrorSystem: FB_ErrorSystem;
-    aFbAxesError: ARRAY [1..gvl_app.axisNum] OF FB_NC_Error;
-
-    //fbEL1018  : EL1018;
-    //fbEL2808  : EL2808;
-    //fbEL5101  : EL5101;
-    //fbEL9505  : EL9505;
-    //fbEL1252  : EL1252;
-    //fbEL9410  : EL9410;
-    //fbEL7037  : EL7037;
-    //fbEK1110  : EK1110;
-
 (******Startup, Shutdown and UPS********)
     fbUPS                  : FB_S_UPS_CX51x0;
     eUpsMode               : E_S_UPS_Mode   := eSUPS_WrPersistData_Shutdown;
@@ -59,8 +46,7 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
 PROG();
-AXES();
-ERROR();]]></ST>
+AXES();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -85,46 +71,6 @@ ELSIF eGlobalSUpsState <> eSUPS_PowerOK THEN
     (* skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown  ... *)
     RETURN;
 END_IF]]></ST>
-      </Implementation>
-    </Action>
-    <Action Name="ERROR" Id="{35f2cf38-f81e-4aa3-9534-be5fb417817d}">
-      <Implementation>
-        <ST><![CDATA[//
-(****FB containting the log of the errors****)
-//
-fbErrorSystem(
-    En:= TRUE,
-    bReset:= ,
-    nErrorNum:= ,
-    bACK:= ,
-    bValidSelection:= ,
-    nTableRowIndex:= ,
-    EnO=> ,
-    nSelectedError=> ,
-    pErrorSystem=> );
-
-
-FOR GVL.iAxis:=1 TO gvl_app.axisNum DO
-    aFbAxesError[gvl.iAxis](EN:=TRUE,
-    nNC_ErrorID:= gvl.axes[gvl.iAxis].status.nErrorID,
-    nNC_AxisID:=gvl.axes[gvl.iAxis].Axis.NcToPlc.AxisId,
-    ErrorSystem:= fbErrorSystem.pErrorSystem);
-END_FOR
-
-
-
-(*call all the necessary instance (input assistance F2 or right click) according to the terminals that you have in your hardware and
- add "TRUE" in the input En, the corresponding number of termianl to the iTerminal_ID and
-the variable "fbErrorSystem.pErrorSystem" to the input ErrorSystem in each FB E. g. :
-fbEL1808(
-    En:= TRUE,
-    iTerminal_ID:= 01,
-    ErrorSystem:= fbErorSystem.pErrorSystem,
-    EnO=> ,
-    bError=> );
- *)
-
-]]></ST>
       </Implementation>
     </Action>
     <Action Name="POSITION_RECOVERY" Id="{28e203b7-aea5-42d0-980d-12a6841f9d22}" FolderPath="POSITION_RECOVERY\">
@@ -276,7 +222,7 @@ END_FOR]]></ST>
     <LineIds Name="MAIN">
       <LineId Id="505" Count="0" />
       <LineId Id="134" Count="0" />
-      <LineId Id="81" Count="1" />
+      <LineId Id="81" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="1" Count="0" />
@@ -286,22 +232,6 @@ END_FOR]]></ST>
     <LineIds Name="MAIN.CHECK_UPS">
       <LineId Id="2" Count="11" />
       <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.ERROR">
-      <LineId Id="31" Count="0" />
-      <LineId Id="10" Count="1" />
-      <LineId Id="34" Count="8" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="88" Count="1" />
-      <LineId Id="92" Count="2" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="79" Count="1" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="44" Count="8" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="33" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.POSITION_RECOVERY">
       <LineId Id="2" Count="3" />
