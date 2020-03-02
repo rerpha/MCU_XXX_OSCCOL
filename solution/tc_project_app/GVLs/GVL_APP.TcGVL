@@ -8,7 +8,6 @@ END_VAR
 
 VAR_GLOBAL CONSTANT
     axisNum :   UINT:=0;
-    //axisCoupleMax :   UINT:=4;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
