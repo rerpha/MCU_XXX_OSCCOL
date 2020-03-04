@@ -147,7 +147,6 @@
     <Folder Include="tc_mca_std_lib\GVLs" />
     <Folder Include="tc_mca_std_lib\POUs" />
     <Folder Include="tc_mca_std_lib\POUs\ChangeConfig" />
-    <Folder Include="tc_mca_std_lib\POUs\Hardware" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
     <Folder Include="tc_mca_std_lib\POUs\Hardware" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
