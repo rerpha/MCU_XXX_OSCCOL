@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_tcUNIT_common" Id="{0f757d3d-99b7-46eb-bdc6-03aa126689f4}" SpecialFunc="None">
+    <Declaration><![CDATA[//  tcUNIT Common function block: Contains helper methods for tcUNIT.
+FUNCTION_BLOCK FB_tcUNIT_common
+
+VAR
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mEnableAxis" Id="{12e91532-7139-4c17-998e-4c670b584b9d}">
+      <Declaration><![CDATA[METHOD mEnableAxis : BOOL
+VAR_INPUT
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL.axes[iAxisIndex].control.bEnable := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mExecute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
+      <Declaration><![CDATA[METHOD mExecute : BOOL
+VAR_INPUT
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GVL.axes[iAxisIndex].control.bExecute := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mPrepareDefaultMove" Id="{c23244d5-896c-49ad-8d8a-19390856e4dc}">
+      <Declaration><![CDATA[METHOD mPrepareDefaultMove
+
+VAR_INPUT
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
+
+GVL.axes[iAxisIndex].control.bEnable := TRUE;
+GVL.axes[iAxisIndex].control.eCommand := MotionFunctions.MoveAbsolute;
+
+GVL.axes[iAxisIndex].inputs.bLimitBwd := TRUE;
+GVL.axes[iAxisIndex].inputs.bLimitFwd := TRUE;
+
+GVL.axes[iAxisIndex].config.fVelocity := tcUNIT_GVL.fDEFAULT_TARGET_VELOCITY;
+GVL.axes[iAxisIndex].config.fAcceleration := tcUNIT_GVL.fDEFAULT_TARGET_ACCELERATION;
+GVL.axes[iAxisIndex].config.fDeceleration := tcUNIT_GVL.fDEFAULT_TARGET_DECCELERATION;
+GVL.axes[iAxisIndex].config.fOverride := tcUNIT_GVL.fDEFAULT_TARGET_OVERRIDE;
+GVL.axes[iAxisIndex].config.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mPrepareMove" Id="{97bd5417-d0a1-4d32-8732-16310a863fcc}">
+      <Declaration><![CDATA[METHOD mPrepareMove
+
+VAR_INPUT
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    fTargetVelocity: LREAL;
+    fTargetAcceleration: LREAL;
+    fTargetDeceleration: LREAL;
+    fTargetPosition: LREAL;
+    eMotionStrategy: MotionFunctions; // The desired MotionFunctions motion strategy.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Prepare the axis so it is ready to action a move when executed for a given motion strategy.
+
+GVL.axes[iAxisIndex].control.bEnable := FALSE;
+GVL.axes[iAxisIndex].control.eCommand := eMotionStrategy;
+
+GVL.axes[iAxisIndex].inputs.bLimitBwd := TRUE;
+GVL.axes[iAxisIndex].inputs.bLimitFwd := TRUE;
+
+GVL.axes[iAxisIndex].config.fVelocity := fTargetVelocity;
+GVL.axes[iAxisIndex].config.fAcceleration := fTargetAcceleration;
+GVL.axes[iAxisIndex].config.fDeceleration := fTargetDeceleration;
+GVL.axes[iAxisIndex].config.fPosition := fTargetPosition;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mSetAxisDefaults" Id="{5b9336be-4414-4858-a614-0fdb2847e171}">
+      <Declaration><![CDATA[METHOD mSetAxisDefaults
+
+VAR_INPUT
+    iAxisIndex: INT;  // The idex of the axis to action the method on.
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Set PLC default values for the axis. Note: Status values can take multiple cycles to updated. This is not an instant reset.
+
+IF GVL.axes[iAxisIndex].status.bBusy THEN
+    GVL.axes[iAxisIndex].control.bStop := TRUE;
+END_IF
+IF GVL.axes[iAxisIndex].status.bError THEN
+    GVL.axes[iAxisIndex].control.bReset := TRUE;
+END_IF
+IF NOT GVL.axes[iAxisIndex].control.bEnable AND GVL.axes[iAxisIndex].control.bStop THEN
+    GVL.axes[iAxisIndex].control.bStop := FALSE;
+END_IF
+
+GVL.axes[iAxisIndex].control.bEnable := FALSE;
+GVL.axes[iAxisIndex].control.bExecute := FALSE;
+GVL.axes[iAxisIndex].control.bReset := FALSE;
+GVL.axes[iAxisIndex].control.bJogFwd := FALSE;
+GVL.axes[iAxisIndex].control.bJogBwd := FALSE;
+GVL.axes[iAxisIndex].control.bStop := FALSE;
+GVL.axes[iAxisIndex].control.eCommand := MotionFunctions.MoveAbsolute;
+
+GVL.axes[iAxisIndex].config.fVelocity := 0.0;
+GVL.axes[iAxisIndex].config.fAcceleration := 0.0;
+GVL.axes[iAxisIndex].config.fDeceleration := 0.0;
+GVL.axes[iAxisIndex].config.fPosition := 0;
+GVL.axes[iAxisIndex].config.fOverride := 0.0;
+GVL.axes[iAxisIndex].config.nHomeSeq := 0;
+
+GVL.axes[iAxisIndex].inputs.bLimitBwd := FALSE;
+GVL.axes[iAxisIndex].inputs.bLimitFwd := FALSE;
+GVL.axes[iAxisIndex].inputs.bEncLAtch := FALSE;
+GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_tcUNIT_common">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.mEnableAxis">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.mExecute">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.mPrepareDefaultMove">
+      <LineId Id="6" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="11" Count="6" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.mPrepareMove">
+      <LineId Id="17" Count="11" />
+    </LineIds>
+    <LineIds Name="FB_tcUNIT_common.mSetAxisDefaults">
+      <LineId Id="6" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="7" Count="19" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
