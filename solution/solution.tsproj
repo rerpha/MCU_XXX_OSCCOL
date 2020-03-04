@@ -33,14 +33,6 @@
 				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
 					<Name>tc_project_app Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Vars VarGrpType="2">
-						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN.bOutput1</Name>
-							<Comment><![CDATA[*****Outputs: Power for Limit switches and Home Sensors (every 4th output)*******]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-					</Vars>
 					<TaskPouOids>
 						<TaskPouOid Prio="20" OTCID="#x08502041"/>
 					</TaskPouOids>
