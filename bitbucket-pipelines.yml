@@ -6,6 +6,5 @@ pipelines:
      - step:
           script:
             - git submodule update --init
-            - git submodule
             - python twincat_version_manager.py
             - python check_fix_white_space.py
