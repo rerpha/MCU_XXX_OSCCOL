@@ -5,7 +5,7 @@
 VAR
     sVersion: STRING:='1.0.0';
     i : UINT; //index variable for AXES()
-    aFbAxes: ARRAY [1..gvl_app.nAxisNum] OF FB_Axis;
+    aFbAxes: ARRAY [1..gvl_app.nAXIS_NUM] OF FB_Axis;
 
     hmiAxisSelection    :   INT:=1;     //Not possible to use local hmi variables for array indexes
 
@@ -34,8 +34,8 @@ VAR
     bRestoreExecute        : BOOL := FALSE;
     bExecuteReadEncRefSys  : BOOL := FALSE;
     iRetry                 : INT;
-    fbReadEncRefSys        : ARRAY [1..gvl_app.nAxisNum] OF MC_ReadParameter;
-    fbRestorePosition      : ARRAY [1..GVL_app.nAxisNum] OF MC_SetPosition;
+    fbReadEncRefSys        : ARRAY [1..gvl_app.nAXIS_NUM] OF MC_ReadParameter;
+    fbRestorePosition      : ARRAY [1..GVL_app.nAXIS_NUM] OF MC_SetPosition;
     fbGetDeviceIdentification : FB_GetDeviceIdentification;
 
 END_VAR
@@ -51,7 +51,7 @@ AXES();]]></ST>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.nAxisNum DO
+        <ST><![CDATA[FOR GVL.iAxis:=1 TO gvl_app.nAXIS_NUM DO
     aFbAxes[GVL.iAxis](stAxisStruct:=gvl.axes[GVL.iAxis]);
 END_FOR]]></ST>
       </Implementation>
@@ -115,7 +115,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
 
     // Cycle through function blocks that read the encoder reference system i.e. whether axis is incremental or absolute
     // Result stored in Value, 0=Inc 1=Abs, execute set during the case statement
-    FOR i:=1 TO gvl_app.nAxisNum DO
+    FOR i:=1 TO gvl_app.nAXIS_NUM DO
         fbReadEncRefSys[i](
           Axis:= gvl.axes[i].Axis,
           Enable:= bExecuteReadEncRefSys,
@@ -125,7 +125,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
     END_FOR
 
     // Cycle through set position function blocks for each axis
-    FOR i:=1 TO gvl_app.nAxisNum DO
+    FOR i:=1 TO gvl_app.nAXIS_NUM DO
         fbRestorePosition[i](
          Axis:= gvl.axes[i].Axis,
          Execute:= ,
@@ -148,8 +148,8 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         CheckReadDone:
         // Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time.
         // If fbReadEncRefSys not started then go back a step.
-        // If any axes result in an error the code will get stuck here, this happens if gvl_app.nAxisNum is not set correctly
-            FOR i:=1 TO gvl_app.nAxisNum DO
+        // If any axes result in an error the code will get stuck here, this happens if gvl_app.nAXIS_NUM is not set correctly
+            FOR i:=1 TO gvl_app.nAXIS_NUM DO
                 IF fbReadEncRefSys[i].Valid = FALSE THEN
                     IF fbReadEncRefSys[i].Busy = TRUE THEN
                         // Exit MAIN.STARTUP Action and wait till next cycle, needs to cycle through whole program in order for data to update
@@ -170,7 +170,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
 
         ExecuteRestore:
         // Execute position restore by setting fbRestorePosition.execute = TRUE
-            FOR i:=1 TO gvl_app.nAxisNum DO
+            FOR i:=1 TO gvl_app.nAXIS_NUM DO
                 IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
                     IF GVL.axes[i].config.eRestorePosition = RestorePosition.RestoreWithoutHome THEN
                         fbRestorePosition[i].Execute:=TRUE;
@@ -183,7 +183,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         // Check the set position fbs are finished
         // Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
         // bPositionRestoreDone will never get set to TRUE and will take up cycle time
-            FOR i:=1 TO gvl_app.nAxisNum DO
+            FOR i:=1 TO gvl_app.nAXIS_NUM DO
                 IF fbReadEncRefSys[i].Valid = TRUE AND fbReadEncRefSys[i].Value = 0 AND NOT(axesPersistent[i].bMovingAtShutdown) THEN
                     IF GVL.axes[i].config.eRestorePosition = RestorePosition.RestoreWithoutHome THEN
                         IF NOT fbRestorePosition[i].Done THEN
@@ -196,7 +196,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
 
         FinishRestore:
         // Remove execute = TRUE for fbRestorePosition
-            FOR i:=1 TO gvl_app.nAxisNum DO
+            FOR i:=1 TO gvl_app.nAXIS_NUM DO
                 fbRestorePosition[i].Execute:=FALSE;
             END_FOR
             bPositionRestoreDone:=TRUE;
@@ -207,7 +207,7 @@ END_IF]]></ST>
     </Action>
     <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}" FolderPath="POSITION_RECOVERY\">
       <Implementation>
-        <ST><![CDATA[FOR i:=1 TO gvl_app.nAxisNum DO
+        <ST><![CDATA[FOR i:=1 TO gvl_app.nAXIS_NUM DO
     axesPersistent[i].iPositionAtShutdown:=gvl.axes[i].Axis.NcToPlc.ActPos;
     IF gvl.axes[i].Axis.NcToPlc.ActVelo <> 0 THEN
         axesPersistent[i].bMovingAtShutdown:=TRUE;
