@@ -66,7 +66,7 @@ InitialValue := GVL.axes[iTargetAxis].config.fPosition;
 ExpectedResult := InitialValue + 10;
 GVL.axes[iTargetAxis].config.fPosition := ExpectedResult;
 
-GVL.axes[iTargetAxis].control.eCommand := MotionFunctions.MoveAbsolute;
+GVL.axes[iTargetAxis].control.eCommand := E_MotionFunctions.MoveAbsolute;
 GVL.axes[iTargetAxis].control.bExecute := TRUE;
 
 Result := GVL.axes[iTargetAxis].status.fActPosition;

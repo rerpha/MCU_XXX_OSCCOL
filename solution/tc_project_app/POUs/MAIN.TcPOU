@@ -159,7 +159,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         // Execute position restore by setting aFbRestorePosition.execute = TRUE
             FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
                 IF aFbReadEncRefSys[GVL.iAxis].Valid = TRUE AND aFbReadEncRefSys[GVL.iAxis].Value = 0 AND NOT(axesPersistent[GVL.iAxis].bMovingAtShutdown) THEN
-                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
                         aFbRestorePosition[GVL.iAxis].Execute := TRUE;
                     END_IF
                 END_IF
@@ -172,7 +172,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         // bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
                 IF aFbReadEncRefSys[GVL.iAxis].Valid = TRUE AND aFbReadEncRefSys[GVL.iAxis].Value = 0 AND NOT(axesPersistent[GVL.iAxis].bMovingAtShutdown) THEN
-                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
                         IF NOT aFbRestorePosition[GVL.iAxis].Done THEN
                             RETURN;
                         END_IF
@@ -227,77 +227,7 @@ END_FOR]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
-      <LineId Id="99" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="213" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="233" Count="1" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="215" Count="0" />
-      <LineId Id="214" Count="0" />
-      <LineId Id="109" Count="0" />
-      <LineId Id="236" Count="2" />
-      <LineId Id="240" Count="0" />
-      <LineId Id="239" Count="0" />
-      <LineId Id="206" Count="0" />
-      <LineId Id="208" Count="1" />
-      <LineId Id="207" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="91" Count="1" />
-      <LineId Id="2" Count="7" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="10" Count="6" />
-      <LineId Id="18" Count="2" />
-      <LineId Id="177" Count="0" />
-      <LineId Id="21" Count="3" />
-      <LineId Id="171" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="26" Count="1" />
-      <LineId Id="170" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="179" Count="0" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="212" Count="0" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="139" Count="0" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="155" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="140" Count="0" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="210" Count="1" />
-      <LineId Id="187" Count="0" />
-      <LineId Id="150" Count="1" />
-      <LineId Id="200" Count="0" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="141" Count="0" />
-      <LineId Id="166" Count="0" />
-      <LineId Id="203" Count="0" />
-      <LineId Id="201" Count="0" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="181" Count="0" />
-      <LineId Id="57" Count="1" />
-      <LineId Id="216" Count="0" />
-      <LineId Id="219" Count="1" />
-      <LineId Id="63" Count="2" />
-      <LineId Id="174" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="182" Count="0" />
-      <LineId Id="204" Count="1" />
-      <LineId Id="67" Count="1" />
-      <LineId Id="221" Count="0" />
-      <LineId Id="71" Count="2" />
-      <LineId Id="222" Count="0" />
-      <LineId Id="79" Count="2" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="223" Count="0" />
-      <LineId Id="83" Count="3" />
-      <LineId Id="241" Count="0" />
-      <LineId Id="87" Count="0" />
+      <LineId Id="242" Count="109" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STORE_PERSISTENT">

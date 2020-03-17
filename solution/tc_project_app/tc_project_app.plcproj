@@ -39,7 +39,7 @@
     <Compile Include="tc_mca_std_lib\DUTs\E_HomeSwitchTypeClass.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\RestorePosition.TcDUT">
+    <Compile Include="tc_mca_std_lib\DUTs\E_RestorePosition.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
@@ -48,7 +48,7 @@
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\MotionFunctions.TcDUT">
+    <Compile Include="tc_mca_std_lib\DUTs\E_MotionFunctions.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisDescription.TcDUT">
@@ -87,31 +87,10 @@
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeDirect.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeFinish.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomePrepare.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeAbsoluteSwitch.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeReadNcVelocities.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeReadSoftLimEnable.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeToSwitch.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeVirtual.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeWriteNcVelocities.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeWriteSoftLimEnable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">

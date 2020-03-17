@@ -37,7 +37,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
 
 GVL.axes[iAxisIndex].control.bEnable := TRUE;
-GVL.axes[iAxisIndex].control.eCommand := MotionFunctions.MoveAbsolute;
+GVL.axes[iAxisIndex].control.eCommand := E_MotionFunctions.MoveAbsolute;
 
 GVL.axes[iAxisIndex].inputs.bLimitBwd := TRUE;
 GVL.axes[iAxisIndex].inputs.bLimitFwd := TRUE;
@@ -58,7 +58,7 @@ VAR_INPUT
     fTargetAcceleration: LREAL;
     fTargetDeceleration: LREAL;
     fTargetPosition: LREAL;
-    eMotionStrategy: MotionFunctions; // The desired MotionFunctions motion strategy.
+    eMotionStrategy: E_MotionFunctions; // The desired MotionFunctions motion strategy.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare the axis so it is ready to action a move when executed for a given motion strategy.
@@ -100,7 +100,7 @@ GVL.axes[iAxisIndex].control.bReset := FALSE;
 GVL.axes[iAxisIndex].control.bJogFwd := FALSE;
 GVL.axes[iAxisIndex].control.bJogBwd := FALSE;
 GVL.axes[iAxisIndex].control.bStop := FALSE;
-GVL.axes[iAxisIndex].control.eCommand := MotionFunctions.MoveAbsolute;
+GVL.axes[iAxisIndex].control.eCommand := E_MotionFunctions.MoveAbsolute;
 
 GVL.axes[iAxisIndex].config.fVelocity := 0.0;
 GVL.axes[iAxisIndex].config.fAcceleration := 0.0;
@@ -125,25 +125,15 @@ GVL.axes[iAxisIndex].inputs.bHomeSensor := FALSE;]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mPrepareDefaultMove">
-      <LineId Id="6" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="11" Count="6" />
+      <LineId Id="44" Count="11" />
       <LineId Id="19" Count="0" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mPrepareMove">
       <LineId Id="17" Count="11" />
     </LineIds>
     <LineIds Name="FB_tcUNIT_common.mSetAxisDefaults">
-      <LineId Id="6" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="34" Count="1" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="44" Count="1" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="36" Count="2" />
-      <LineId Id="7" Count="19" />
+      <LineId Id="50" Count="29" />
+      <LineId Id="26" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
