@@ -42,7 +42,7 @@ AXES();]]></ST>
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
         <ST><![CDATA[FOR GVL.iAxis := 1 TO gvl_app.nAxisNum DO
-    aFbAxes[GVL.iAxis](stAxisStruct := gvl.axes[GVL.iAxis]);
+    aFbAxes[GVL.iAxis](stAxisStruct := gvl.aAxes[GVL.iAxis]);
 END_FOR]]></ST>
       </Implementation>
     </Action>
@@ -83,7 +83,7 @@ END_IF]]></ST>
 // This ACT will restore the position of an incremental axis on startup with the act position it read before losing power.
 // It checks the type of axis, 0=incremental, and that the axis was stationary at shut down.
 // Because 0 equates to incremental we also need to check that the data is valid, otherwise by default it would restore all axes.
-// By default an axis will not restore the position unless it is set to opt-in, i.e. gvl.axes[GVL.iAxis].config.eRestorePosition is non-zero.
+// By default an axis will not restore the position unless it is set to opt-in, i.e. gvl.aAxes[GVL.iAxis].config.eRestorePosition is non-zero.
 // This needs to be initialised somewhere in TwinCAT code otherwise it will not be available at start up.
 // A restore will only be performed on a loss of power, this code shouldn't make any changes on a reset cold, a rest origin or a download.
 // There is a enum to allow for different types of restore modes, currently only one is implemented.
@@ -104,7 +104,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
     // Result stored in Value, 0=Inc 1=Abs, execute set during the case statement
     FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
         aFbReadEncRefSys[GVL.iAxis](
-          Axis := gvl.axes[GVL.iAxis].Axis,
+          Axis := gvl.aAxes[GVL.iAxis].Axis,
           Enable := bExecuteReadEncRefSys,
           ParameterNumber := MC_AxisParameter.AxisEncoderReferenceSystem,
           Value=>,
@@ -114,7 +114,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
     // Cycle through set position function blocks for each axis
     FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
         aFbRestorePosition[GVL.iAxis](
-         Axis := gvl.axes[GVL.iAxis].Axis,
+         Axis := gvl.aAxes[GVL.iAxis].Axis,
          Execute := ,
          Position := axesPersistent[GVL.iAxis].iPositionAtShutdown);
     END_FOR
@@ -159,7 +159,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         // Execute position restore by setting aFbRestorePosition.execute = TRUE
             FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
                 IF aFbReadEncRefSys[GVL.iAxis].Valid = TRUE AND aFbReadEncRefSys[GVL.iAxis].Value = 0 AND NOT(axesPersistent[GVL.iAxis].bMovingAtShutdown) THEN
-                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.aAxes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
                         aFbRestorePosition[GVL.iAxis].Execute := TRUE;
                     END_IF
                 END_IF
@@ -172,7 +172,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         // bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
                 IF aFbReadEncRefSys[GVL.iAxis].Valid = TRUE AND aFbReadEncRefSys[GVL.iAxis].Value = 0 AND NOT(axesPersistent[GVL.iAxis].bMovingAtShutdown) THEN
-                    IF GVL.axes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.aAxes[GVL.iAxis].config.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
                         IF NOT aFbRestorePosition[GVL.iAxis].Done THEN
                             RETURN;
                         END_IF
@@ -195,13 +195,13 @@ END_IF]]></ST>
     <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}" FolderPath="POSITION_RECOVERY\">
       <Implementation>
         <ST><![CDATA[FOR GVL.iAxis:= 1 TO gvl_app.nAxisNum DO
-    axesPersistent[GVL.iAxis].iPositionAtShutdown := gvl.axes[GVL.iAxis].Axis.NcToPlc.ActPos;
-    IF gvl.axes[GVL.iAxis].Axis.NcToPlc.ActVelo <> 0 THEN
+    axesPersistent[GVL.iAxis].iPositionAtShutdown := gvl.aAxes[GVL.iAxis].Axis.NcToPlc.ActPos;
+    IF gvl.aAxes[GVL.iAxis].Axis.NcToPlc.ActVelo <> 0 THEN
         axesPersistent[GVL.iAxis].bMovingAtShutdown := TRUE;
     ELSE
         axesPersistent[GVL.iAxis].bMovingAtShutdown := FALSE;
     END_IF
-    axesPersistent[GVL.iAxis].bMovingAtShutdown := axesPersistent[GVL.iAxis].bMovingAtShutdown OR gvl.axes[GVL.iAxis].Axis.Status.Moving;
+    axesPersistent[GVL.iAxis].bMovingAtShutdown := axesPersistent[GVL.iAxis].bMovingAtShutdown OR gvl.aAxes[GVL.iAxis].Axis.Status.Moving;
 END_FOR]]></ST>
       </Implementation>
     </Action>
