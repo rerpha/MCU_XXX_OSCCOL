@@ -15,7 +15,7 @@ VAR_INPUT
     iAxisIndex: INT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GVL.aAxes[iAxisIndex].control.bEnable := TRUE;]]></ST>
+        <ST><![CDATA[GVL.aAxes[iAxisIndex].stControl.bEnable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mExecute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
@@ -24,7 +24,7 @@ VAR_INPUT
     iAxisIndex: INT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[GVL.aAxes[iAxisIndex].control.bExecute := TRUE;]]></ST>
+        <ST><![CDATA[GVL.aAxes[iAxisIndex].stControl.bExecute := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mPrepareDefaultMove" Id="{c23244d5-896c-49ad-8d8a-19390856e4dc}">
@@ -36,17 +36,17 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
 
-GVL.aAxes[iAxisIndex].control.bEnable := TRUE;
-GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.eMoveAbsolute;
+GVL.aAxes[iAxisIndex].stControl.bEnable := TRUE;
+GVL.aAxes[iAxisIndex].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
 
-GVL.aAxes[iAxisIndex].inputs.bLimitBwd := TRUE;
-GVL.aAxes[iAxisIndex].inputs.bLimitFwd := TRUE;
+GVL.aAxes[iAxisIndex].stInputs.bLimitBwd := TRUE;
+GVL.aAxes[iAxisIndex].stInputs.bLimitFwd := TRUE;
 
-GVL.aAxes[iAxisIndex].config.fVelocity := tcUNIT_GVL.fDEFAULT_TARGET_VELOCITY;
-GVL.aAxes[iAxisIndex].config.fAcceleration := tcUNIT_GVL.fDEFAULT_TARGET_ACCELERATION;
-GVL.aAxes[iAxisIndex].config.fDeceleration := tcUNIT_GVL.fDEFAULT_TARGET_DECCELERATION;
-GVL.aAxes[iAxisIndex].config.fOverride := tcUNIT_GVL.fDEFAULT_TARGET_OVERRIDE;
-GVL.aAxes[iAxisIndex].config.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;]]></ST>
+GVL.aAxes[iAxisIndex].stConfig.fVelocity := tcUNIT_GVL.fDEFAULT_TARGET_VELOCITY;
+GVL.aAxes[iAxisIndex].stConfig.fAcceleration := tcUNIT_GVL.fDEFAULT_TARGET_ACCELERATION;
+GVL.aAxes[iAxisIndex].stConfig.fDeceleration := tcUNIT_GVL.fDEFAULT_TARGET_DECCELERATION;
+GVL.aAxes[iAxisIndex].stConfig.fOverride := tcUNIT_GVL.fDEFAULT_TARGET_OVERRIDE;
+GVL.aAxes[iAxisIndex].stConfig.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mPrepareMove" Id="{97bd5417-d0a1-4d32-8732-16310a863fcc}">
@@ -63,16 +63,16 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare the axis so it is ready to action a move when executed for a given motion strategy.
 
-GVL.aAxes[iAxisIndex].control.bEnable := FALSE;
-GVL.aAxes[iAxisIndex].control.eCommand := eMotionStrategy;
+GVL.aAxes[iAxisIndex].stControl.bEnable := FALSE;
+GVL.aAxes[iAxisIndex].stControl.eCommand := eMotionStrategy;
 
-GVL.aAxes[iAxisIndex].inputs.bLimitBwd := TRUE;
-GVL.aAxes[iAxisIndex].inputs.bLimitFwd := TRUE;
+GVL.aAxes[iAxisIndex].stInputs.bLimitBwd := TRUE;
+GVL.aAxes[iAxisIndex].stInputs.bLimitFwd := TRUE;
 
-GVL.aAxes[iAxisIndex].config.fVelocity := fTargetVelocity;
-GVL.aAxes[iAxisIndex].config.fAcceleration := fTargetAcceleration;
-GVL.aAxes[iAxisIndex].config.fDeceleration := fTargetDeceleration;
-GVL.aAxes[iAxisIndex].config.fPosition := fTargetPosition;]]></ST>
+GVL.aAxes[iAxisIndex].stConfig.fVelocity := fTargetVelocity;
+GVL.aAxes[iAxisIndex].stConfig.fAcceleration := fTargetAcceleration;
+GVL.aAxes[iAxisIndex].stConfig.fDeceleration := fTargetDeceleration;
+GVL.aAxes[iAxisIndex].stConfig.fPosition := fTargetPosition;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mSetAxisDefaults" Id="{5b9336be-4414-4858-a614-0fdb2847e171}">
@@ -84,34 +84,34 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Set PLC default values for the axis. Note: Status values can take multiple cycles to updated. This is not an instant reset.
 
-IF GVL.aAxes[iAxisIndex].status.bBusy THEN
-    GVL.aAxes[iAxisIndex].control.bStop := TRUE;
+IF GVL.aAxes[iAxisIndex].stStatus.bBusy THEN
+    GVL.aAxes[iAxisIndex].stControl.bStop := TRUE;
 END_IF
-IF GVL.aAxes[iAxisIndex].status.bError THEN
-    GVL.aAxes[iAxisIndex].control.bReset := TRUE;
+IF GVL.aAxes[iAxisIndex].stStatus.bError THEN
+    GVL.aAxes[iAxisIndex].stControl.bReset := TRUE;
 END_IF
-IF NOT GVL.aAxes[iAxisIndex].control.bEnable AND GVL.aAxes[iAxisIndex].control.bStop THEN
-    GVL.aAxes[iAxisIndex].control.bStop := FALSE;
+IF NOT GVL.aAxes[iAxisIndex].stControl.bEnable AND GVL.aAxes[iAxisIndex].stControl.bStop THEN
+    GVL.aAxes[iAxisIndex].stControl.bStop := FALSE;
 END_IF
 
-GVL.aAxes[iAxisIndex].control.bEnable := FALSE;
-GVL.aAxes[iAxisIndex].control.bExecute := FALSE;
-GVL.aAxes[iAxisIndex].control.bReset := FALSE;
-GVL.aAxes[iAxisIndex].control.bJogFwd := FALSE;
-GVL.aAxes[iAxisIndex].control.bJogBwd := FALSE;
-GVL.aAxes[iAxisIndex].control.bStop := FALSE;
-GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.eMoveAbsolute;
+GVL.aAxes[iAxisIndex].stControl.bEnable := FALSE;
+GVL.aAxes[iAxisIndex].stControl.bExecute := FALSE;
+GVL.aAxes[iAxisIndex].stControl.bReset := FALSE;
+GVL.aAxes[iAxisIndex].stControl.bJogFwd := FALSE;
+GVL.aAxes[iAxisIndex].stControl.bJogBwd := FALSE;
+GVL.aAxes[iAxisIndex].stControl.bStop := FALSE;
+GVL.aAxes[iAxisIndex].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
 
-GVL.aAxes[iAxisIndex].config.fVelocity := 0.0;
-GVL.aAxes[iAxisIndex].config.fAcceleration := 0.0;
-GVL.aAxes[iAxisIndex].config.fDeceleration := 0.0;
-GVL.aAxes[iAxisIndex].config.fPosition := 0;
-GVL.aAxes[iAxisIndex].config.fOverride := 0.0;
-GVL.aAxes[iAxisIndex].config.nHomeSeq := 0;
+GVL.aAxes[iAxisIndex].stConfig.fVelocity := 0.0;
+GVL.aAxes[iAxisIndex].stConfig.fAcceleration := 0.0;
+GVL.aAxes[iAxisIndex].stConfig.fDeceleration := 0.0;
+GVL.aAxes[iAxisIndex].stConfig.fPosition := 0;
+GVL.aAxes[iAxisIndex].stConfig.fOverride := 0.0;
+GVL.aAxes[iAxisIndex].stConfig.nHomeSeq := 0;
 
-GVL.aAxes[iAxisIndex].inputs.bLimitBwd := FALSE;
-GVL.aAxes[iAxisIndex].inputs.bLimitFwd := FALSE;
-GVL.aAxes[iAxisIndex].inputs.bHomeSensor := FALSE;]]></ST>
+GVL.aAxes[iAxisIndex].stInputs.bLimitBwd := FALSE;
+GVL.aAxes[iAxisIndex].stInputs.bLimitFwd := FALSE;
+GVL.aAxes[iAxisIndex].stInputs.bHomeSensor := FALSE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_tcUNIT_common">
