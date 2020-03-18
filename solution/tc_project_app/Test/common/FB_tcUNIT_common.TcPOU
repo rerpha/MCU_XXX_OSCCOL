@@ -37,7 +37,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
 
 GVL.aAxes[iAxisIndex].control.bEnable := TRUE;
-GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.MoveAbsolute;
+GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.eMoveAbsolute;
 
 GVL.aAxes[iAxisIndex].inputs.bLimitBwd := TRUE;
 GVL.aAxes[iAxisIndex].inputs.bLimitFwd := TRUE;
@@ -100,7 +100,7 @@ GVL.aAxes[iAxisIndex].control.bReset := FALSE;
 GVL.aAxes[iAxisIndex].control.bJogFwd := FALSE;
 GVL.aAxes[iAxisIndex].control.bJogBwd := FALSE;
 GVL.aAxes[iAxisIndex].control.bStop := FALSE;
-GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.MoveAbsolute;
+GVL.aAxes[iAxisIndex].control.eCommand := E_MotionFunctions.eMoveAbsolute;
 
 GVL.aAxes[iAxisIndex].config.fVelocity := 0.0;
 GVL.aAxes[iAxisIndex].config.fAcceleration := 0.0;
