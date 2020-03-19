@@ -52,7 +52,7 @@ VAR
     InitialValue: LREAL;
     Result: LREAL;
     ExpectedResult: LREAL;
-	
+
     nCycle: UINT;
     nCycleMax: UINT := 100;
 END_VAR]]></Declaration>
@@ -111,7 +111,7 @@ TEST_FINISHED();]]></ST>
 VAR
     Result: BOOL;
     ExpectedResult: BOOL;
-	
+
     nCycle: UINT;
     nMaxCycles: UINT := 30;
 END_VAR]]></Declaration>
@@ -169,7 +169,7 @@ AssertEquals_LREAL(Expected := ExpectedResult,
 VAR
     Result: BOOL;
     ExpectedResult: BOOL;
-	
+
     nCycle: UINT;
     nMaxCycles: UINT := 30;
 END_VAR]]></Declaration>

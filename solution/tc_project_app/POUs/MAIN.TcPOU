@@ -24,7 +24,7 @@ VAR
     bRestoreExecute: BOOL := FALSE;
     bExecuteReadEncRefSys: BOOL := FALSE;
     nRetry: INT;
-	iAxes : UINT; //index for for loops in Position recovery actions
+    iAxes : UINT; //index for for loops in Position recovery actions
     aFbReadEncRefSys: ARRAY [1..gvl_app.nAxisNum] OF MC_ReadParameter;
     aFbRestorePosition: ARRAY [1..GVL_app.nAxisNum] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentification;
