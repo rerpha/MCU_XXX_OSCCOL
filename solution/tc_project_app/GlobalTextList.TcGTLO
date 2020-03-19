@@ -176,6 +176,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"149"</v>
+              <v n="TextDefault">"fRatio"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"708"</v>
               <v n="TextDefault">"Free Entries:"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -191,8 +196,23 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"717"</v>
+              <v n="TextDefault">"gearInMultiMaster"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"300"</v>
               <v n="TextDefault">"gearOut"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"566"</v>
+              <v n="TextDefault">"homeSensorNeg"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"677"</v>
+              <v n="TextDefault">"homeSensorPos"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -233,6 +253,11 @@
             <o>
               <v n="TextID">"112"</v>
               <v n="TextDefault">"moveVelocity"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"575"</v>
+              <v n="TextDefault">"nIndex"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
