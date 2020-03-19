@@ -6,7 +6,7 @@
 FUNCTION_BLOCK FB_Axis_TEST EXTENDS tcUnit.FB_TestSuite
 VAR
     fbCommon: FB_tcUNIT_common;
-    iTargetAxis: INT := 1;  // The <index> of the axis within GVL.aAxes[<index>] to test against.
+    iTargetAxis: UINT := 1;  // The <index> of the axis within GVL.aAxes[<index>] to test against.
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Declare methods defined in the FB_Axis_TEST POU to be included (executed) in the test suite
@@ -52,6 +52,7 @@ VAR
     InitialValue: LREAL;
     Result: LREAL;
     ExpectedResult: LREAL;
+	
     nCycle: UINT;
     nCycleMax: UINT := 100;
 END_VAR]]></Declaration>
@@ -96,7 +97,7 @@ END_VAR]]></Declaration>
 ExpectedResult := tcUNIT_gvl.fDEFAULT_TARGET_ACCELERATION;
 fbCommon.mPrepareDefaultMove(iTargetAxis);
 
-Result := GVL.aAxes[1].stConfig.fAcceleration;
+Result := GVL.aAxes[iTargetAxis].stConfig.fAcceleration;
 
 AssertEquals(Expected := ExpectedResult,
              Actual := Result,
@@ -110,6 +111,7 @@ TEST_FINISHED();]]></ST>
 VAR
     Result: BOOL;
     ExpectedResult: BOOL;
+	
     nCycle: UINT;
     nMaxCycles: UINT := 30;
 END_VAR]]></Declaration>
@@ -119,7 +121,7 @@ END_VAR]]></Declaration>
 // example of test that requires multiple cycles to complete. Due to stateful behaviour of the axis structure.
 
 ExpectedResult := TRUE;
-GVL.aAxes[1].stControl.bEnable := ExpectedResult;
+GVL.aAxes[iTargetAxis].stControl.bEnable := ExpectedResult;
 
 Result := GVL.aAxes[iTargetAxis].stStatus.bEnabled;
 
@@ -167,7 +169,7 @@ AssertEquals_LREAL(Expected := ExpectedResult,
 VAR
     Result: BOOL;
     ExpectedResult: BOOL;
-
+	
     nCycle: UINT;
     nMaxCycles: UINT := 30;
 END_VAR]]></Declaration>

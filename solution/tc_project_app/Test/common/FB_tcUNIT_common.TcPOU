@@ -5,6 +5,7 @@
 FUNCTION_BLOCK FB_tcUNIT_common
 
 VAR
+	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -12,7 +13,7 @@ END_VAR]]></Declaration>
     <Method Name="mEnableAxis" Id="{12e91532-7139-4c17-998e-4c670b584b9d}">
       <Declaration><![CDATA[METHOD mEnableAxis : BOOL
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[GVL.aAxes[iAxisIndex].stControl.bEnable := TRUE;]]></ST>
@@ -21,7 +22,7 @@ END_VAR]]></Declaration>
     <Method Name="mExecute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
       <Declaration><![CDATA[METHOD mExecute : BOOL
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[GVL.aAxes[iAxisIndex].stControl.bExecute := TRUE;]]></ST>
@@ -31,7 +32,7 @@ END_VAR]]></Declaration>
       <Declaration><![CDATA[METHOD mPrepareDefaultMove
 
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
@@ -53,7 +54,7 @@ GVL.aAxes[iAxisIndex].stConfig.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;]]></ST
       <Declaration><![CDATA[METHOD mPrepareMove
 
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT;  // The idex of the axis to action the method on.
     fTargetVelocity: LREAL;
     fTargetAcceleration: LREAL;
     fTargetDeceleration: LREAL;
@@ -79,7 +80,7 @@ GVL.aAxes[iAxisIndex].stConfig.fPosition := fTargetPosition;]]></ST>
       <Declaration><![CDATA[METHOD mSetAxisDefaults
 
 VAR_INPUT
-    iAxisIndex: INT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT;  // The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Set PLC default values for the axis. Note: Status values can take multiple cycles to updated. This is not an instant reset.

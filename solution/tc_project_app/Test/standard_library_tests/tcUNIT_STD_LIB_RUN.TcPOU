@@ -5,7 +5,7 @@
 PROGRAM tcUNIT_STD_LIB_RUN
 VAR
     // Declare standard library POU tests to be run
-    fbFB_Axis: FB_Axis_TEST;
+    fbAxisTest: FB_Axis_TEST;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();]]></ST>
