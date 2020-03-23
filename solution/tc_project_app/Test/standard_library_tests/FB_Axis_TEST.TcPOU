@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_Axis_TEST" Id="{3bfca2b4-3b3f-48f2-9900-9d4cd3404e9e}" SpecialFunc="None">
-    <Declaration><![CDATA[// Test suite for the FB_Axis POU
+    <Declaration><![CDATA[//Test suite for the FB_Axis POU
 {attribute 'call_after_init'}
 FUNCTION_BLOCK FB_Axis_TEST EXTENDS tcUnit.FB_TestSuite
 VAR
     fbCommon: FB_tcUNIT_common;
-    iTargetAxis: UINT := 1;  // The <index> of the axis within GVL.aAxes[<index>] to test against.
+    iTargetAxis: UINT := 1; //The <index> of the axis within GVL.astAxes[<index>] to test against.
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Declare methods defined in the FB_Axis_TEST POU to be included (executed) in the test suite
+      <ST><![CDATA[//Declare methods defined in the FB_Axis_TEST POU to be included (executed) in the test suite
 SetAxisControl_Enabled();
 CheckAxisStatus_Moving();
 SetAxisConfig_Acceleration();
@@ -59,9 +59,9 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('test_GIVEN_new_axis_position_set_WHEN_executed_THEN_axis_moves_to_new_position');
 
-// Since the axis has state; a test might begin the position at some location set by
-// a previous test. Therefore if we execute a move we should just check it's moved
-// from the initial location not some initial default.
+//Since the axis has state; a test might begin the position at some location set by
+//a previous test. Therefore if we execute a move we should just check it's moved
+//from the initial location not some initial default.
 
 InitialValue := GVL.astAxes[iTargetAxis].stConfig.fPosition;
 ExpectedResult := InitialValue + 10;
@@ -92,7 +92,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('test_GIVEN_new_axis_acceleration_set_WHEN_executed_THEN_new_axis_acceleration_set');
 
-// example of direct GVL axis reference for assert.
+//example of direct GVL axis reference for assert.
 
 ExpectedResult := tcUNIT_gvl.fDEFAULT_TARGET_ACCELERATION;
 fbCommon.mPrepareDefaultMove(iTargetAxis);
@@ -118,7 +118,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('test_GIVEN_prepare_default_move_WHEN_move_prepared_THEN_axis_enabled');
 
-// example of test that requires multiple cycles to complete. Due to stateful behaviour of the axis structure.
+//example of test that requires multiple cycles to complete. Due to stateful behaviour of the axis structure.
 
 ExpectedResult := TRUE;
 GVL.astAxes[iTargetAxis].stControl.bEnable := ExpectedResult;
@@ -148,7 +148,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TEST('test_GIVEN_new_axis_velocity_set_WHEN_executed_THEN_new_axis_velocity_set');
 
-// Example of using a tcUNIT assert for a specific type (in this case LREAL).
+//Example of using a tcUNIT assert for a specific type (in this case LREAL).
 
 InitialValue := GVL.astAxes[iTargetAxis].stConfig.fVelocity;
 ExpectedResult := InitialValue + 0.5;

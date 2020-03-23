@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_tcUNIT_common" Id="{0f757d3d-99b7-46eb-bdc6-03aa126689f4}" SpecialFunc="None">
-    <Declaration><![CDATA[//  tcUNIT Common function block: Contains helper methods for tcUNIT.
+    <Declaration><![CDATA[//tcUNIT Common function block: Contains helper methods for tcUNIT.
 FUNCTION_BLOCK FB_tcUNIT_common
 
 VAR
@@ -11,18 +11,18 @@ END_VAR]]></Declaration>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="mEnableAxis" Id="{12e91532-7139-4c17-998e-4c670b584b9d}">
-      <Declaration><![CDATA[METHOD mEnableAxis : BOOL
+      <Declaration><![CDATA[METHOD mEnableAxis: BOOL
 VAR_INPUT
-    iAxisIndex: UINT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT; //The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[GVL.astAxes[iAxisIndex].stControl.bEnable := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="mExecute" Id="{010bd927-5568-40db-a7c5-fcfe995a5cb1}">
-      <Declaration><![CDATA[METHOD mExecute : BOOL
+      <Declaration><![CDATA[METHOD mExecute: BOOL
 VAR_INPUT
-    iAxisIndex: UINT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT; //The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[GVL.astAxes[iAxisIndex].stControl.bExecute := TRUE;]]></ST>
@@ -32,10 +32,10 @@ END_VAR]]></Declaration>
       <Declaration><![CDATA[METHOD mPrepareDefaultMove
 
 VAR_INPUT
-    iAxisIndex: UINT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT; //The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Prepare an axis so it is ready to action a move using target defaults when executed.
+        <ST><![CDATA[//Prepare an axis so it is ready to action a move using target defaults when executed.
 
 GVL.astAxes[iAxisIndex].stControl.bEnable := TRUE;
 GVL.astAxes[iAxisIndex].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
@@ -54,15 +54,15 @@ GVL.astAxes[iAxisIndex].stConfig.fPosition := tcUNIT_GVL.fDEFAULT_POSITION;]]></
       <Declaration><![CDATA[METHOD mPrepareMove
 
 VAR_INPUT
-    iAxisIndex: UINT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT; //The idex of the axis to action the method on.
     fTargetVelocity: LREAL;
     fTargetAcceleration: LREAL;
     fTargetDeceleration: LREAL;
     fTargetPosition: LREAL;
-    eMotionStrategy: E_MotionFunctions; // The desired MotionFunctions motion strategy.
+    eMotionStrategy: E_MotionFunctions; //The desired MotionFunctions motion strategy.
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Prepare the axis so it is ready to action a move when executed for a given motion strategy.
+        <ST><![CDATA[//Prepare the axis so it is ready to action a move when executed for a given motion strategy.
 
 GVL.astAxes[iAxisIndex].stControl.bEnable := FALSE;
 GVL.astAxes[iAxisIndex].stControl.eCommand := eMotionStrategy;
@@ -80,7 +80,7 @@ GVL.astAxes[iAxisIndex].stConfig.fPosition := fTargetPosition;]]></ST>
       <Declaration><![CDATA[METHOD mSetAxisDefaults
 
 VAR_INPUT
-    iAxisIndex: UINT;  // The idex of the axis to action the method on.
+    iAxisIndex: UINT; //The idex of the axis to action the method on.
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// Set PLC default values for the axis. Note: Status values can take multiple cycles to updated. This is not an instant reset.
