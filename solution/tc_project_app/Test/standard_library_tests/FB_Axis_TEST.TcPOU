@@ -34,7 +34,7 @@ ExpectedResult := TRUE;
 fbCommon.mPrepareDefaultMove(iTargetAxis);
 fbCommon.mExecute(iTargetAxis);
 
-Result := GVL.aAxes[iTargetAxis].stStatus.bBusy;
+Result := GVL.astAxes[iTargetAxis].stStatus.bBusy;
 
 IF nCycle > nMaxCycles OR ExpectedResult = Result THEN
     AssertEquals(Expected := ExpectedResult,
@@ -63,14 +63,14 @@ END_VAR]]></Declaration>
 // a previous test. Therefore if we execute a move we should just check it's moved
 // from the initial location not some initial default.
 
-InitialValue := GVL.aAxes[iTargetAxis].stConfig.fPosition;
+InitialValue := GVL.astAxes[iTargetAxis].stConfig.fPosition;
 ExpectedResult := InitialValue + 10;
-GVL.aAxes[iTargetAxis].stConfig.fPosition := ExpectedResult;
+GVL.astAxes[iTargetAxis].stConfig.fPosition := ExpectedResult;
 
-GVL.aAxes[iTargetAxis].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
-GVL.aAxes[iTargetAxis].stControl.bExecute := TRUE;
+GVL.astAxes[iTargetAxis].stControl.eCommand := E_MotionFunctions.eMoveAbsolute;
+GVL.astAxes[iTargetAxis].stControl.bExecute := TRUE;
 
-Result := GVL.aAxes[iTargetAxis].stStatus.fActPosition;
+Result := GVL.astAxes[iTargetAxis].stStatus.fActPosition;
 
 IF nCycle > nCycleMax OR ExpectedResult = Result THEN
     AssertEquals(Expected := ExpectedResult,
@@ -97,7 +97,7 @@ END_VAR]]></Declaration>
 ExpectedResult := tcUNIT_gvl.fDEFAULT_TARGET_ACCELERATION;
 fbCommon.mPrepareDefaultMove(iTargetAxis);
 
-Result := GVL.aAxes[iTargetAxis].stConfig.fAcceleration;
+Result := GVL.astAxes[iTargetAxis].stConfig.fAcceleration;
 
 AssertEquals(Expected := ExpectedResult,
              Actual := Result,
@@ -121,9 +121,9 @@ END_VAR]]></Declaration>
 // example of test that requires multiple cycles to complete. Due to stateful behaviour of the axis structure.
 
 ExpectedResult := TRUE;
-GVL.aAxes[iTargetAxis].stControl.bEnable := ExpectedResult;
+GVL.astAxes[iTargetAxis].stControl.bEnable := ExpectedResult;
 
-Result := GVL.aAxes[iTargetAxis].stStatus.bEnabled;
+Result := GVL.astAxes[iTargetAxis].stStatus.bEnabled;
 
 IF nCycle > nMaxCycles OR ExpectedResult = Result THEN
     AssertEquals(Expected := ExpectedResult,
@@ -150,11 +150,11 @@ END_VAR]]></Declaration>
 
 // Example of using a tcUNIT assert for a specific type (in this case LREAL).
 
-InitialValue := GVL.aAxes[iTargetAxis].stConfig.fVelocity;
+InitialValue := GVL.astAxes[iTargetAxis].stConfig.fVelocity;
 ExpectedResult := InitialValue + 0.5;
-GVL.aAxes[iTargetAxis].stConfig.fVelocity := ExpectedResult;
+GVL.astAxes[iTargetAxis].stConfig.fVelocity := ExpectedResult;
 
-Result := GVL.aAxes[iTargetAxis].stConfig.fVelocity;
+Result := GVL.astAxes[iTargetAxis].stConfig.fVelocity;
 
 AssertEquals_LREAL(Expected := ExpectedResult,
                    Actual := Result,
@@ -178,9 +178,9 @@ END_VAR]]></Declaration>
 
 ExpectedResult := TRUE;
 
-GVL.aAxes[iTargetAxis].stInputs.bLimitFwd := TRUE;
+GVL.astAxes[iTargetAxis].stInputs.bLimitFwd := TRUE;
 
-Result := GVL.aAxes[iTargetAxis].stStatus.bFwEnabled;
+Result := GVL.astAxes[iTargetAxis].stStatus.bFwEnabled;
 
 IF nCycle > nMaxCycles OR ExpectedResult = Result THEN
     AssertEquals(Expected := ExpectedResult,
