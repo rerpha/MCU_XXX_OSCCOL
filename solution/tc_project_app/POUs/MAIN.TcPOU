@@ -157,7 +157,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         //Execute position restore by setting afbRestorePosition.execute = TRUE
             FOR iAxes := 1 TO GVL_APP.nAxisNum DO
                 IF afbReadEncRefSys[iAxes].Valid = TRUE AND afbReadEncRefSys[iAxes].Value = 0 AND NOT(aAxesPersistent[iAxes].bMovingAtShutdown) THEN
-                    IF GVL.aAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.aAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
                         afbRestorePosition[iAxes].Execute := TRUE;
                     END_IF
                 END_IF
@@ -170,7 +170,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         //bPositionRestoreDone will never get set to TRUE and will take up cycle time
             FOR iAxes := 1 TO GVL_APP.nAxisNum DO
                 IF afbReadEncRefSys[iAxes].Valid = TRUE AND afbReadEncRefSys[iAxes].Value = 0 AND NOT(aAxesPersistent[iAxes].bMovingAtShutdown) THEN
-                    IF GVL.aAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.RestoreWithoutHome THEN
+                    IF GVL.aAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
                         IF NOT afbRestorePosition[iAxes].Done THEN
                             RETURN;
                         END_IF
@@ -225,10 +225,7 @@ END_FOR]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
-      <LineId Id="242" Count="19" />
-      <LineId Id="263" Count="6" />
-      <LineId Id="271" Count="6" />
-      <LineId Id="279" Count="72" />
+      <LineId Id="352" Count="106" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.STORE_PERSISTENT">
