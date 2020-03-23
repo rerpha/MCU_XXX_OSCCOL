@@ -108,7 +108,7 @@ GVL.aAxes[iAxisIndex].stConfig.fAcceleration := 0.0;
 GVL.aAxes[iAxisIndex].stConfig.fDeceleration := 0.0;
 GVL.aAxes[iAxisIndex].stConfig.fPosition := 0;
 GVL.aAxes[iAxisIndex].stConfig.fOverride := 0.0;
-GVL.aAxes[iAxisIndex].stConfig.nHomeSeq := 0;
+GVL.aAxes[iAxisIndex].stConfig.eHomeSeq := 0;
 
 GVL.aAxes[iAxisIndex].stInputs.bLimitBwd := FALSE;
 GVL.aAxes[iAxisIndex].stInputs.bLimitFwd := FALSE;
