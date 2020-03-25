@@ -28,7 +28,6 @@ VAR
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAxisNum] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAxisNum] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentification;
-
 END_VAR
 
 VAR PERSISTENT
