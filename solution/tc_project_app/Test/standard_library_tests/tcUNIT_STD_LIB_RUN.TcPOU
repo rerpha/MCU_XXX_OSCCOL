@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="tcUNIT_STD_LIB_RUN" Id="{5e8cc903-e536-40be-a096-d6b305fbb618}" SpecialFunc="None">
-    <Declaration><![CDATA[// tcUNIT Standard Library tests: Add program to PLC task in order to run tcUNIT tests against the declared POU test suites
+    <Declaration><![CDATA[//tcUNIT Standard Library tests: Add program to PLC task in order to run tcUNIT tests against the declared POU test suites
 PROGRAM tcUNIT_STD_LIB_RUN
 VAR
-    // Declare standard library POU tests to be run
-    fbFB_Axis: FB_Axis_TEST;
+    //Declare standard library POU tests to be run
+    fbAxisTest: FB_Axis_TEST;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();]]></ST>
