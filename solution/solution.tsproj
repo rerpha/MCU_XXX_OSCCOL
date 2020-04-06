@@ -25,7 +25,7 @@
 						<Name>PlcTask Outputs</Name>
 						<Var>
 							<Name>MAIN.bOutput1</Name>
-							<Comment><![CDATA[*****Outputs: Power for Limit switches and Home Sensors (every 4th output)*******]]></Comment>
+							<Comment><![CDATA[Outputs: Power for Limit switches and Home Sensors (every 4th output)]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
