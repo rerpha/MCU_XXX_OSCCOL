@@ -78,49 +78,15 @@
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeDirect.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeFinish.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomePrepare.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeReadNcVelocities.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeReadSoftLimEnable.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeToSwitch.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeVirtual.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeWriteNcVelocities.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeWriteSoftLimEnable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\VISUs\Error_Log_Visu.TcVIS">
-      <SubType>Code</SubType>
-      <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\VISUs\languageSupport.TcTLO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\VISUs\MainVisu.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\VISUs\visuTextLinks.TcTLO">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Test\app_tests\tcUNIT_APP_RUN.TcPOU">
       <SubType>Code</SubType>
