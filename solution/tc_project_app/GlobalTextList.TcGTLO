@@ -186,6 +186,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"768"</v>
+              <v n="TextDefault">"eWriteParameter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"955"</v>
               <v n="TextDefault">"fAcceleration"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -206,6 +211,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"781"</v>
+              <v n="TextDefault">"fReadAxisParameter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"708"</v>
               <v n="TextDefault">"Free Entries:"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -213,6 +223,11 @@
             <o>
               <v n="TextID">"954"</v>
               <v n="TextDefault">"fVelocity"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"688"</v>
+              <v n="TextDefault">"fWriteAxisParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
