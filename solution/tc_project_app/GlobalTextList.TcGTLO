@@ -11,28 +11,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"878"</v>
-              <v n="TextDefault">"%d"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"706"</v>
-              <v n="TextDefault">"%i"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"940"</v>
               <v n="TextDefault">"%x"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"703"</v>
-              <v n="TextDefault">"Acknowledge"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"710"</v>
-              <v n="TextDefault">"Active:"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -63,6 +43,11 @@
             <o>
               <v n="TextID">"950"</v>
               <v n="TextDefault">"bBwEnabled"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"225"</v>
+              <v n="TextDefault">"bCommandAborted"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -101,21 +86,6 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"947"</v>
-              <v n="TextDefault">"bResetDone"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"944"</v>
-              <v n="TextDefault">"bWarning"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"704"</v>
-              <v n="TextDefault">"Clear All"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"104"</v>
               <v n="TextDefault">"ENABLE"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -141,26 +111,6 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"701"</v>
-              <v n="TextDefault">"Error #"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"705"</v>
-              <v n="TextDefault">"Error #:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"702"</v>
-              <v n="TextDefault">"Error Log"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"707"</v>
-              <v n="TextDefault">"Errors:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"955"</v>
               <v n="TextDefault">"fAcceleration"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -178,11 +128,6 @@
             <o>
               <v n="TextID">"149"</v>
               <v n="TextDefault">"fRatio"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"708"</v>
-              <v n="TextDefault">"Free Entries:"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -213,11 +158,6 @@
             <o>
               <v n="TextID">"677"</v>
               <v n="TextDefault">"homeSensorPos"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"711"</v>
-              <v n="TextDefault">"Inactive:"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -258,11 +198,6 @@
             <o>
               <v n="TextID">"575"</v>
               <v n="TextDefault">"nIndex"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"709"</v>
-              <v n="TextDefault">"Overflows:"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

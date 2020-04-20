@@ -57,6 +57,9 @@
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisDescription.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisError.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
       <SubType>Code</SubType>
     </Compile>
