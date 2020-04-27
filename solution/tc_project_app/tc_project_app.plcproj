@@ -93,7 +93,7 @@
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_HomeReadNcVelocities.TcPOU">
+    <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_ReadNcVelocities.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
@@ -115,7 +115,13 @@
     <Compile Include="Test\common\FB_tcUNIT_common.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test\common\FB_tcUNIT_GenericHomingTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Test\common\tcUNIT_GVL.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\standard_library_tests\E_TestStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Test\standard_library_tests\FB_Axis_TEST.TcPOU">

@@ -131,7 +131,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         eCheckReadDone:
         //Check the encoder reference system has been read for all axis -> if busy then continue with PLC cycle and check again next time.
         //If afbReadEncRefSys not started then go back a step.
-        //If any axes result in an error the code will get stuck here, this happens if GVL_APP.nAxisNum is not set correctly
+        //If any axes result in an error the code will get stuck here, this happens if GVL_APP.nAXIS_NUM is not set correctly
             FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
                 IF afbReadEncRefSys[iAxes].Valid = FALSE THEN
                     IF afbReadEncRefSys[iAxes].Busy = TRUE THEN
