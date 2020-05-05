@@ -46,6 +46,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"633"</v>
+              <v n="TextDefault">"bCoammandAborted"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"225"</v>
               <v n="TextDefault">"bCommandAborted"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -87,7 +92,7 @@
             </o>
             <o>
               <v n="TextID">"944"</v>
-              <v n="TextDefault">"bWarning"</v>
+              <v n="TextDefault">"bCommandAborted"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
