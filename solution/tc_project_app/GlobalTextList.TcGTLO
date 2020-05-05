@@ -186,6 +186,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"157"</v>
+              <v n="TextDefault">"fHomePositions"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"957"</v>
               <v n="TextDefault">"fPosition"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -213,6 +218,11 @@
             <o>
               <v n="TextID">"300"</v>
               <v n="TextDefault">"gearOut"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"169"</v>
+              <v n="TextDefault">"homeDirect"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -268,6 +278,11 @@
             <o>
               <v n="TextID">"942"</v>
               <v n="TextDefault">"reset"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"611"</v>
+              <v n="TextDefault">"shomeDirect"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
