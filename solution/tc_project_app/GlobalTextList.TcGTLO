@@ -11,13 +11,33 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"165"</v>
+              <v n="TextDefault">"%2.3f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"543"</v>
+              <v n="TextDefault">"%2.4f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"878"</v>
               <v n="TextDefault">"%d"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"294"</v>
+              <v n="TextDefault">"%f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"706"</v>
               <v n="TextDefault">"%i"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"821"</v>
+              <v n="TextDefault">"%s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -103,6 +123,11 @@
             <o>
               <v n="TextID">"947"</v>
               <v n="TextDefault">"bResetDone"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"693"</v>
+              <v n="TextDefault">"bSet"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -346,6 +371,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"768"</v>
+              <v n="TextDefault">"eWriteParameter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"955"</v>
               <v n="TextDefault">"fAcceleration"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -381,6 +411,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"781"</v>
+              <v n="TextDefault">"fReadAxisParameter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"708"</v>
               <v n="TextDefault">"Free Entries:"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -388,6 +423,11 @@
             <o>
               <v n="TextID">"954"</v>
               <v n="TextDefault">"fVelocity"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"688"</v>
+              <v n="TextDefault">"fWriteAxisParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -471,6 +511,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"993"</v>
+              <v n="TextDefault">"Read"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"942"</v>
               <v n="TextDefault">"reset"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -493,6 +538,16 @@
             <o>
               <v n="TextID">"103"</v>
               <v n="TextDefault">"toggle"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"445"</v>
+              <v n="TextDefault">"Write"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"322"</v>
+              <v n="TextDefault">"WriteParameters"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>
