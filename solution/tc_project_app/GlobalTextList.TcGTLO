@@ -16,6 +16,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"821"</v>
+              <v n="TextDefault">"%s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"940"</v>
               <v n="TextDefault">"%x"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -176,6 +181,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"768"</v>
+              <v n="TextDefault">"eWriteParameter"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"955"</v>
               <v n="TextDefault">"fAcceleration"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -318,6 +328,16 @@
             <o>
               <v n="TextID">"103"</v>
               <v n="TextDefault">"toggle"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"445"</v>
+              <v n="TextDefault">"Write"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"322"</v>
+              <v n="TextDefault">"WriteParameters"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>
