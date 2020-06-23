@@ -11,28 +11,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"165"</v>
-              <v n="TextDefault">"%2.3f"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"543"</v>
               <v n="TextDefault">"%2.4f"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"878"</v>
-              <v n="TextDefault">"%d"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"294"</v>
-              <v n="TextDefault">"%f"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"706"</v>
-              <v n="TextDefault">"%i"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -43,16 +23,6 @@
             <o>
               <v n="TextID">"940"</v>
               <v n="TextDefault">"%x"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"703"</v>
-              <v n="TextDefault">"Acknowledge"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"710"</v>
-              <v n="TextDefault">"Active:"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -83,6 +53,16 @@
             <o>
               <v n="TextID">"950"</v>
               <v n="TextDefault">"bBwEnabled"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"633"</v>
+              <v n="TextDefault">"bCoammandAborted"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"225"</v>
+              <v n="TextDefault">"bCommandAborted"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -121,128 +101,13 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"947"</v>
-              <v n="TextDefault">"bResetDone"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"693"</v>
-              <v n="TextDefault">"bSet"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"944"</v>
-              <v n="TextDefault">"bWarning"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"704"</v>
-              <v n="TextDefault">"Clear All"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"712"</v>
-              <v n="TextDefault">"eHomeBwdLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"530"</v>
-              <v n="TextDefault">"eHomeBwdToEncRef"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"386"</v>
-              <v n="TextDefault">"eHomeBwdToEncRef2speed"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"341"</v>
-              <v n="TextDefault">"eHomeBwdToEncRef2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"387"</v>
-              <v n="TextDefault">"eHomeBwdToLimit2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"964"</v>
-              <v n="TextDefault">"eHomeBwdToRef"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"35"</v>
-              <v n="TextDefault">"eHomeBwdToRef2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"650"</v>
-              <v n="TextDefault">"eHomeBwdToReference"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"480"</v>
-              <v n="TextDefault">"eHomeBwdToReference2speed"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"339"</v>
-              <v n="TextDefault">"eHomeBwdToReference2speeds"</v>
+              <v n="TextDefault">"bCommandAborted"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
               <v n="TextID">"986"</v>
               <v n="TextDefault">"ehomeDirect"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"328"</v>
-              <v n="TextDefault">"eHomeFwdToEncRef"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"125"</v>
-              <v n="TextDefault">"eHomeFwdToEncRef2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"484"</v>
-              <v n="TextDefault">"eHomeFwdToEncRef_viaFwdLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"374"</v>
-              <v n="TextDefault">"eHomeFwdToLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"851"</v>
-              <v n="TextDefault">"eHomeFwdToLimit2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"693"</v>
-              <v n="TextDefault">"eHomeBwdToLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"489"</v>
-              <v n="TextDefault">"eHomeBwdToLimit2speeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"445"</v>
-              <v n="TextDefault">"eHomeBwdToLimitspeeds"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"637"</v>
-              <v n="TextDefault">"eHomeFwdToLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"351"</v>
-              <v n="TextDefault">"eHomeFwdToLimit2speeds"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -266,36 +131,6 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"535"</v>
-              <v n="TextDefault">"eHomeToEncRefBwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"367"</v>
-              <v n="TextDefault">"eHomeToEncRefFwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"358"</v>
-              <v n="TextDefault">"eHomeToEncRef_viaBwdLimi"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"740"</v>
-              <v n="TextDefault">"eHomeToEncRef_viaBwdLimit"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"689"</v>
-              <v n="TextDefault">"eHomeToLimitBwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"504"</v>
-              <v n="TextDefault">"eHomeToLimitFwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"312"</v>
               <v n="TextDefault">"eHomeToLimit_Bwd"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -303,16 +138,6 @@
             <o>
               <v n="TextID">"635"</v>
               <v n="TextDefault">"eHomeToLimit_Fwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"432"</v>
-              <v n="TextDefault">"eHomeToRefBwd"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"285"</v>
-              <v n="TextDefault">"eHomeToRefFwd"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -351,23 +176,8 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"701"</v>
-              <v n="TextDefault">"Error #"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"705"</v>
-              <v n="TextDefault">"Error #:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"702"</v>
-              <v n="TextDefault">"Error Log"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"707"</v>
-              <v n="TextDefault">"Errors:"</v>
+              <v n="TextID">"768"</v>
+              <v n="TextDefault">"eWriteParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -416,11 +226,6 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"708"</v>
-              <v n="TextDefault">"Free Entries:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"954"</v>
               <v n="TextDefault">"fVelocity"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -461,11 +266,6 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"711"</v>
-              <v n="TextDefault">"Inactive:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
               <v n="TextID">"116"</v>
               <v n="TextDefault">"jogBw"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -503,16 +303,6 @@
             <o>
               <v n="TextID">"575"</v>
               <v n="TextDefault">"nIndex"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"709"</v>
-              <v n="TextDefault">"Overflows:"</v>
-              <l n="LanguageTexts" t="ArrayList" />
-            </o>
-            <o>
-              <v n="TextID">"993"</v>
-              <v n="TextDefault">"Read"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

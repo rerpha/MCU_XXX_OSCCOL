@@ -30,6 +30,9 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\E_AxisParameters.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\E_HomingRoutines.TcTLEO">
       <SubType>Code</SubType>
     </Compile>
@@ -58,6 +61,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisDescription.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\ST_AxisError.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisInputs.TcDUT">
@@ -122,6 +128,7 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\VISUs" />
     <Folder Include="Test" />
     <Folder Include="tc_mca_std_lib" />
@@ -129,7 +136,6 @@
     <Folder Include="tc_mca_std_lib\GVLs" />
     <Folder Include="tc_mca_std_lib\POUs" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
-    <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="Test\app_tests" />
     <Folder Include="Test\common" />
     <Folder Include="Test\standard_library_tests" />
