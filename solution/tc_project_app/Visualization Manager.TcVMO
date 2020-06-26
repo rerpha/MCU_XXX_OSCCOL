@@ -37,6 +37,7 @@
             <v n="GuidShowChangeConfigDialogFunction">{00000000-0000-0000-0000-000000000000}</v>
             <v n="UseStandardKeyboardHandling">true</v>
             <v n="PaintDeactiveElementsGrayedOut">true</v>
+            <n n="GlobalOpenNumpadKeypadSettings" />
             <v n="ConvertImages">false</v>
             <v n="ConversionType">""</v>
           </o>
@@ -511,6 +512,7 @@
           <n n="FontsConfig" />
           <n n="FontDownloadConfig" />
           <n n="VisuInitializationCode" />
+          <n n="FontSettings" />
           <v n="GuidVisuSettingsPou">{925c2b24-84d1-469a-954d-7af8b99219ef}</v>
           <v n="GuidVisuSettingsPouInit">{f905b871-af16-47c5-a6ef-0a0918a8b009}</v>
           <v n="GuidVisuSettingsPouReInit">{d3706fa7-8257-48b3-af0a-cab0afb4dc49}</v>
