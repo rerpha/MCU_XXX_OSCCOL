@@ -9,8 +9,8 @@ VAR
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
 
 //Outputs: Power for Limit switches and Home Sensors (every 4th output)
-    bOutput1 AT %Q*: BOOL := TRUE;
-    //bOutput5 AT %Q*: BOOL := TRUE;
+    bOutput1 AT %Q*: BOOL:= TRUE;
+    //bOutput5 AT %Q*: BOOL:= TRUE;
     //bOutput13 AT %Q*: BOOL:= TRUE;
     //bOutput17 AT %Q*: BOOL:= TRUE;
     //bOutput21 AT %Q*: BOOL:= TRUE;
