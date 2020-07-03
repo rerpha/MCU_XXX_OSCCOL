@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM MAIN
+    <Declaration><![CDATA[
+PROGRAM MAIN
 VAR
     sVersion: STRING := '1.0.0';
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
 
 //Outputs: Power for Limit switches and Home Sensors (every 4th output)
-    bOutput1 AT %Q*: BOOL := TRUE;
+    bOutput1 AT %Q*: BOOL:= TRUE;
     //bOutput5 AT %Q*: BOOL:= TRUE;
     //bOutput13 AT %Q*: BOOL:= TRUE;
     //bOutput17 AT %Q*: BOOL:= TRUE;
