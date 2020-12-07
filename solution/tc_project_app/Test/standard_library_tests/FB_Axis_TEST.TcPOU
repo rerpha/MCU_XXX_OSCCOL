@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
   <POU Name="FB_Axis_TEST" Id="{3bfca2b4-3b3f-48f2-9900-9d4cd3404e9e}" SpecialFunc="None">
     <Declaration><![CDATA[//Test suite for the FB_Axis POU
 {attribute 'call_after_init'}
