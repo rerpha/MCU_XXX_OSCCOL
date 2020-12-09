@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="EXAMPLE" Id="{4bdeebc0-15d8-4790-97d0-e9c4239d121c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM EXAMPLE //Example program for a specific application 
+VAR
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Program any specific code or safety code for an specific application]]></ST>
+    </Implementation>
+    <LineIds Name="EXAMPLE">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
