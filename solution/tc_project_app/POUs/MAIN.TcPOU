@@ -75,7 +75,8 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[//Program any sequence, safety or feature (if necessary) application specific in thsi section]]></ST>
+        <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder. Create as many programs in that folder as applications you have or need
+EXAMPLE();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -221,7 +222,7 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
-      <LineId Id="2" Count="0" />
+      <LineId Id="2" Count="1" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />
