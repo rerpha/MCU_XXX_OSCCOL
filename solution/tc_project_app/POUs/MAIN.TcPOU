@@ -36,7 +36,6 @@ VAR PERSISTENT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
-PROG();
 AXES();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
@@ -71,11 +70,6 @@ IF (fbGetDeviceIdentification.stDevIdent.strHardwareSerialNo <> '0') THEN
     CHECK_UPS();
     RESTORE_POSITIONS();
 END_IF]]></ST>
-      </Implementation>
-    </Action>
-    <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
-      <Implementation>
-        <ST><![CDATA[//Program any sequence, safety or feature (if necessary) application specific in thsi section]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -204,7 +198,6 @@ END_FOR]]></ST>
     </Action>
     <LineIds Name="MAIN">
       <LineId Id="505" Count="0" />
-      <LineId Id="134" Count="0" />
       <LineId Id="81" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
@@ -219,9 +212,6 @@ END_FOR]]></ST>
     <LineIds Name="MAIN.POSITION_RECOVERY">
       <LineId Id="2" Count="3" />
       <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.PROG">
-      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />
