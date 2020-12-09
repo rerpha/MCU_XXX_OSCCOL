@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
-    <Declaration><![CDATA[
-PROGRAM MAIN
+    <Declaration><![CDATA[PROGRAM MAIN
 VAR
     sVersion: STRING := '1.0.0';
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
@@ -36,7 +35,8 @@ VAR PERSISTENT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
-AXES();]]></ST>
+AXES();
+PROG();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -199,6 +199,7 @@ END_FOR]]></ST>
     <LineIds Name="MAIN">
       <LineId Id="505" Count="0" />
       <LineId Id="81" Count="0" />
+      <LineId Id="538" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="1" Count="0" />
