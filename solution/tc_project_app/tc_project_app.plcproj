@@ -17,9 +17,6 @@
     <Released>false</Released>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Application Specific\EXAMPLE.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +25,12 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application Specific\Applications\Application_Template.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Application Specific\Axes\Axis_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -131,7 +134,9 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="Application Specific" />
+    <Folder Include="POUs\Application Specific" />
+    <Folder Include="POUs\Application Specific\Applications" />
+    <Folder Include="POUs\Application Specific\Axes" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\VISUs" />
     <Folder Include="Test" />
