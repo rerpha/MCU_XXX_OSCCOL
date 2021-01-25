@@ -78,7 +78,7 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder. 
+        <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder.
 //Create as many programs in that folder as axes and applications you have or need
 
 //Axes initial parameters and program
