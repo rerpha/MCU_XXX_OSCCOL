@@ -2,7 +2,7 @@ import glob
 import xml.etree.ElementTree as ET
 
 VERSION_TAGS     = {"**/*.Tc*": "ProductVersion", "**/*.tsproj": "TcVersion"}
-CORRECT_VERSIONS = {"**/*.Tc*": "3.1.4024.5",     "**/*.tsproj": "3.1.4023.119"}
+CORRECT_VERSIONS = {"**/*.Tc*": "3.1.4024.5",     "**/*.tsproj": "3.1.4024.11"}
 
 
 def check_versions():
