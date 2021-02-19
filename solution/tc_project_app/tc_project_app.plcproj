@@ -106,27 +106,6 @@
     <Compile Include="tc_mca_std_lib\VISUs\visuTextLinks.TcTLO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Test\app_tests\tcUNIT_APP_RUN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\common\FB_tcUNIT_common.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\common\FB_tcUNIT_GenericHomingTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\common\tcUNIT_GVL.TcGVL">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\standard_library_tests\E_TestStates.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\standard_library_tests\FB_Axis_TEST.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Test\standard_library_tests\tcUNIT_STD_LIB_RUN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
@@ -139,15 +118,11 @@
     <Folder Include="POUs\Application Specific\Axes" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\VISUs" />
-    <Folder Include="Test" />
     <Folder Include="tc_mca_std_lib" />
     <Folder Include="tc_mca_std_lib\DUTs" />
     <Folder Include="tc_mca_std_lib\GVLs" />
     <Folder Include="tc_mca_std_lib\POUs" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
-    <Folder Include="Test\app_tests" />
-    <Folder Include="Test\common" />
-    <Folder Include="Test\standard_library_tests" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,10 +199,6 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="TcUnit">
-      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
-      <Namespace>TcUnit</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="VisuDialogs">
       <DefaultResolution>VisuDialogs, * (System)</DefaultResolution>
