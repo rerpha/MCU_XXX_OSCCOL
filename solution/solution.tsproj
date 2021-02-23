@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.11">
-	<Project ProjectGUID="{9CF97348-B9D3-4938-B1F2-5F0B0B6AA66A}" TargetNetId="5.65.73.242.1.1" Target64Bit="true" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{9CF97348-B9D3-4938-B1F2-5F0B0B6AA66A}" TargetNetId="5.65.73.242.1.1" AutoPrioManagement="true" ShowHideConfigurations="#x106">
 		<System>
+			<Settings>
+				<IoIdleTask Priority="6"/>
+			</Settings>
 			<Tasks>
-				<Task Id="4" Priority="20" CycleTime="100000" AmsPort="351" AdtTasks="true">
+				<Task Id="4" Priority="10" CycleTime="100000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
 			</Tasks>
@@ -12,34 +15,7 @@
 			<NC File="NC.xti"/>
 		</Motion>
 		<Plc>
-			<Project GUID="{FB261665-FD20-4BF2-97F8-2854C82B752D}" Name="tc_project_app" PrjFilePath="tc_project_app\tc_project_app.plcproj" TmcFilePath="tc_project_app\tc_project_app.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
-					<Name>tc_project_app Instance</Name>
-					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
-					<Vars VarGrpType="2" AreaNo="1">
-						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>MAIN.bOutput1</Name>
-							<Comment><![CDATA[Outputs: Power for Limit switches and Home Sensors (every 4th output)]]></Comment>
-							<Type>BOOL</Type>
-						</Var>
-					</Vars>
-					<Contexts>
-						<Context>
-							<Id NeedCalleeCall="true">0</Id>
-							<Name>PlcTask</Name>
-							<ManualConfig>
-								<OTCID>#x02010040</OTCID>
-							</ManualConfig>
-							<Priority>20</Priority>
-							<CycleTime>10000000</CycleTime>
-						</Context>
-					</Contexts>
-					<TaskPouOids>
-						<TaskPouOid Prio="20" OTCID="#x08502041"/>
-					</TaskPouOids>
-				</Instance>
-			</Project>
+			<Project File="tc_project_app.xti"/>
 		</Plc>
 	</Project>
 </TcSmProject>
