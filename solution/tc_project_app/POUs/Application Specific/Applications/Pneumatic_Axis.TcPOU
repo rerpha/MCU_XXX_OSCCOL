@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
   <POU Name="Pneumatic_Axis" Id="{c5a87a8f-b672-49f9-9218-441b3e670d3f}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Pneumatic_Axis
 VAR
