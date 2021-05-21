@@ -9,7 +9,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbPneumaticAxis();
-fbPneumaticAxis.stPneumaticAxisInputs.bPermit := TRUE;
+
 
 ]]></ST>
     </Implementation>
