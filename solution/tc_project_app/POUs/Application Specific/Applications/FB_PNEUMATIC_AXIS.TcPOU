@@ -11,6 +11,8 @@ VAR
     fbTimerExtendManual: TON; //Timing the extraction of the cylinder
     fbTimerRetractManual: TON; //Timing the retraction of the cylinder
     bStateChange: BOOL := FALSE; //State of the cylinder changed from extend to retract and vice versa
+	nTimeToExtract: INT; //allowed time for the cylider to extract in seconds
+	nTimeToRetract: INT; //allowed time for the cylinder to retract in seconds
 
 END_VAR
 ]]></Declaration>
@@ -51,10 +53,15 @@ END_CASE ]]></ST>
     <Action Name="Single_Solenoid_Manual" Id="{e31de170-18f1-4f95-8712-ce861e79ff7b}">
       <Implementation>
         <ST><![CDATA[//Manual control of single solenoid pneumatic actuator
+
+//Enter allowed times for extraction and retraction of pneumatic cylinder in seconds
+fbTimerExtendManual.PT := INT_TO_TIME(nTimeToExtract * 1000);
+fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
+
 //Extend cylinder
         IF stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := TRUE;
-        fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#20S);
+        fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
         IF fbTimerExtendManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -65,14 +72,14 @@ END_CASE ]]></ST>
         stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'EXTRACTED';
         bStateChange := TRUE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
-        fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#20S);
+        fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
     END_IF
 
 //Starting the retraction movement and extraction timing
         IF stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd AND bStateChange THEN
         stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := FALSE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := TRUE;
-        fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#20S);
+        fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
         IF fbTimerRetractManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -83,7 +90,7 @@ END_CASE ]]></ST>
         stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'RETRACTED';
         bStateChange := FALSE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
-        fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#20S);
+        fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
         stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual := FALSE;
     END_IF
 ]]></ST>
@@ -91,12 +98,17 @@ END_CASE ]]></ST>
     </Action>
     <Action Name="Single_Solenoid_PLC" Id="{a75a03ea-ec30-403c-91eb-96684f17a503}">
       <Implementation>
-        <ST><![CDATA[stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE;
+        <ST><![CDATA[//Permit to move cylinder is true
+//Enter allowed times for extraction and retraction of pneumatic cylinder in seconds
+stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE;
+fbTimerExtend.PT := INT_TO_TIME(nTimeToExtract * 1000);
+fbTimerRetract.PT := INT_TO_TIME(nTimeToRetract * 1000);
+
 
 IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit) AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := TRUE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMoving := TRUE;
-        fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#20S);
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := TRUE;
+        fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
         IF fbTimerExtend.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -105,19 +117,19 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 // Extraction of the cylinder finished, reset timer
         IF stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'EXTRACTED';
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bExtracted := TRUE;
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bExtractedStatus := TRUE;
         bStateChange := TRUE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMoving := FALSE;
-        fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#20S);
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := FALSE;
+        fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
     END_IF
 
 //Starting the retraction movement and retraction timing
         IF NOT stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd AND bStateChange THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := TRUE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMoving := TRUE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bExtracted := FALSE;
-        fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#20S);
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := TRUE;
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bExtractedStatus := FALSE;
+        fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
         IF fbTimerRetract.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -126,11 +138,11 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 // Retraction of the cylinder finished, reset timer
         IF NOT stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'RETRACTED';
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bRetracted := TRUE;
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractedStatus := TRUE;
         bStateChange := FALSE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMoving := FALSE;
-        fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#20S);
+        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := FALSE;
+        fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
      END_IF
 
  ]]></ST>
@@ -159,11 +171,19 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_Manual">
-      <LineId Id="2" Count="35" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="3" Count="34" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_PLC">
-      <LineId Id="42" Count="1" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="42" Count="2" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="0" />
       <LineId Id="2" Count="6" />
       <LineId Id="1" Count="0" />
       <LineId Id="11" Count="0" />
