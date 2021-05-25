@@ -3,17 +3,17 @@
   <POU Name="FB_PNEUMATIC_AXIS" Id="{74b90e1e-7e39-4d6d-a9f3-f7a29858f68b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_PNEUMATIC_AXIS
 VAR
-	
+
     stPneumaticAxisStruct: ST_PneumaticAxisStruct;
     ePneumaticAxisState: E_PneumaticMode;
     fbTimerExtend: TON; //Timing the extraction of the cylinder
     fbTimerRetract: TON; //Timing the retraction of the cylinder
     fbTimerExtendManual: TON; //Timing the extraction of the cylinder
     fbTimerRetractManual: TON; //Timing the retraction of the cylinder
+    fbTimerStartMoving: TON; //Timing the start of moving after the command hs been given
     bStateChange: BOOL := FALSE; //State of the cylinder changed from extend to retract and vice versa
-	nTimeToExtract: INT; //allowed time for the cylider to extract in seconds
-	nTimeToRetract: INT; //allowed time for the cylinder to retract in seconds
-
+    nTimeToExtract: INT; //allowed time for the cylider to extract in seconds
+    nTimeToRetract: INT; //allowed time for the cylinder to retract in seconds
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -38,11 +38,15 @@ END_CASE ]]></ST>
     <Action Name="Reset" Id="{68a6c9d7-8606-401b-9168-ec931e79f0f6}">
       <Implementation>
         <ST><![CDATA[   stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend := FALSE;
-    stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := FALSE;
-    fbTimerExtend.IN := FALSE;
-    fbTimerRetract.IN := FALSE;
-    fbTimerExtendManual.IN := FALSE;
-    fbTimerRetractManual.IN := FALSE;]]></ST>
+   stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := FALSE;
+   stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
+   stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
+   fbTimerExtend.IN := FALSE;
+   fbTimerExtend.Q := FALSE;
+   fbTimerRetract.IN := FALSE;
+   fbTimerExtendManual.IN := FALSE;
+   fbTimerRetractManual.IN := FALSE;
+   fbTimerStartMoving.IN := FALSE;]]></ST>
       </Implementation>
     </Action>
     <Action Name="Single_Solenoid_Error" Id="{f8e38dc6-971b-478e-a924-9eec8537d2f1}">
@@ -62,6 +66,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
         IF stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := TRUE;
         fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#10S);
+
+        IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
+            ePneumaticAxisState := E_PneumaticMode.ERROR;
+            END_IF
         IF fbTimerExtendManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -73,6 +82,7 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
         bStateChange := TRUE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
         fbTimerExtendManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#10S);
     END_IF
 
 //Starting the retraction movement and extraction timing
@@ -80,6 +90,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
         stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := FALSE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := TRUE;
         fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#10S);
+
+        IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
+            ePneumaticAxisState := E_PneumaticMode.ERROR;
+        END_IF
         IF fbTimerRetractManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -92,6 +107,7 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
         fbTimerRetractManual (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
         stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual := FALSE;
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#10S);
     END_IF
 ]]></ST>
       </Implementation>
@@ -104,32 +120,40 @@ stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE;
 fbTimerExtend.PT := INT_TO_TIME(nTimeToExtract * 1000);
 fbTimerRetract.PT := INT_TO_TIME(nTimeToRetract * 1000);
 
-
+//Starting the extraction movement
 IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit) AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := TRUE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := TRUE;
         fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#10S);
+
+        IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
+            ePneumaticAxisState := E_PneumaticMode.ERROR;
+        END_IF
         IF fbTimerExtend.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
     END_IF
 
 // Extraction of the cylinder finished, reset timer
-        IF stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
+        IF stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'EXTRACTED';
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtractedStatus := TRUE;
         bStateChange := TRUE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := FALSE;
         fbTimerExtend (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving, PT := T#10S);
     END_IF
 
 //Starting the retraction movement and retraction timing
         IF NOT stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND NOT stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd AND bStateChange THEN
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := TRUE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := TRUE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bExtractedStatus := FALSE;
         fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#10S);
+
+        IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
+            ePneumaticAxisState := E_PneumaticMode.ERROR;
+        END_IF
         IF fbTimerRetract.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
         END_IF
@@ -141,8 +165,8 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractedStatus := TRUE;
         bStateChange := FALSE;
         stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
-        stPneumaticAxisStruct.stPneumaticAxisStatus.bMovingStatus := FALSE;
         fbTimerRetract (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving);
+        fbTimerStartMoving (IN := stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving, PT := T#10S);
      END_IF
 
  ]]></ST>
@@ -164,8 +188,14 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Reset">
-      <LineId Id="2" Count="4" />
+      <LineId Id="2" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="1" />
       <LineId Id="1" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_Error">
       <LineId Id="1" Count="0" />
@@ -176,7 +206,18 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="39" Count="1" />
       <LineId Id="38" Count="0" />
       <LineId Id="41" Count="0" />
-      <LineId Id="3" Count="34" />
+      <LineId Id="3" Count="3" />
+      <LineId Id="45" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="7" Count="10" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="18" Count="6" />
+      <LineId Id="51" Count="3" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="25" Count="11" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_PLC">
@@ -184,10 +225,24 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="42" Count="2" />
       <LineId Id="46" Count="0" />
       <LineId Id="45" Count="0" />
-      <LineId Id="2" Count="6" />
+      <LineId Id="2" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="50" Count="2" />
+      <LineId Id="6" Count="2" />
       <LineId Id="1" Count="0" />
       <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="28" />
+      <LineId Id="13" Count="5" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="56" Count="3" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="29" Count="10" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="60" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="9" Count="1" />
     </LineIds>
