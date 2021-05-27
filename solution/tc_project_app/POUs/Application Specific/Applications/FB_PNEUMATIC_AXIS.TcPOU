@@ -6,6 +6,7 @@ VAR
 
     stPneumaticAxisStruct: ST_PneumaticAxisStruct;
     ePneumaticAxisState: E_PneumaticMode;
+	ePneumaticAxisErrors: E_PneumaticAxisErrors;
     fbTimerExtend: TON; //Timing the extraction of the cylinder
     fbTimerRetract: TON; //Timing the retraction of the cylinder
     fbTimerExtendManual: TON; //Timing the extraction of the cylinder
@@ -42,7 +43,6 @@ END_CASE ]]></ST>
    stPneumaticAxisStruct.stPneumaticAxisStatus.bExtendMoving := FALSE;
    stPneumaticAxisStruct.stPneumaticAxisStatus.bRetractMoving := FALSE;
    fbTimerExtend.IN := FALSE;
-   fbTimerExtend.Q := FALSE;
    fbTimerRetract.IN := FALSE;
    fbTimerExtendManual.IN := FALSE;
    fbTimerRetractManual.IN := FALSE;
@@ -51,7 +51,29 @@ END_CASE ]]></ST>
     </Action>
     <Action Name="Single_Solenoid_Error" Id="{f8e38dc6-971b-478e-a924-9eec8537d2f1}">
       <Implementation>
-        <ST><![CDATA[stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';]]></ST>
+        <ST><![CDATA[CASE ePneumaticAxisErrors OF
+	
+	E_PneumaticAxisErrors.NO_ERROR:
+	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := FALSE;
+	
+	E_PneumaticAxisErrors.EXTRACT_TIMED_OUT:
+	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
+	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+	
+	E_PneumaticAxisErrors.RETRACT_TIMED_OUT:
+	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
+	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+	
+	E_PneumaticAxisErrors.NOT_MOVING_EXTRACT:
+	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
+	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+	
+	E_PneumaticAxisErrors.NOT_MOVING_RETRACT:
+	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
+	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+	
+END_CASE
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="Single_Solenoid_Manual" Id="{e31de170-18f1-4f95-8712-ce861e79ff7b}">
@@ -70,9 +92,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
             END_IF
         IF fbTimerExtendManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -94,9 +118,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
         END_IF
         IF fbTimerRetractManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -128,9 +154,12 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
+			
         END_IF
         IF fbTimerExtend.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -153,9 +182,11 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
         END_IF
         IF fbTimerRetract.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
+			ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -191,13 +222,23 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="2" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="5" Count="1" />
+      <LineId Id="4" Count="2" />
       <LineId Id="1" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_Error">
+      <LineId Id="2" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="5" Count="3" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="17" Count="4" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="4" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="FB_PNEUMATIC_AXIS.Single_Solenoid_Manual">
@@ -209,13 +250,19 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="3" Count="3" />
       <LineId Id="45" Count="2" />
       <LineId Id="44" Count="0" />
+      <LineId Id="56" Count="0" />
       <LineId Id="48" Count="0" />
-      <LineId Id="7" Count="10" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="9" Count="8" />
       <LineId Id="49" Count="0" />
       <LineId Id="18" Count="6" />
       <LineId Id="51" Count="3" />
+      <LineId Id="58" Count="0" />
       <LineId Id="50" Count="0" />
-      <LineId Id="25" Count="11" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="27" Count="9" />
       <LineId Id="55" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="1" Count="0" />
@@ -229,8 +276,13 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="5" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="53" Count="0" />
-      <LineId Id="50" Count="2" />
-      <LineId Id="6" Count="2" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="8" Count="0" />
       <LineId Id="1" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="5" />
@@ -239,8 +291,11 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
       <LineId Id="21" Count="4" />
       <LineId Id="27" Count="1" />
       <LineId Id="56" Count="3" />
+      <LineId Id="64" Count="0" />
       <LineId Id="55" Count="0" />
-      <LineId Id="29" Count="10" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="31" Count="8" />
       <LineId Id="41" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="12" Count="0" />
