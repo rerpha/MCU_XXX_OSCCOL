@@ -6,7 +6,7 @@ VAR
 
     stPneumaticAxisStruct: ST_PneumaticAxisStruct;
     ePneumaticAxisState: E_PneumaticMode;
-	ePneumaticAxisErrors: E_PneumaticAxisErrors;
+    ePneumaticAxisErrors: E_PneumaticAxisErrors;
     fbTimerExtend: TON; //Timing the extraction of the cylinder
     fbTimerRetract: TON; //Timing the retraction of the cylinder
     fbTimerExtendManual: TON; //Timing the extraction of the cylinder
@@ -52,26 +52,26 @@ END_CASE ]]></ST>
     <Action Name="Single_Solenoid_Error" Id="{f8e38dc6-971b-478e-a924-9eec8537d2f1}">
       <Implementation>
         <ST><![CDATA[CASE ePneumaticAxisErrors OF
-	
-	E_PneumaticAxisErrors.NO_ERROR:
-	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := FALSE;
-	
-	E_PneumaticAxisErrors.EXTRACT_TIMED_OUT:
-	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
-	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
-	
-	E_PneumaticAxisErrors.RETRACT_TIMED_OUT:
-	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
-	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
-	
-	E_PneumaticAxisErrors.NOT_MOVING_EXTRACT:
-	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
-	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
-	
-	E_PneumaticAxisErrors.NOT_MOVING_RETRACT:
-	stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
-	stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
-	
+
+    E_PneumaticAxisErrors.NO_ERROR:
+    stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := FALSE;
+
+    E_PneumaticAxisErrors.EXTRACT_TIMED_OUT:
+    stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
+    stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+
+    E_PneumaticAxisErrors.RETRACT_TIMED_OUT:
+    stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: COMMAND TIMED OUT';
+    stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+
+    E_PneumaticAxisErrors.NOT_MOVING_EXTRACT:
+    stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
+    stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+
+    E_PneumaticAxisErrors.NOT_MOVING_RETRACT:
+    stPneumaticAxisStruct.stPneumaticAxisStatus.sStatus := 'ERROR: CYLINDER NOT MOVING';
+    stPneumaticAxisStruct.stPneumaticAxisStatus.bErrorStatus := TRUE;
+
 END_CASE
 ]]></ST>
       </Implementation>
@@ -92,11 +92,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
             END_IF
         IF fbTimerExtendManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -118,11 +118,11 @@ fbTimerRetractManual.PT := INT_TO_TIME(nTimeToRetract * 1000);
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
         END_IF
         IF fbTimerRetractManual.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -154,12 +154,12 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
-			
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_EXTRACT;
+
         END_IF
         IF fbTimerExtend.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.EXTRACT_TIMED_OUT;
         END_IF
     END_IF
 
@@ -182,11 +182,11 @@ IF (stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend AND stPneumaticAxi
 
         IF fbTimerStartMoving.Q AND stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.NOT_MOVING_RETRACT;
         END_IF
         IF fbTimerRetract.Q THEN
             ePneumaticAxisState := E_PneumaticMode.ERROR;
-			ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
+            ePneumaticAxisErrors := E_PneumaticAxisErrors.RETRACT_TIMED_OUT;
         END_IF
     END_IF
 
