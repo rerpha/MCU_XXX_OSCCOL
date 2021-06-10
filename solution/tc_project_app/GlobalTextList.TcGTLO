@@ -6,6 +6,11 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
+              <v n="TextID">"947"</v>
+              <v n="TextDefault">"   LocalMode"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"951"</v>
               <v n="TextDefault">"%2.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -103,6 +108,16 @@
             <o>
               <v n="TextID">"944"</v>
               <v n="TextDefault">"bCommandAborted"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"786"</v>
+              <v n="TextDefault">"Bwd Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"571"</v>
+              <v n="TextDefault">"BWD Limit"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -231,6 +246,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"668"</v>
+              <v n="TextDefault">"Fwd Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"737"</v>
+              <v n="TextDefault">"FWD Limit"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"688"</v>
               <v n="TextDefault">"fWriteAxisParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -271,6 +296,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"784"</v>
+              <v n="TextDefault">"Interlock Bwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"505"</v>
+              <v n="TextDefault">"Interlock Fwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"116"</v>
               <v n="TextDefault">"jogBw"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -278,6 +313,16 @@
             <o>
               <v n="TextID">"117"</v>
               <v n="TextDefault">"jogFw"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"167"</v>
+              <v n="TextDefault">"Limit Bwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"11"</v>
+              <v n="TextDefault">"Limit Fwd"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
