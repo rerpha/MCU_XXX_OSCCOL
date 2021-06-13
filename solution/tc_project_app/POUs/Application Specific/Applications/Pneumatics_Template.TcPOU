@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="Pneumatics_Template" Id="{7bf401fb-a600-4741-a67b-36f20e194cfc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Pneumatics_Template
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Set initial parameters:
+
+(*
+stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE (to enable cylinder to move)
+If stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit is not set to true before going online, error will appear.
+Set stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE, and reset errors with E_PneumaticMode.RESET.
+
+Select the wanted mode of work.
+Default state is E_PneumaticMode.SINGLE_SOLENOID_PLC.
+
+For E_PneumaticMode.SINGLE_SOLENOID_PLC:
+
+Define:
+nTimeToExtract and nTimeToRetract in seconds (if you want the time to be 10s just write 10)
+It’s assumed that the cylinder is retracted and the bLimitBackward is activated:
+Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE
+
+To start extraction: stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend := TRUE;
+This will activate the timing of the command, with fbTimerStartMoving. 
+Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := FALSE, to simulate cylider moving
+If the stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd is not deactivated in given time (it's set to 10s by default), it’s assumed that the cylinder has not moved and this will cause it to go to the error state. 
+If the end position is not reached within time defined in nTimeToExtract, the system will show error.
+Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := TRUE (to simulate finishing of extraction)
+
+To reset errors, change state to  E_PneumaticMode.RESET.
+
+To move cylinder backwards: stPneumaticAxisStruct.stPneumaticAxisControl.bStartRetract := TRUE;
+Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := FALSE;
+The cylinder is retracted when stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE (you have to make it TRUE manually to simulate the finish of the moving). 
+If this doesn’t happen in specified time, in nTimeToRetract, state machine goes into error state.
+
+To reset errors, change state to  E_PneumaticMode.RESET.
+
+For E_PneumaticMode.SINGLE_SOLENOID_MANUAL:
+
+Same prinicples apply, control is done with two signals: 
+stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := TRUE to extract cylinder
+stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual := TRUE to retract cylinder
+
+RS function blocks are used to handle signals from the extend/retract push buttons.
+
+Reset errors with E_PneumaticMode.RESET
+
+*)
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="Pneumatics_Template">
+      <LineId Id="8" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="77" Count="1" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="49" Count="2" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="57" Count="1" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
