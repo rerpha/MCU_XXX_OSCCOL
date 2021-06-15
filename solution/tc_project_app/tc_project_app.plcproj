@@ -127,9 +127,6 @@
     <Compile Include="tc_mca_std_lib\POUs\Pneumatics\FB_PneumaticAxis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\POUs\Pneumatics\Pneumatic_Axis.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tc_mca_std_lib\VISUs\languageSupport.TcTLO">
       <SubType>Code</SubType>
     </Compile>
