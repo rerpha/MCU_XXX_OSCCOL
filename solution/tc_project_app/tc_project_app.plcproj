@@ -28,10 +28,10 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application Specific\Applications\Pneumatics_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\Pneumatics_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application Specific\Axes\Axis_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -144,9 +144,9 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\Application Specific" />
-    <Folder Include="POUs\Application Specific\Applications" />
-    <Folder Include="POUs\Application Specific\Axes" />
+    <Folder Include="POUs\Application_Specific" />
+    <Folder Include="POUs\Application_Specific\Applications" />
+    <Folder Include="POUs\Application_Specific\Axes" />
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\POUs\Pneumatics" />
     <Folder Include="tc_mca_std_lib\VISUs" />
@@ -250,7 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <PlaceholderResolution Include="Tc2_MC2">
-      <Resolution>Tc2_MC2, * (Beckhoff Automation GmbH)</Resolution>
+      <Resolution>Tc2_MC2, 3.3.41.0 (Beckhoff Automation GmbH)</Resolution>
     </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
