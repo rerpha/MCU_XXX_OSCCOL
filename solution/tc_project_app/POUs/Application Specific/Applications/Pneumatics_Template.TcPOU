@@ -24,9 +24,9 @@ It’s assumed that the cylinder is retracted and the bLimitBackward is activate
 Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE
 
 To start extraction: stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend := TRUE;
-This will activate the timing of the command, with fbTimerStartMoving. 
+This will activate the timing of the command, with fbTimerStartMoving.
 Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := FALSE, to simulate cylider moving
-If the stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd is not deactivated in given time (it's set to 10s by default), it’s assumed that the cylinder has not moved and this will cause it to go to the error state. 
+If the stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd is not deactivated in given time (it's set to 10s by default), it’s assumed that the cylinder has not moved and this will cause it to go to the error state.
 If the end position is not reached within time defined in nTimeToExtract, the system will show error.
 Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := TRUE (to simulate finishing of extraction)
 
@@ -34,14 +34,14 @@ To reset errors, change state to  E_PneumaticMode.RESET.
 
 To move cylinder backwards: stPneumaticAxisStruct.stPneumaticAxisControl.bStartRetract := TRUE;
 Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := FALSE;
-The cylinder is retracted when stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE (you have to make it TRUE manually to simulate the finish of the moving). 
+The cylinder is retracted when stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE (you have to make it TRUE manually to simulate the finish of the moving).
 If this doesn’t happen in specified time, in nTimeToRetract, state machine goes into error state.
 
 To reset errors, change state to  E_PneumaticMode.RESET.
 
 For E_PneumaticMode.SINGLE_SOLENOID_MANUAL:
 
-Same prinicples apply, control is done with two signals: 
+Same prinicples apply, control is done with two signals:
 stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := TRUE to extract cylinder
 stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual := TRUE to retract cylinder
 

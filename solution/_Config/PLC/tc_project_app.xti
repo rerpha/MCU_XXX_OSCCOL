@@ -4,11 +4,69 @@
 		<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="tc_project_app\tc_project_app.tmc">
 			<Name>tc_project_app Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<Vars VarGrpType="1">
+				<Name>PlcTask Inputs</Name>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd</Name>
+					<Comment><![CDATA[Status of Limit Switch Fwd]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd</Name>
+					<Comment><![CDATA[Status of Limit Switch Bwd]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bSolenoidExtendStatus</Name>
+					<Comment><![CDATA[Status of solenoid valve to Extend]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bSolenoideRetractStatus</Name>
+					<Comment><![CDATA[Status of of solenoid valve to Retract]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit</Name>
+					<Comment><![CDATA[Status of permit signal for the movement]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bPressureExtendStatus</Name>
+					<Comment><![CDATA[Monitor of air pressure for cyclinder extraction]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bPressureRetractStatus</Name>
+					<Comment><![CDATA[Monitor of air pressure for cylinder retraction]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.nAirPressureStatus</Name>
+					<Comment><![CDATA[Monitor of input air pressure for pneumatic valve]]></Comment>
+					<Type>REAL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual</Name>
+					<Comment><![CDATA[Status of push button input to extend cylinder]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual</Name>
+					<Comment><![CDATA[Status of push button input to retract the cylinder]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+			</Vars>
 			<Vars VarGrpType="2" AreaNo="1">
 				<Name>PlcTask Outputs</Name>
 				<Var>
 					<Name>MAIN.bOutput1</Name>
 					<Comment><![CDATA[Outputs: Power for Limit switches and Home Sensors (every 4th output)]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>Pneumatic_Axis.fbPneumaticAxis.stPneumaticAxisStruct.stPneumaticAxisControl.bValveOn</Name>
+					<Comment><![CDATA[Output for solenoid valve]]></Comment>
 					<Type>BOOL</Type>
 				</Var>
 			</Vars>
