@@ -7,7 +7,7 @@ VAR
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
-
+    hmiPneumaticAxisSelection: INT := 1; //Variable for hmi pneumatic axis selection
 //Outputs: Power for Limit switches and Home Sensors (every 4th output)
     bOutput1 AT %Q*: BOOL:= TRUE;
     //bOutput5 AT %Q*: BOOL:= TRUE;
