@@ -6,49 +6,28 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Set initial parameters:
+      <ST><![CDATA[//Test the program to control pneumatic acutator through PneumaticsVisu.
+//Currently implemented control of single solenoid through PLC and and manually, with two momentary push buttons.
 
 (*
-stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE (to enable cylinder to move)
-If stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit is not set to true before going online, error will appear.
-Set stPneumaticAxisStruct.stPneumaticAxisInputs.bPermit := TRUE, and reset errors with E_PneumaticMode.RESET.
+The number of axis is already set to one, don't chnage the Pneumatic Axis Selection.
+Default mode of control is SINGLE_SOLENOID_PLC.
+Activate the Permit signal through bPermit button.
 
-Select the wanted mode of work.
-Default state is E_PneumaticMode.SINGLE_SOLENOID_PLC.
+Simulate the position of actuator through bLimitBwd and bLimitFwd buttons.
+When bLimitBwd := TRUE, cylinder is retracted, when bLimitFwd := TRUE, cylinder is extracted, when bLimitBwd := FALSE
+and bLimitFwd := FALSE, cylinder is moving.
 
-For E_PneumaticMode.SINGLE_SOLENOID_PLC:
+Write allowed times for extending and retracting the cylinder in seconds in nTimeToExtend and nTimeToRetract.
 
-Define:
-nTimeToExtract and nTimeToRetract in seconds (if you want the time to be 10s just write 10)
-It’s assumed that the cylinder is retracted and the bLimitBackward is activated:
-Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE
+Use the buttons StartExtend and StartRetract to control the cylider, based on the selected mode SINGLE_SOLENOID_PLC and SINGLE_SOLENOID_MANUAL.
 
-To start extraction: stPneumaticAxisStruct.stPneumaticAxisControl.bStartExtend := TRUE;
-This will activate the timing of the command, with fbTimerStartMoving.
-Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := FALSE, to simulate cylider moving
-If the stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd is not deactivated in given time (it's set to 10s by default), it’s assumed that the cylinder has not moved and this will cause it to go to the error state.
-If the end position is not reached within time defined in nTimeToExtract, the system will show error.
-Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := TRUE (to simulate finishing of extraction)
-
-To reset errors, change state to  E_PneumaticMode.RESET.
-
-To move cylinder backwards: stPneumaticAxisStruct.stPneumaticAxisControl.bStartRetract := TRUE;
-Set stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitFwd := FALSE;
-The cylinder is retracted when stPneumaticAxisStruct.stPneumaticAxisInputs.bLimitBwd := TRUE (you have to make it TRUE manually to simulate the finish of the moving).
-If this doesn’t happen in specified time, in nTimeToRetract, state machine goes into error state.
-
-To reset errors, change state to  E_PneumaticMode.RESET.
-
-For E_PneumaticMode.SINGLE_SOLENOID_MANUAL:
-
-Same prinicples apply, control is done with two signals:
-stPneumaticAxisStruct.stPneumaticAxisInputs.bExtendCylinderManual := TRUE to extract cylinder
-stPneumaticAxisStruct.stPneumaticAxisInputs.bRetractCylinderManual := TRUE to retract cylinder
-
-RS function blocks are used to handle signals from the extend/retract push buttons.
-
-Reset errors with E_PneumaticMode.RESET
-
+To simulate errors:
+- Leave bLimitFwd activated until the allowed time elapses when moving forward.
+- Leave bLimitBwd activated until allowed time elapses when moving backward.
+- Deactivate both limit switches and leave the allowed time to elapse.
+- Deactivate bPermit while the cylnder is moving. Cylinder can't move if the bPermit := FALSE.
+- Reset errors with bReset button, and choose the wanted mode again.
 *)
 
 
@@ -61,40 +40,23 @@ Reset errors with E_PneumaticMode.RESET
     </Implementation>
     <LineIds Name="Pneumatics_Template">
       <LineId Id="8" Count="0" />
+      <LineId Id="89" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="37" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="77" Count="1" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="43" Count="1" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="49" Count="2" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="52" Count="1" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="57" Count="1" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="59" Count="1" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="69" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="70" Count="1" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="72" Count="0" />
       <LineId Id="56" Count="0" />
+      <LineId Id="90" Count="1" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="102" Count="2" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="105" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="32" Count="0" />
