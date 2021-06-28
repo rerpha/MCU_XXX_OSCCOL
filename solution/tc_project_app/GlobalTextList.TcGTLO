@@ -11,11 +11,14 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+
               <v n="TextID">"587"</v>
               <v n="TextDefault">"%1d"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+
+
               <v n="TextID">"951"</v>
               <v n="TextDefault">"%2.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -136,6 +139,7 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+
               <v n="TextID">"485"</v>
               <v n="TextDefault">"bMovingExtend"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -168,6 +172,15 @@
             <o>
               <v n="TextID">"933"</v>
               <v n="TextDefault">"bValveOn"</v>
+
+              <v n="TextID">"786"</v>
+              <v n="TextDefault">"Bwd Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"571"</v>
+              <v n="TextDefault">"BWD Limit"</v>
+
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -316,6 +329,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"668"</v>
+              <v n="TextDefault">"Fwd Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"737"</v>
+              <v n="TextDefault">"FWD Limit"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"688"</v>
               <v n="TextDefault">"fWriteAxisParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -356,6 +379,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"784"</v>
+              <v n="TextDefault">"Interlock Bwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"505"</v>
+              <v n="TextDefault">"Interlock Fwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"116"</v>
               <v n="TextDefault">"jogBw"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -366,6 +399,7 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+
               <v n="TextID">"19"</v>
               <v n="TextDefault">"Limit switches simulation"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -378,6 +412,15 @@
             <o>
               <v n="TextID">"459"</v>
               <v n="TextDefault">"LimitFwd"</v>
+
+              <v n="TextID">"167"</v>
+              <v n="TextDefault">"Limit Bwd"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"11"</v>
+              <v n="TextDefault">"Limit Fwd"</v>
+
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

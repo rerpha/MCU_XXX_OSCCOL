@@ -31,9 +31,11 @@
     <Compile Include="POUs\Application_Specific\Applications\Application_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+
     <Compile Include="POUs\Application_Specific\Applications\Pneumatics_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+
     <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -145,10 +147,15 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+
     <Folder Include="POUs\Application_Specific" />
     <Folder Include="POUs\Application_Specific\Applications" />
     <Folder Include="POUs\Application_Specific\Axes" />
     <Folder Include="tc_mca_std_lib\DUTs\Pneumatics" />
+
+    <Folder Include="POUs\Application_Specific\Applications" />
+    <Folder Include="POUs\Application_Specific\Axes" />
+
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\POUs\Pneumatics" />
     <Folder Include="tc_mca_std_lib\VISUs" />
@@ -158,6 +165,7 @@
     <Folder Include="tc_mca_std_lib\POUs" />
     <Folder Include="tc_mca_std_lib\POUs\Motion" />
     <Folder Include="POUs" />
+    <Folder Include="POUs\Application_Specific" />
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="System_VisuElemEventTable">
