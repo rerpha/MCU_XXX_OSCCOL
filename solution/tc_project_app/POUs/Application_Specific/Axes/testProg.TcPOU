@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="testProg" Id="{6b742e2c-3720-4a26-aa80-15486c69d838}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM testProg
+VAR
+	myFirstSlits : FB_SlitPair;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL.astAxes[1].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToRef_Bwd;
+GVL.astAxes[1].stConfig.fHomePosition:=30;
+GVL.astAxes[2].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToRef_Fwd;
+GVL.astAxes[2].stConfig.fHomePosition:=-30;
+
+myFirstSlits(iBladeNegative:=2,iBladePositive:=1, iGapSize:=3, iGapCentre:=4);]]></ST>
+    </Implementation>
+    <LineIds Name="testProg">
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
