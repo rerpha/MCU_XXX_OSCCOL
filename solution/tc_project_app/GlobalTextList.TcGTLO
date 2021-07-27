@@ -136,6 +136,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"183"</v>
+              <v n="TextDefault">"bInterlock"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"485"</v>
               <v n="TextDefault">"bMovingExtend"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -153,6 +158,11 @@
             <o>
               <v n="TextID">"511"</v>
               <v n="TextDefault">"bPermit"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"963"</v>
+              <v n="TextDefault">"bPSSPermit"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -446,6 +456,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"787"</v>
+              <v n="TextDefault">"nTimeToExtend(ms)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"992"</v>
               <v n="TextDefault">"nTimeToExtend(s)"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -453,6 +468,11 @@
             <o>
               <v n="TextID">"929"</v>
               <v n="TextDefault">"nTimeToRetract"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"444"</v>
+              <v n="TextDefault">"nTimeToRetract(ms)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -468,6 +488,11 @@
             <o>
               <v n="TextID">"958"</v>
               <v n="TextDefault">"Pneumatic AxisSelection"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"694"</v>
+              <v n="TextDefault">"Pneumatics"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
