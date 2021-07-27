@@ -32,47 +32,12 @@ END_VAR
 
 VAR PERSISTENT
     bRestoreOnStartup: BOOL;
-END_VAR
-
-
-VAR
-//all for testing	
-
-axisBladeNeg : AXIS_REF;
-axisBladePos : AXIS_REF;
-axisGap : AXIS_REF;
-powerBladeNeg : MC_POWER;
-powerBladePos : MC_POWER;
-powerAxisGap : MC_POWER;
-
-mcGearIn : MC_GEARIN;
-mcGearInMulti : MC_GEARINMULTIMASTER;
-mcGearOut : MC_GEAROUT;
-
-mcMoveAbs : MC_MOVEABSOLUTE;
-
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[//POSITION_RECOVERY();
 AXES();
 PROG();
 
-powerBladeNeg.Enable_Negative := GVL.astAxes[1].stInputs.bLimitBwd;
-powerBladeNeg.Enable_Positive := GVL.astAxes[1].stInputs.bLimitFwd;
-powerBladePos.Enable_Negative := GVL.astAxes[2].stInputs.bLimitBwd;
-powerBladePos.Enable_Positive := GVL.astAxes[2].stInputs.bLimitFwd;
-powerAxisGap.Enable_Negative:= TRUE;
-powerAxisGap.Enable_Positive:= TRUE;
-
-powerBladeNeg(Axis:=axisBladeNeg);
-powerBladePos(Axis:=axisBladePos);
-powerAxisGap(Axis:=axisGap);
-mcGearIn(Slave:= axisBladeNeg, Master:=axisBladePos);
-mcGearInMulti(Master1:=axisBladePos,Master2:=axisGap,Slave:=axisBladeNeg);
-
-mcGearOut(Slave:=axisBladeNeg);
-
-mcMoveAbs(Axis:=axisBladeNeg);
 ]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
@@ -248,20 +213,6 @@ END_FOR]]></ST>
       <LineId Id="505" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="538" Count="0" />
-      <LineId Id="594" Count="0" />
-      <LineId Id="592" Count="1" />
-      <LineId Id="597" Count="0" />
-      <LineId Id="595" Count="1" />
-      <LineId Id="609" Count="0" />
-      <LineId Id="577" Count="0" />
-      <LineId Id="576" Count="0" />
-      <LineId Id="588" Count="0" />
-      <LineId Id="610" Count="0" />
-      <LineId Id="589" Count="0" />
-      <LineId Id="608" Count="0" />
-      <LineId Id="607" Count="0" />
-      <LineId Id="591" Count="0" />
-      <LineId Id="602" Count="0" />
       <LineId Id="601" Count="0" />
       <LineId Id="590" Count="0" />
     </LineIds>

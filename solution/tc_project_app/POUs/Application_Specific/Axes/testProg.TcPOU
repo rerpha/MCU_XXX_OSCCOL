@@ -3,7 +3,7 @@
   <POU Name="testProg" Id="{6b742e2c-3720-4a26-aa80-15486c69d838}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM testProg
 VAR
-	myFirstSlits : FB_SlitPair;
+    myFirstSlits : FB_SlitPair;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -12,8 +12,7 @@ GVL.astAxes[1].stConfig.fHomePosition:=-30;
 GVL.astAxes[2].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToRef_Fwd;
 GVL.astAxes[2].stConfig.fHomePosition:=30;
 
-myFirstSlits(iBladeNegative:=1,iBladePositive:=2, iGapSize:=3, iGapCentre:=4);
-]]></ST>
+myFirstSlits(iBladeNegative:=1,iBladePositive:=2, iGapSize:=3, iGapCentre:=4, bEnable :=TRUE);]]></ST>
     </Implementation>
     <LineIds Name="testProg">
       <LineId Id="10" Count="0" />
@@ -21,7 +20,6 @@ myFirstSlits(iBladeNegative:=1,iBladePositive:=2, iGapSize:=3, iGapCentre:=4);
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="1" />
       <LineId Id="5" Count="0" />
-      <LineId Id="30" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
