@@ -8,11 +8,12 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[GVL.astAxes[1].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToRef_Bwd;
-GVL.astAxes[1].stConfig.fHomePosition:=30;
+GVL.astAxes[1].stConfig.fHomePosition:=-30;
 GVL.astAxes[2].stConfig.eHomeSeq:=E_HomingRoutines.eHomeToRef_Fwd;
-GVL.astAxes[2].stConfig.fHomePosition:=-30;
+GVL.astAxes[2].stConfig.fHomePosition:=30;
 
-myFirstSlits(iBladeNegative:=2,iBladePositive:=1, iGapSize:=3, iGapCentre:=4);]]></ST>
+myFirstSlits(iBladeNegative:=1,iBladePositive:=2, iGapSize:=3, iGapCentre:=4);
+]]></ST>
     </Implementation>
     <LineIds Name="testProg">
       <LineId Id="10" Count="0" />
@@ -20,6 +21,7 @@ myFirstSlits(iBladeNegative:=2,iBladePositive:=1, iGapSize:=3, iGapCentre:=4);]]
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="1" />
       <LineId Id="5" Count="0" />
+      <LineId Id="30" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
