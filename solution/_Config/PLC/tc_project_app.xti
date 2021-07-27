@@ -27,8 +27,13 @@
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
-					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisInputs.bPermit</Name>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisInputs.bPSSPermit</Name>
 					<Comment><![CDATA[Permit signal for the movement]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisInputs.bInterlock</Name>
+					<Comment><![CDATA[Interlock signal for the movement]]></Comment>
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
@@ -65,8 +70,48 @@
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
-					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisControl.bValveOn</Name>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bLimitFwdOut</Name>
+					<Comment><![CDATA[Limit Switch Fwd power output]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bLimitBwdOut</Name>
+					<Comment><![CDATA[Limit Switch Bwd power output]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bValveOn</Name>
 					<Comment><![CDATA[Output of the solenoid valve (for single solenoid)]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bSolenoidExtendOut</Name>
+					<Comment><![CDATA[Solenoid valve Extend power output (for single solenoid)]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bPressureExtendOut</Name>
+					<Comment><![CDATA[Power output for air pressure switch]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bPressureRetractOut</Name>
+					<Comment><![CDATA[Power output for air pressure switch]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.nAirPressureOut</Name>
+					<Comment><![CDATA[Power output for analog pressure sensor]]></Comment>
+					<Type>REAL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bExtendCylinderManualOut</Name>
+					<Comment><![CDATA[Power output for push button (extend)]]></Comment>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bRetractCylinderManualOut</Name>
+					<Comment><![CDATA[Power output for push button (retract)]]></Comment>
 					<Type>BOOL</Type>
 				</Var>
 			</Vars>
