@@ -7,15 +7,6 @@ VAR
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
 
-//Outputs: Power for Limit switches and Home Sensors (every 4th output)
-    bOutput1 AT %Q*: BOOL:= TRUE;
-    //bOutput5 AT %Q*: BOOL:= TRUE;
-    //bOutput13 AT %Q*: BOOL:= TRUE;
-    //bOutput17 AT %Q*: BOOL:= TRUE;
-    //bOutput21 AT %Q*: BOOL:= TRUE;
-    //bOutput24 AT %Q*: BOOL:= TRUE;
-    //bOutput28 AT %Q*: BOOL:= TRUE;
-
 //Startup, Shutdown and UPS
     fbUPS: FB_S_UPS_CX51x0;
     eUpsMode: E_S_UPS_Mode := eSUPS_WrPersistData_Shutdown;
@@ -36,9 +27,7 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
 AXES();
-PROG();
-
-]]></ST>
+PROG();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -80,9 +69,14 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[testProg();
-limitsPower();
-]]></ST>
+        <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder.
+//Create as many programs in that folder as axes and applications you have or need
+
+//Axes initial parameters and program
+Axis_Template();
+
+//Application program calls
+Application_Template();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -213,8 +207,6 @@ END_FOR]]></ST>
       <LineId Id="505" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="538" Count="0" />
-      <LineId Id="601" Count="0" />
-      <LineId Id="590" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="11" Count="1" />
@@ -232,7 +224,12 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
-      <LineId Id="11" Count="1" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
       <LineId Id="3" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
