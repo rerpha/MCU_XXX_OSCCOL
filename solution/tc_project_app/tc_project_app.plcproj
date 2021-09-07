@@ -31,11 +31,9 @@
     <Compile Include="POUs\Application_Specific\Applications\Application_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-
     <Compile Include="POUs\Application_Specific\Applications\Pneumatics_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-
     <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +68,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisControl.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisFBVariables.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisInputs.TcDUT">
@@ -147,15 +148,12 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-
     <Folder Include="POUs\Application_Specific" />
     <Folder Include="POUs\Application_Specific\Applications" />
     <Folder Include="POUs\Application_Specific\Axes" />
     <Folder Include="tc_mca_std_lib\DUTs\Pneumatics" />
-
     <Folder Include="POUs\Application_Specific\Applications" />
     <Folder Include="POUs\Application_Specific\Axes" />
-
     <Folder Include="tc_mca_std_lib\POUs\Motion\Homing" />
     <Folder Include="tc_mca_std_lib\POUs\Pneumatics" />
     <Folder Include="tc_mca_std_lib\VISUs" />
