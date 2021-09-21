@@ -7,15 +7,6 @@ VAR
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
 
-//Outputs: Power for Limit switches and Home Sensors (every 4th output)
-    bOutput1 AT %Q*: BOOL:= TRUE;
-    //bOutput5 AT %Q*: BOOL:= TRUE;
-    //bOutput13 AT %Q*: BOOL:= TRUE;
-    //bOutput17 AT %Q*: BOOL:= TRUE;
-    //bOutput21 AT %Q*: BOOL:= TRUE;
-    //bOutput24 AT %Q*: BOOL:= TRUE;
-    //bOutput28 AT %Q*: BOOL:= TRUE;
-
 //Startup, Shutdown and UPS
     fbUPS: FB_S_UPS_CX51x0;
     eUpsMode: E_S_UPS_Mode := eSUPS_WrPersistData_Shutdown;
