@@ -83,6 +83,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisStruct.TcDUT">
+	  <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\DUTs\E_SlitPairStates.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\ST_AxisConfig.TcDUT">
@@ -119,6 +122,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\FB_Axis.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\Motion\FB_SlitPair.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\POUs\Motion\Homing\FB_Homing.TcPOU">
