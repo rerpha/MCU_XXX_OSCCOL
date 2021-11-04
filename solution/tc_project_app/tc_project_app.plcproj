@@ -70,7 +70,7 @@
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisFBVariables.TcDUT">
+    <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisFBConfig.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisInputs.TcDUT">
@@ -83,7 +83,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisStruct.TcDUT">
-	  <SubType>Code</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\E_SlitPairStates.TcDUT">
       <SubType>Code</SubType>
