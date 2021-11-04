@@ -80,11 +80,6 @@
 					<Type>BOOL</Type>
 				</Var>
 				<Var>
-					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bSolenoidExtendOn</Name>
-					<Comment><![CDATA[Solenoid valve Extend power output (for single solenoid)]]></Comment>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
 					<Name>GVL.astPneumaticAxes[1].stPneumaticAxisOutputs.bPressureExtendOn</Name>
 					<Comment><![CDATA[Power output for air pressure switch]]></Comment>
 					<Type>BOOL</Type>
