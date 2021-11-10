@@ -9,27 +9,6 @@ END_VAR
       <ST><![CDATA[//Test the program to control pneumatic acutator through PneumaticsVisu.
 //Currently implemented control of single solenoid through PLC and and manually, with two momentary push buttons.
 
-(*
-The number of axis is already set to one, don't chnage the Pneumatic Axis Selection.
-Default mode of control is SINGLE_SOLENOID_PLC.
-Activate the Permit signal through bPermit button.
-
-Simulate the position of actuator through bLimitBwd and bLimitFwd buttons.
-When bLimitBwd := TRUE, cylinder is retracted, when bLimitFwd := TRUE, cylinder is extracted, when bLimitBwd := FALSE
-and bLimitFwd := FALSE, cylinder is moving.
-
-Write allowed times for extending and retracting the cylinder in seconds in nTimeToExtend and nTimeToRetract.
-
-Use the buttons StartExtend and StartRetract to control the cylider, based on the selected mode SINGLE_SOLENOID_PLC and SINGLE_SOLENOID_MANUAL.
-
-To simulate errors:
-- Leave bLimitFwd activated until the allowed time elapses when moving forward.
-- Leave bLimitBwd activated until allowed time elapses when moving backward.
-- Deactivate both limit switches and leave the allowed time to elapse.
-- Deactivate bPermit while the cylnder is moving. Cylinder can't move if the bPermit := FALSE.
-- Reset errors with bReset button, and choose the wanted mode again.
-*)
-
 
 
 
@@ -41,23 +20,6 @@ To simulate errors:
     <LineIds Name="Pneumatics_Template">
       <LineId Id="8" Count="0" />
       <LineId Id="89" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="94" Count="1" />
-      <LineId Id="97" Count="0" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="102" Count="2" />
-      <LineId Id="106" Count="0" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="39" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="9" Count="0" />
