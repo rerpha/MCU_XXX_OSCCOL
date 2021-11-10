@@ -70,7 +70,7 @@
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisControl.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisFBConfig.TcDUT">
+    <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisConfig.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\Pneumatics\ST_PneumaticAxisInputs.TcDUT">
