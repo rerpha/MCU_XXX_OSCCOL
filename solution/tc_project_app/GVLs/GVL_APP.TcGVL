@@ -7,8 +7,10 @@ VAR_GLOBAL
 END_VAR
 
 VAR_GLOBAL CONSTANT
-    nAXIS_NUM : UINT:=0; (*~ (OPC: 1 : available for OPC-clients)
+    nAXIS_NUM: UINT := 0; (*~ (OPC: 1 : available for OPC-clients)
                          (OPC_PROP[0005]: 1 : OPC_PROP_RIGHTS, here read only) *)
-END_VAR]]></Declaration>
+    nPNEUMATIC_AXIS_NUM: UINT := 0;
+END_VAR
+]]></Declaration>
   </GVL>
 </TcPlcObject>

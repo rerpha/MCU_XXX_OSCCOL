@@ -5,8 +5,9 @@
 VAR
     sVersion: STRING := '1.0.0';
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
+    afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
-
+    hmiPneumaticAxisSelection: INT := 1;
 //Startup, Shutdown and UPS
     fbUPS: FB_S_UPS_CX51x0;
     eUpsMode: E_S_UPS_Mode := eSUPS_WrPersistData_Shutdown;
@@ -38,7 +39,12 @@ GVL.fbGetCurTaskIndex();
 //Create an stAxisStruct for every axis in the project.
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
     afbAxes[GVL.iAxis](stAxisStruct := GVL.astAxes[GVL.iAxis]);
-END_FOR]]></ST>
+END_FOR
+
+FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
+    afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
+END_FOR
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="CHECK_UPS" Id="{f0f28f50-53b8-4f73-b0f5-6d7ce4c1636f}" FolderPath="POSITION_RECOVERY\">
@@ -76,7 +82,7 @@ END_IF]]></ST>
 Axis_Template();
 
 //Application program calls
-Application_Template();]]></ST>
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -214,6 +220,8 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
+      <LineId Id="18" Count="3" />
+      <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.CHECK_UPS">
       <LineId Id="2" Count="11" />

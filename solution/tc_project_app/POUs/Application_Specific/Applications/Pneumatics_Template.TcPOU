@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="Pneumatics_Template" Id="{7bf401fb-a600-4741-a67b-36f20e194cfc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Pneumatics_Template
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Test the program to control pneumatic acutator through PneumaticsVisu.
+//Currently implemented control of single solenoid through PLC and and manually, with two momentary push buttons.
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="Pneumatics_Template">
+      <LineId Id="8" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
