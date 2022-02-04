@@ -80,8 +80,10 @@ END_IF]]></ST>
 
 //Axes initial parameters and program
 Axis_Template();
+//Pneumatics_Template();
 
 //Application program calls
+//Application_Template();
 ]]></ST>
       </Implementation>
     </Action>
@@ -236,9 +238,11 @@ END_FOR]]></ST>
       <LineId Id="7" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="8" Count="0" />
+      <LineId Id="12" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="3" Count="0" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />
