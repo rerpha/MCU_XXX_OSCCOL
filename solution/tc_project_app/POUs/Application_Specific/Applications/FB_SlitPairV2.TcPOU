@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <POU Name="FB_SlitPairV2" Id="{ff4013b1-472a-4f42-a6c8-2711712ac06d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SlitPairV2
+VAR_INPUT
+    positiveAxis_ID : UINT;
+    negativeAxis_ID : UINT;
+    GapSizeAxis_ID : UINT;
+    GapCentreAxis_ID : UINT;
+    
+    Enable : BOOL;
+    Reset : BOOL;
+    EncoderScaling : LREAL := 10000;
+END_VAR
+VAR_OUTPUT    
+END_VAR
+VAR
+    GapSizeEncoder AT %Q* : UDINT:=0;
+    GapCentreEncoder AT %Q* : UDINT:=0;
+    fGapSize : LREAL;
+    fGapCentre : LREAL;
+    
+    setpointGenEnable_positiveAxis : MC_ExtSetPointGenEnable;    
+    setpointGenEnable_negativeAxis : MC_ExtSetPointGenEnable;
+    setpointGenEnable_gapSizeAxis : MC_ExtSetPointGenEnable;
+    setpointGenEnable_gapCentreAxis : MC_ExtSetPointGenEnable;
+    
+    setpointGenDisable_positiveAxis : MC_ExtSetPointGenDisable;    
+    setpointGenDisable_negativeAxis : MC_ExtSetPointGenDisable;
+    setpointGenDisable_gapSizeAxis : MC_ExtSetPointGenDisable;
+    setpointGenDisable_gapCentreAxis : MC_ExtSetPointGenDisable;
+    
+    posSetpoint_positiveAxis : LREAL;
+    posSetpoint_negativeAxis : LREAL;
+    posSetpoint_gapSizeAxis : LREAL;
+    posSetpoint_gapCentreAxis : LREAL;
+    
+    veloSetpoint_positiveAxis : LREAL;
+    veloSetpoint_negativeAxis : LREAL;
+    veloSetpoint_gapSizeAxis : LREAL;
+    veloSetpoint_gapCentreAxis : LREAL;
+    
+    dir_positiveAxis : DINT;
+    dir_negativeAxis : DINT;
+    dir_gapSizeAxis : DINT;
+    dir_gapCentreAxis : DINT;
+    
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="FB_SlitPairV2">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

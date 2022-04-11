@@ -28,13 +28,13 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application_Specific\Applications\Application_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\limitsPower.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application_Specific\Axes\Axis_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Applications\testSlitApp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Application_Specific\Axes\Pneumatics_Template.TcPOU">
+    <Compile Include="POUs\Application_Specific\Axes\testProg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
