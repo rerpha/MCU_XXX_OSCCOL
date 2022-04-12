@@ -24,5 +24,7 @@
 	</Project>
 	<Mappings>
 		<MappingInfo Identifier="{00000000-0020-0304-1000-040320000403}" Id="#x02030010"/>
+		<MappingInfo Identifier="{00000000-2041-0850-4020-500831000403}" Id="#x02030020"/>
+		<MappingInfo Identifier="{05000010-2041-0850-1000-040340205008}" Id="#x02030030" Watchdog="14000000040000000400000004000000"/>
 	</Mappings>
 </TcSmProject>
