@@ -43,8 +43,7 @@ END_FOR
 
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
-END_FOR
-]]></ST>
+END_FOR]]></ST>
       </Implementation>
     </Action>
     <Action Name="CHECK_UPS" Id="{f0f28f50-53b8-4f73-b0f5-6d7ce4c1636f}" FolderPath="POSITION_RECOVERY\">
@@ -75,8 +74,7 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[testProg();
-limitsPower();]]></ST>
+        <ST><![CDATA[Application_Template();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -214,7 +212,6 @@ END_FOR]]></ST>
       <LineId Id="4" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="18" Count="3" />
-      <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.CHECK_UPS">
       <LineId Id="2" Count="11" />
@@ -225,7 +222,7 @@ END_FOR]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.PROG">
-      <LineId Id="13" Count="1" />
+      <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />
