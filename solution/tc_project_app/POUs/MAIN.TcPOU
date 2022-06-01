@@ -20,8 +20,6 @@ VAR
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentification;
-    
-    slit1Vertical : FB_SlitPairV2;
 END_VAR
 
 VAR PERSISTENT
@@ -30,10 +28,7 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
 AXES();
-PROG();
-
-slit1Vertical(ID_positiveAxis:=1, ID_negativeAxis:=2, ID_gapSizeAxis:=3, ID_gapCentreAxis:=4);
-]]></ST>
+PROG();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -209,11 +204,7 @@ END_FOR]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="505" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="538" Count="0" />
-      <LineId Id="589" Count="0" />
-      <LineId Id="586" Count="0" />
+      <LineId Id="640" Count="1" />
       <LineId Id="585" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">

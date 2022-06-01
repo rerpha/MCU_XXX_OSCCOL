@@ -1071,6 +1071,30 @@ External Setpoint Generation:
 			<Vars VarGrpType="2" AreaNo="1">
 				<Name>PlcTask Outputs</Name>
 				<Var>
+					<Name>limitsPower.bEnableAxis1Limits</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>limitsPower.bEnableAxis2Limits</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>limitsPower.bEnableAxis1Enc</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>limitsPower.bEnableAxis2Enc</Name>
+					<Type>BOOL</Type>
+				</Var>
+				<Var>
+					<Name>MAIN.slit1Vertical.GapSizeEncoder</Name>
+					<Type>UDINT</Type>
+				</Var>
+				<Var>
+					<Name>MAIN.slit1Vertical.GapCentreEncoder</Name>
+					<Type>UDINT</Type>
+				</Var>
+				<Var>
 					<Name>GVL.astAxes[1].Axis.PlcToNc</Name>
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
@@ -1094,30 +1118,6 @@ External Setpoint Generation:
 					<Name>GVL.astAxes[6].Axis.PlcToNc</Name>
 					<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 				</Var>
-				<Var>
-					<Name>MAIN.slit1Vertical.GapSizeEncoder</Name>
-					<Type>UDINT</Type>
-				</Var>
-				<Var>
-					<Name>MAIN.slit1Vertical.GapCentreEncoder</Name>
-					<Type>UDINT</Type>
-				</Var>
-				<Var>
-					<Name>limitsPower.bEnableAxis1Limits</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>limitsPower.bEnableAxis2Limits</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>limitsPower.bEnableAxis1Enc</Name>
-					<Type>BOOL</Type>
-				</Var>
-				<Var>
-					<Name>limitsPower.bEnableAxis2Enc</Name>
-					<Type>BOOL</Type>
-				</Var>
 			</Vars>
 			<Contexts>
 				<Context>
@@ -1135,50 +1135,4 @@ External Setpoint Generation:
 			</TaskPouOids>
 		</Instance>
 	</Project>
-	<Mappings>
-		<OwnerA Name="tc_project_app Instance">
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 2 (EL1808)">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bHomeSensor" VarB="Channel 3^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bLimitBwd" VarB="Channel 2^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].stInputs.bLimitFwd" VarB="Channel 1^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bHomeSensor" VarB="Channel 7^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bLimitBwd" VarB="Channel 5^Input" Size="1"/>
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].stInputs.bLimitFwd" VarB="Channel 6^Input" Size="1"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 3 (EL2819)">
-				<Link VarA="PlcTask Outputs^limitsPower.bEnableAxis1Limits" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
-				<Link VarA="PlcTask Outputs^limitsPower.bEnableAxis2Limits" VarB="DIG Outputs^Channel 5^Output" Size="1"/>
-			</OwnerB>
-			<OwnerB Name="TIID^Device 1 (EtherCAT)^Term 1 (EK1200)^Term 5 (EL2014)">
-				<Link VarA="PlcTask Outputs^limitsPower.bEnableAxis1Enc" VarB="DIG Outputs^Channel 1^Output" Size="1"/>
-				<Link VarA="PlcTask Outputs^limitsPower.bEnableAxis2Enc" VarB="DIG Outputs^Channel 2^Output" Size="1"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^North">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[1].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[1].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^North_Offset">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[5].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[5].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^South">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[2].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[2].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^South_Offset">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[6].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[6].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^VC">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[4].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[4].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-				<Link VarA="PlcTask Outputs^MAIN.slit1Vertical.GapCentreEncoder" VarB="Enc^Inputs^In^nDataIn1"/>
-			</OwnerB>
-			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^VG">
-				<Link VarA="PlcTask Inputs^GVL.astAxes[3].Axis.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="PlcTask Outputs^GVL.astAxes[3].Axis.PlcToNc" VarB="Inputs^FromPlc"/>
-				<Link VarA="PlcTask Outputs^MAIN.slit1Vertical.GapSizeEncoder" VarB="Enc^Inputs^In^nDataIn1"/>
-			</OwnerB>
-		</OwnerA>
-	</Mappings>
 </TcSmItem>
