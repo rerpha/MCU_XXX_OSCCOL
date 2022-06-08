@@ -144,9 +144,6 @@
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="tc_mca_std_lib\VISUs\visuTextLinks.TcTLO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
