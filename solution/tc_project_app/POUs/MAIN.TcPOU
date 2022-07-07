@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="MAIN" Id="{33eb6f49-7781-4211-a70b-87ada6d80cb7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
     sVersion: STRING := '1.0.0';
+    aIAxes : ARRAY [1..GVL_APP.nAXIS_NUM] OF I_Axis;
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
+    afbAxesV2: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis_V2;
     afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
     hmiPneumaticAxisSelection: INT := 1;
@@ -36,10 +38,22 @@ PROG();]]></ST>
         <ST><![CDATA[//Get task index for Axes parameters initialization.
 GVL.fbGetCurTaskIndex();
 
-//Create an stAxisStruct for every axis in the project.
+IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
+    FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
+        afbAxesV2[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
+        aIAxes[GVL.iAxis] := afbAxesV2[GVL.iAxis];
+    END_FOR
+END_IF
+
+
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-    afbAxes[GVL.iAxis](stAxisStruct := GVL.astAxes[GVL.iAxis]);
+    aIAxes[GVL.iAxis].Run();
 END_FOR
+
+//Create an stAxisStruct for every axis in the project.
+(*FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
+    afbAxes[GVL.iAxis](stAxisStruct := GVL.astAxes[GVL.iAxis]);
+END_FOR*)
 
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
@@ -218,6 +232,15 @@ END_FOR]]></ST>
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="11" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="30" Count="2" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="24" Count="0" />
       <LineId Id="14" Count="1" />
       <LineId Id="1" Count="0" />
       <LineId Id="4" Count="0" />
