@@ -98,6 +98,18 @@ Axis_Template();
 
 //Application program calls
 //Application_Template();
+
+IF astAxes[1].stStatus.fActPosition > 50 THEN
+    astAxes[1].stInputs.bLimitFwd := FALSE;
+ELSE
+    astAxes[1].stInputs.bLimitFwd := TRUE;
+END_IF
+
+IF astAxes[1].stStatus.fActPosition < -5 THEN
+    astAxes[1].stInputs.bLimitBwd := FALSE;
+ELSE
+    astAxes[1].stInputs.bLimitBwd := TRUE;
+END_IF
 ]]></ST>
       </Implementation>
     </Action>
@@ -265,6 +277,13 @@ END_FOR]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="3" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="20" Count="4" />
+      <LineId Id="19" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">

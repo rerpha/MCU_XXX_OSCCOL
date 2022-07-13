@@ -1425,6 +1425,7 @@ External Setpoint Generation:
 		<Axis Id="1" CreateSymbols="true" AxisType="1">
 			<Name>Axis 1</Name>
 			<AxisPara>
+				<Velo RefSearch="5" RefSync="5"/>
 				<OtherSettings AllowMotionCmdToSlave="true"/>
 			</AxisPara>
 			<Encoder Name="Enc" EncType="1">
