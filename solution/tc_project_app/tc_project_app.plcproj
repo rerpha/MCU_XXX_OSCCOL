@@ -149,6 +149,9 @@
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
     </Compile>
+    <Compile Include="tc_mca_std_lib\VISUs\ParameterTextList.TcTLO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\VISUs\PneumaticsVisu.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
