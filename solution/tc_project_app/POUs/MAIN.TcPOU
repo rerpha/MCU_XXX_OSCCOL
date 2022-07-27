@@ -38,35 +38,32 @@ AXES_EndOfCycle();]]></ST>
         <ST><![CDATA[//Get task index for Axes parameters initialization.
 GVL.fbGetCurTaskIndex();
 
+//First cycle, assign FB_axis to interface array
 IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
     FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
         afbAxes[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
         aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
     END_FOR
+    //Custom axis types defined and linked to aiAxes here
 END_IF
 
-
+//Execute FB_Axis logic
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
     aIAxes[GVL.iAxis].Run();
 END_FOR
 
-//Create an stAxisStruct for every axis in the project.
-(*FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-    afbAxes[GVL.iAxis](stAxisStruct := GVL.astAxes[GVL.iAxis]);
-END_FOR*)
-
+//Execute Pneumatic Axis logic
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
-END_FOR
-]]></ST>
+END_FOR]]></ST>
       </Implementation>
     </Action>
     <Action Name="AXES_EndOfCycle" Id="{1d0c47cf-5c32-4a53-bfaa-da9593fd6c0d}">
       <Implementation>
-        <ST><![CDATA[FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
+        <ST><![CDATA[//Clear control signals at end of each cycle
+FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
     aIAxes[GVL.iAxis].EndOfCycle();
-END_FOR
-]]></ST>
+END_FOR]]></ST>
       </Implementation>
     </Action>
     <Action Name="CHECK_UPS" Id="{f0f28f50-53b8-4f73-b0f5-6d7ce4c1636f}" FolderPath="POSITION_RECOVERY\">
@@ -101,23 +98,11 @@ END_IF]]></ST>
 //Create as many programs in that folder as axes and applications you have or need
 
 //Axes initial parameters and program
-Axis_Template();
+//Axis_Template();
 //Pneumatics_Template();
 
 //Application program calls
-//Application_Template();
-
-IF astAxes[1].stStatus.fActPosition > 50 THEN
-    astAxes[1].stInputs.bLimitFwd := FALSE;
-ELSE
-    astAxes[1].stInputs.bLimitFwd := TRUE;
-END_IF
-
-IF astAxes[1].stStatus.fActPosition < -5 THEN
-    astAxes[1].stInputs.bLimitBwd := FALSE;
-ELSE
-    astAxes[1].stInputs.bLimitBwd := TRUE;
-END_IF]]></ST>
+//Application_Template();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -252,25 +237,23 @@ END_FOR]]></ST>
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="11" Count="1" />
+      <LineId Id="38" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="30" Count="2" />
       <LineId Id="29" Count="0" />
+      <LineId Id="39" Count="0" />
       <LineId Id="23" Count="0" />
-      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="33" Count="0" />
       <LineId Id="35" Count="1" />
       <LineId Id="24" Count="0" />
-      <LineId Id="14" Count="1" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="10" Count="0" />
+      <LineId Id="40" Count="0" />
       <LineId Id="18" Count="3" />
-      <LineId Id="17" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES_EndOfCycle">
+      <LineId Id="5" Count="0" />
       <LineId Id="2" Count="2" />
-      <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.CHECK_UPS">
       <LineId Id="2" Count="11" />
@@ -289,13 +272,6 @@ END_FOR]]></ST>
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="3" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="20" Count="4" />
-      <LineId Id="19" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.RESTORE_POSITIONS">
       <LineId Id="567" Count="105" />
