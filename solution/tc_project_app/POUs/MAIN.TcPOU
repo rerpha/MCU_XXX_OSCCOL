@@ -6,7 +6,6 @@ VAR
     sVersion: STRING := '1.0.0';
     aIAxes : ARRAY [1..GVL_APP.nAXIS_NUM] OF I_Axis;
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
-    afbAxesV2: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis_V2;
     afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
     hmiPneumaticAxisSelection: INT := 1;
@@ -22,8 +21,6 @@ VAR
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentification;
-    
-    counter : BYTE;
 END_VAR
 
 VAR PERSISTENT
@@ -43,8 +40,8 @@ GVL.fbGetCurTaskIndex();
 
 IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
     FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-        afbAxesV2[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
-        aIAxes[GVL.iAxis] := afbAxesV2[GVL.iAxis];
+        afbAxes[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
+        aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
     END_FOR
 END_IF
 
