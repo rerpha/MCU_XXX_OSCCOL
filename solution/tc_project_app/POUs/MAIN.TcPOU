@@ -28,9 +28,8 @@ VAR PERSISTENT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
-AXES();
 PROG();
-AXES_EndOfCycle();]]></ST>
+AXES();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -231,9 +230,8 @@ END_FOR]]></ST>
     </Action>
     <LineIds Name="MAIN">
       <LineId Id="505" Count="0" />
+      <LineId Id="593" Count="0" />
       <LineId Id="81" Count="0" />
-      <LineId Id="538" Count="0" />
-      <LineId Id="568" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.AXES">
       <LineId Id="11" Count="1" />
