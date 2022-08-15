@@ -4,7 +4,7 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
     sVersion: STRING := '1.0.0';
-    aIAxes : ARRAY [1..GVL_APP.nAXIS_NUM] OF I_Axis;
+    aIAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF I_Axis;
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
@@ -17,7 +17,7 @@ VAR
     bRestoreExecute: BOOL := FALSE;
     bExecuteReadEncRefSys: BOOL := FALSE;
     nRetry: INT;
-    iAxes : UINT; //index for for loops in Position recovery actions
+    iAxes: UINT; //index for for loops in Position recovery actions
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentification;
@@ -34,8 +34,7 @@ AXES();]]></ST>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[//Get task index for Axes parameters initialization.
-GVL.fbGetCurTaskIndex();
+        <ST><![CDATA[
 
 //First cycle, assign FB_axis to interface array
 IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
@@ -54,14 +53,6 @@ END_FOR
 //Execute Pneumatic Axis logic
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
-END_FOR]]></ST>
-      </Implementation>
-    </Action>
-    <Action Name="AXES_EndOfCycle" Id="{1d0c47cf-5c32-4a53-bfaa-da9593fd6c0d}">
-      <Implementation>
-        <ST><![CDATA[//Clear control signals at end of each cycle
-FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-    aIAxes[GVL.iAxis].EndOfCycle();
 END_FOR]]></ST>
       </Implementation>
     </Action>
@@ -93,7 +84,10 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[//Call the programs that are defined in the "Application Specific" folder.
+        <ST><![CDATA[//Get task index for Axes parameters initialization.
+GVL.fbGetCurTaskIndex();
+
+//Call the programs that are defined in the "Application Specific" folder.
 //Create as many programs in that folder as axes and applications you have or need
 
 //Axes initial parameters and program
@@ -228,61 +222,5 @@ END_IF]]></ST>
 END_FOR]]></ST>
       </Implementation>
     </Action>
-    <LineIds Name="MAIN">
-      <LineId Id="505" Count="0" />
-      <LineId Id="593" Count="0" />
-      <LineId Id="81" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.AXES">
-      <LineId Id="11" Count="1" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="30" Count="2" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="35" Count="1" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="18" Count="3" />
-    </LineIds>
-    <LineIds Name="MAIN.AXES_EndOfCycle">
-      <LineId Id="5" Count="0" />
-      <LineId Id="2" Count="2" />
-    </LineIds>
-    <LineIds Name="MAIN.CHECK_UPS">
-      <LineId Id="2" Count="11" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.POSITION_RECOVERY">
-      <LineId Id="2" Count="3" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.PROG">
-      <LineId Id="4" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="3" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.RESTORE_POSITIONS">
-      <LineId Id="567" Count="105" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.STORE_PERSISTENT">
-      <LineId Id="10" Count="0" />
-      <LineId Id="3" Count="0" />
-      <LineId Id="5" Count="1" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
