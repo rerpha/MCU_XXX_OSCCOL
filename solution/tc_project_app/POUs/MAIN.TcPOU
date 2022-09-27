@@ -20,8 +20,8 @@ VAR
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
     afbReadPositionBias: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
-	afbWritePositionBias: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_WriteParameter;
-	fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
+    afbWritePositionBias: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_WriteParameter;
+    fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
 END_VAR
 
 VAR PERSISTENT
@@ -53,13 +53,13 @@ END_FOR]]></ST>
         <ST><![CDATA[fbUPS(eUpsMode := eUpsMode);
 
 FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
-	//Read encoder position BIAS
-	IF astAxes[iAxes].stStatus.bAxisInitialized THEN
-		afbReadPositionBias[iAxes](Axis := GVL.astAxes[iAxes].Axis,
-						Enable := TRUE,
+    //Read encoder position BIAS
+    IF astAxes[iAxes].stStatus.bAxisInitialized THEN
+        afbReadPositionBias[iAxes](Axis := GVL.astAxes[iAxes].Axis,
+                        Enable := TRUE,
                         ReadMode:= READMODE_CYCLIC,
                         ParameterNumber := E_AxisParameters.AxisEncoderOffset);
-	END_IF
+    END_IF
 END_FOR
 
 IF eGlobalSUpsState = eSUPS_PowerFailure THEN
@@ -101,9 +101,9 @@ END_IF]]></ST>
 //0 'DontRestore'
 //1 'RestoreWithoutHome' -restores the position using a set position fb and does not set the home bit in the axis struct.
 //Note from Beckhoff: "A maximum of 1 MB persistent data can be reliably saved over the entire service life."
-//Encoder Reference system types: INCREMENTAL=0; INCREMENTAL (singleturn absolute)=4; 
-//						  		  ABSOLUTE=1; ABSOLUTE MULTITURN RANGE (with single overflow)=3; ABSOLUTE SINGLETURN RANGE (with single overflow)=5;
-//						  		  ABSOLUTE (modulo)=2;
+//Encoder Reference system types: INCREMENTAL=0; INCREMENTAL (singleturn absolute)=4;
+//                                ABSOLUTE=1; ABSOLUTE MULTITURN RANGE (with single overflow)=3; ABSOLUTE SINGLETURN RANGE (with single overflow)=5;
+//                                ABSOLUTE (modulo)=2;
 
 IF bRestoreOnStartup AND eGlobalSUpsState = eSUPS_PowerOK THEN
     bRestoreOnStartup := FALSE;
@@ -128,11 +128,11 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         afbRestorePosition[iAxes](
          Axis := GVL.astAxes[iAxes].Axis,
          Position := astAxesPersistent[iAxes].fPositionAtShutdown);
-		 
-		afbWritePositionBias[iAxes](
-		 Axis:= GVL.astAxes[iAxes].Axis, 
-	     ParameterNumber:= E_AxisParameters.AxisEncoderOffset, 
-	     Value:= astAxesPersistent[iAxes].fBiasAtShutdown);
+
+        afbWritePositionBias[iAxes](
+         Axis:= GVL.astAxes[iAxes].Axis,
+         ParameterNumber:= E_AxisParameters.AxisEncoderOffset,
+         Value:= astAxesPersistent[iAxes].fBiasAtShutdown);
     END_FOR
 
     CASE eStartUp OF
@@ -173,30 +173,30 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
 
         eExecuteRestore:
         //Execute position restore by setting afbRestorePosition.execute = TRUE
-			FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
-				//Restore position value for incremental encoders
-			    IF afbReadEncRefSys[iAxes].Valid = TRUE AND NOT astAxesPersistent[iAxes].bMovingAtShutdown AND 
-				(afbReadEncRefSys[iAxes].Value = 0 OR afbReadEncRefSys[iAxes].Value = 4 OR afbReadEncRefSys[iAxes].Value = 2) THEN
+            FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
+                //Restore position value for incremental encoders
+                IF afbReadEncRefSys[iAxes].Valid = TRUE AND NOT astAxesPersistent[iAxes].bMovingAtShutdown AND
+                (afbReadEncRefSys[iAxes].Value = 0 OR afbReadEncRefSys[iAxes].Value = 4 OR afbReadEncRefSys[iAxes].Value = 2) THEN
                     IF GVL.astAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
                         afbRestorePosition[iAxes].Execute := TRUE;
                     END_IF
-				//Restore encoder position BIAS for absolute encoders	
-                ELSIF afbReadEncRefSys[iAxes].Valid = TRUE THEN           
-				    IF GVL.astAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
+                //Restore encoder position BIAS for absolute encoders
+                ELSIF afbReadEncRefSys[iAxes].Valid = TRUE THEN
+                    IF GVL.astAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
                         afbWritePositionBias[iAxes].Execute := TRUE;
-					END_IF
-			   END_IF
-			END_FOR		
-			
+                    END_IF
+               END_IF
+            END_FOR
+
             eStartUp := eCheckRestore;
 
         eCheckRestore:
         //Check the set position fbs are finished
         //Nothing actually happens if the restore is not done, the code just returns from here each cycle and the
         //bPositionRestoreDone will never get set to TRUE and will take up cycle time
-        	FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
-				IF afbReadEncRefSys[iAxes].Valid = TRUE AND NOT astAxesPersistent[iAxes].bMovingAtShutdown AND 
-				(afbReadEncRefSys[iAxes].Value = 0 OR afbReadEncRefSys[iAxes].Value = 4 OR afbReadEncRefSys[iAxes].Value = 2) THEN
+            FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
+                IF afbReadEncRefSys[iAxes].Valid = TRUE AND NOT astAxesPersistent[iAxes].bMovingAtShutdown AND
+                (afbReadEncRefSys[iAxes].Value = 0 OR afbReadEncRefSys[iAxes].Value = 4 OR afbReadEncRefSys[iAxes].Value = 2) THEN
                     IF GVL.astAxes[iAxes].stConfig.eRestorePosition = E_RestorePosition.eRestoreWithoutHome THEN
                         IF NOT afbRestorePosition[iAxes].Done OR NOT afbWritePositionBias[iAxes].Done THEN
                             RETURN;
@@ -210,7 +210,7 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
         //Remove execute = TRUE for afbRestorePosition
             FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
                 afbRestorePosition[iAxes].Execute := FALSE;
-				afbWritePositionBias[iAxes].Execute := FALSE;
+                afbWritePositionBias[iAxes].Execute := FALSE;
             END_FOR
             bPositionRestoreDone := TRUE;
             bRestoreExecute := FALSE;
@@ -222,12 +222,12 @@ END_IF]]></ST>
       <Implementation>
         <ST><![CDATA[FOR iAxes := 1 TO GVL_APP.nAXIS_NUM DO
     //Store Position beofre shutdown
-	astAxesPersistent[iAxes].fPositionAtShutdown := GVL.astAxes[iAxes].Axis.NcToPlc.ActPos;
-	
-	//Store encoder position BIAS at shutdown
-	astAxesPersistent[iAxes].fBiasAtShutdown := afbReadPositionBias[iAxes].Value;
-	
-	//Store value of moving at shutdown
+    astAxesPersistent[iAxes].fPositionAtShutdown := GVL.astAxes[iAxes].Axis.NcToPlc.ActPos;
+
+    //Store encoder position BIAS at shutdown
+    astAxesPersistent[iAxes].fBiasAtShutdown := afbReadPositionBias[iAxes].Value;
+
+    //Store value of moving at shutdown
     IF NOT GVL.astAxes[iAxes].Axis.Status.StandStill THEN
         astAxesPersistent[iAxes].bMovingAtShutdown := TRUE;
     ELSE
