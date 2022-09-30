@@ -40,14 +40,19 @@ AXES();]]></ST>
 IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
     FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
         afbAxes[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
-        aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
+        //aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
     END_FOR
     //Custom axis types defined and linked to aiAxes here
+	  //fbCustomAxis extends FB_axis
+		//fbCustomAxis.stAxis REF= astAxes[x];
 END_IF
 
 //Execute FB_Axis logic
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-    aIAxes[GVL.iAxis].Run();
+	afbAxes[GVL.iAxis].Run();
+    //aIAxes[GVL.iAxis].Run();
+  //Run the Run() of the custom axis
+	//fbCustomAxis.Run();
 END_FOR
 
 //Execute Pneumatic Axis logic
