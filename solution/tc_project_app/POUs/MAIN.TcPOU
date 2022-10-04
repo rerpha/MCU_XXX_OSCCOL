@@ -20,7 +20,7 @@ VAR
     iAxes: UINT; //index for for loops in Position recovery actions
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
-    fbGetDeviceIdentification: FB_GetDeviceIdentification;
+    fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
 END_VAR
 
 VAR PERSISTENT
@@ -41,14 +41,14 @@ IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
         aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
     END_FOR
     //Custom axis types defined and linked to aiAxes here
-	  //FB_CustomAxis extends FB_axis
-		//fbCustomAxis.stAxis REF= astAxes[x];
+      //FB_CustomAxis extends FB_axis
+        //fbCustomAxis.stAxis REF= astAxes[x];
         //aIAxes[x] := fbCustomAxis;
 END_IF
 
 //Execute FB_Axis logic
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-	aIAxes[GVL.iAxis].Run();
+    aIAxes[GVL.iAxis].Run();
 END_FOR
 
 //Execute Pneumatic Axis logic
