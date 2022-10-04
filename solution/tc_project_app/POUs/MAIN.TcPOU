@@ -19,7 +19,7 @@ VAR
     iAxes : UINT; //index for for loops in Position recovery actions
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
-    fbGetDeviceIdentification: FB_GetDeviceIdentification;
+    fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
 END_VAR
 
 VAR PERSISTENT
@@ -201,41 +201,5 @@ END_IF]]></ST>
 END_FOR]]></ST>
       </Implementation>
     </Action>
-    <LineIds Name="MAIN">
-      <LineId Id="640" Count="1" />
-      <LineId Id="585" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.AXES">
-      <LineId Id="11" Count="1" />
-      <LineId Id="14" Count="1" />
-      <LineId Id="1" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="18" Count="3" />
-    </LineIds>
-    <LineIds Name="MAIN.CHECK_UPS">
-      <LineId Id="2" Count="11" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.POSITION_RECOVERY">
-      <LineId Id="2" Count="3" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.PROG">
-      <LineId Id="14" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.RESTORE_POSITIONS">
-      <LineId Id="567" Count="105" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
-    <LineIds Name="MAIN.STORE_PERSISTENT">
-      <LineId Id="10" Count="0" />
-      <LineId Id="3" Count="0" />
-      <LineId Id="5" Count="1" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="1" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
