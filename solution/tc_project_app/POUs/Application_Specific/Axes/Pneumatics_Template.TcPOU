@@ -17,17 +17,5 @@ END_VAR
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="Pneumatics_Template">
-      <LineId Id="8" Count="0" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="30" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
