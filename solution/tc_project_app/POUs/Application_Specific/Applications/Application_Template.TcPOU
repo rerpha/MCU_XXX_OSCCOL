@@ -10,9 +10,5 @@ END_VAR
       <ST><![CDATA[//Program any specific code or safety code for an specific application when it involves multiple axes
 //Eg. Collision avoidance, interlocks, sequencing, etc.]]></ST>
     </Implementation>
-    <LineIds Name="Application_Template">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
