@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="Application_Template" Id="{4bdeebc0-15d8-4790-97d0-e9c4239d121c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Application_Template
 VAR
@@ -10,9 +10,5 @@ END_VAR
       <ST><![CDATA[//Program any specific code or safety code for an specific application when it involves multiple axes
 //Eg. Collision avoidance, interlocks, sequencing, etc.]]></ST>
     </Implementation>
-    <LineIds Name="Application_Template">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
