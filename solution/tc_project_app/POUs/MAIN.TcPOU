@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
     sVersion: STRING := '1.0.0';
+    aIAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF I_Axis;
     afbAxes: ARRAY [1..GVL_APP.nAXIS_NUM] OF FB_Axis;
     afbPneumaticAxes: ARRAY [1..GVL_APP.nPNEUMATIC_AXIS_NUM] OF FB_PneumaticAxis;
     hmiAxisSelection: INT := 1; //Not possible to use local hmi variables for array indexes
@@ -16,7 +17,7 @@ VAR
     bRestoreExecute: BOOL := FALSE;
     bExecuteReadEncRefSys: BOOL := FALSE;
     nRetry: INT;
-    iAxes : UINT; //index for for loops in Position recovery actions
+    iAxes: UINT; //index for for loops in Position recovery actions
     afbReadEncRefSys: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_ReadParameter;
     afbRestorePosition: ARRAY [1..GVL_APP.nAXIS_NUM] OF MC_SetPosition;
     fbGetDeviceIdentification: FB_GetDeviceIdentificationEx;
@@ -27,20 +28,30 @@ VAR PERSISTENT
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
-AXES();
-PROG();]]></ST>
+PROG();
+AXES();]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
       <Implementation>
-        <ST><![CDATA[//Get task index for Axes parameters initialization.
-GVL.fbGetCurTaskIndex();
+        <ST><![CDATA[//First cycle, assign FB_axis to interface array
+IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
+    FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
+        afbAxes[GVL.iAxis].stAxis REF= astAxes[GVL.iAxis];
+        aIAxes[GVL.iAxis] := afbAxes[GVL.iAxis];
+    END_FOR
+    //Custom axis types defined and linked to aiAxes here
+      //FB_CustomAxis extends FB_axis
+        //fbCustomAxis.stAxis REF= astAxes[x];
+        //aIAxes[x] := fbCustomAxis;
+END_IF
 
-//Create an stAxisStruct for every axis in the project.
+//Execute FB_Axis logic
 FOR GVL.iAxis := 1 TO GVL_APP.nAXIS_NUM DO
-    afbAxes[GVL.iAxis](stAxisStruct := GVL.astAxes[GVL.iAxis]);
+    aIAxes[GVL.iAxis].Run();
 END_FOR
 
+//Execute Pneumatic Axis logic
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
 END_FOR]]></ST>
@@ -74,7 +85,18 @@ END_IF]]></ST>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
       <Implementation>
-        <ST><![CDATA[Application_Template();]]></ST>
+        <ST><![CDATA[//Get task index for Axes parameters initialization.
+GVL.fbGetCurTaskIndex();
+
+//Call the programs that are defined in the "Application Specific" folder.
+//Create as many programs in that folder as axes and applications you have or need
+
+//Axes initial parameters and program
+//Axis_Template();
+//Pneumatics_Template();
+
+//Application program calls
+//Application_Template();]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">

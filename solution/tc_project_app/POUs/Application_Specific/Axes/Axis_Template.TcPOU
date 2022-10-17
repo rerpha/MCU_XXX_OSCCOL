@@ -8,8 +8,7 @@ VAR
 
 //Hardware interlocks
     //bInterlockFwdOK AT %I*: BOOL;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Initial parameters of an Axis
 (*IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
@@ -21,8 +20,7 @@ END_IF*)
 
 //Define ACTIONS() or write exclusive code for an specific axis.
 (*Eg. Stop when temperature reaches certain values, reduce speed if  a signal is activated, etc.
-Eg. GVL.astAxes[x].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)
-]]></ST>
+Eg. GVL.astAxes[x].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
