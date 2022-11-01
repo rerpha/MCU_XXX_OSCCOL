@@ -16,6 +16,7 @@ END_VAR]]></Declaration>
     GVL.astAxes[1].stConfig.eHomeSeq := 0;
     GVL.astAxes[1].stConfig.fHomePosition := 0.0;
     GVL.astAxes[1].stConfig.fHomeFinishDistance := 0.0;
+    GVL.astAxes[1].stConfig.eRestorePosition := E_RestorePosition.eRestoreWithoutHome;
 END_IF*)
 
 //Define ACTIONS() or write exclusive code for an specific axis.
