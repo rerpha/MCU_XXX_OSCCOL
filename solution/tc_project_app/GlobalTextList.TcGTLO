@@ -11,6 +11,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"972"</v>
+              <v n="TextDefault">"  bLocalMode"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"587"</v>
               <v n="TextDefault">"%1d"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -141,6 +146,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"512"</v>
+              <v n="TextDefault">"bInVelocity"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"541"</v>
+              <v n="TextDefault">"bInVeloit"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"485"</v>
               <v n="TextDefault">"bMovingExtend"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -188,6 +203,11 @@
             <o>
               <v n="TextID">"986"</v>
               <v n="TextDefault">"ehomeDirect"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"350"</v>
+              <v n="TextDefault">"eHomeDirect"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -253,6 +273,11 @@
             <o>
               <v n="TextID">"109"</v>
               <v n="TextDefault">"English"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"1004"</v>
+              <v n="TextDefault">"eReadParameter"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -363,6 +388,11 @@
             <o>
               <v n="TextID">"123"</v>
               <v n="TextDefault">"HOME"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"568"</v>
+              <v n="TextDefault">"Home"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

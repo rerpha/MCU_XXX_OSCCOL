@@ -93,7 +93,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\I_Axis.TcIO">
-	  <SubType>Code</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="tc_mca_std_lib\DUTs\E_SlitPairStatesV2.TcDUT">
       <SubType>Code</SubType>
