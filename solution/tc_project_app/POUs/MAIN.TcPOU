@@ -27,11 +27,13 @@ END_VAR
 
 VAR PERSISTENT
     bRestoreOnStartup: BOOL;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
     <Implementation>
       <ST><![CDATA[POSITION_RECOVERY();
 PROG();
-AXES();]]></ST>
+AXES();
+]]></ST>
     </Implementation>
     <Folder Name="POSITION_RECOVERY" Id="{3561f6ef-e145-4ed3-9839-f17334bd2d97}" />
     <Action Name="AXES" Id="{7eb32732-9b53-4934-8cd9-20ba971dd8ff}">
@@ -56,7 +58,8 @@ END_FOR
 //Execute Pneumatic Axis logic
 FOR GVL.iPneumaticAxis := 1 TO GVL_APP.nPNEUMATIC_AXIS_NUM DO
     afbPneumaticAxes[GVL.iPneumaticAxis](stPneumaticAxisStruct := GVL.astPneumaticAxes[GVL.iPneumaticAxis]);
-END_FOR]]></ST>
+END_FOR
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="CHECK_UPS" Id="{f0f28f50-53b8-4f73-b0f5-6d7ce4c1636f}" FolderPath="POSITION_RECOVERY\">
@@ -83,7 +86,8 @@ ELSIF eGlobalSUpsState <> eSUPS_PowerOK THEN
     //next cycles of powerfailure
     //skip regular code execution for the remaining cycles of the powerfailure/writing of persistent data/quick shutdown...
     RETURN;
-END_IF]]></ST>
+END_IF
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="POSITION_RECOVERY" Id="{28e203b7-aea5-42d0-980d-12a6841f9d22}" FolderPath="POSITION_RECOVERY\">
@@ -92,7 +96,8 @@ END_IF]]></ST>
 IF (fbGetDeviceIdentification.stDevIdent.strHardwareSerialNo <> '') THEN
     CHECK_UPS();
     RESTORE_POSITIONS();
-END_IF]]></ST>
+END_IF
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="PROG" Id="{5d03ebbb-2a47-4890-ad6d-e82daf72dc51}">
@@ -108,7 +113,8 @@ GVL.fbGetCurTaskIndex();
 //Pneumatics_Template();
 
 //Application program calls
-//Application_Template();]]></ST>
+//Application_Template();
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="RESTORE_POSITIONS" Id="{0c7ee537-7bd9-4833-b428-c17cbb57e893}" FolderPath="POSITION_RECOVERY\">
@@ -260,7 +266,8 @@ IF bRestoreExecute AND NOT bPositionRestoreDone THEN
                 bRestoreExecute := FALSE;
             END_FOR
     END_CASE
-END_IF]]></ST>
+END_IF
+]]></ST>
       </Implementation>
     </Action>
     <Action Name="STORE_PERSISTENT" Id="{cb5c9254-2e5f-47b1-9baa-10e728a961b0}" FolderPath="POSITION_RECOVERY\">
@@ -278,7 +285,8 @@ END_IF]]></ST>
     ELSE
         astAxesPersistent[iAxes].bMovingAtShutdown := TRUE;
     END_IF
-END_FOR]]></ST>
+END_FOR
+]]></ST>
       </Implementation>
     </Action>
   </POU>

@@ -8,7 +8,8 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Program any specific code or safety code for an specific application when it involves multiple axes
-//Eg. Collision avoidance, interlocks, sequencing, etc.]]></ST>
+//Eg. Collision avoidance, interlocks, sequencing, etc.
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
