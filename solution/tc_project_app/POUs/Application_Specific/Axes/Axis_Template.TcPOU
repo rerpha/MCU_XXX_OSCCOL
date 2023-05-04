@@ -13,6 +13,11 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//Initial parameters of an Axis
 (*IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
+    //Axis description for EPICS PV
+    GVL.astAxes[1].stDescription.sAxisName := 'MotorApplication1';
+    GVL.astAxes[1].stDescription.eUnit := E_AxisEngUnit.eMeter;
+    GVL.astAxes[1].stDescription.nPrefix := -3;
+
     //Initial default values:
     GVL.astAxes[1].stConfig.eHomeSeq := 0;
     GVL.astAxes[1].stConfig.fHomePosition := 0.0;
