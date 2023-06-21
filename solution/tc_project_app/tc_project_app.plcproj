@@ -137,6 +137,9 @@
     <Compile Include="tc_mca_std_lib\GVLs\GVL.TcGVL">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tc_mca_std_lib\POUs\FB_AxisTemperature.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tc_mca_std_lib\POUs\FB_ESSMonitoring.TcPOU">
       <SubType>Code</SubType>
     </Compile>
