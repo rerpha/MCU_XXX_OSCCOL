@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.13.21" creationDateTime="2023-08-04T14:20:43.0098278" />
+  <contentHeader name="tc_project_app" modificationDateTime="2023-08-04T14:20:43.0127944">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="Axis_Template" pouType="program">
+        <interface />
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">//Initial parameters of an Axis
+(*IF _TaskInfo[fbGetCurTaskIndex.index].FirstCycle THEN
+    //Axis description for EPICS PV
+    GVL.astAxes[1].stDescription.sAxisName := 'MotorApplication1';
+    GVL.astAxes[1].stDescription.eUnit := E_AxisEngUnit.eMeter;
+    GVL.astAxes[1].stDescription.nPrefix := -3;
+
+    //Initial default values:
+    GVL.astAxes[1].stConfig.eHomeSeq := 0;
+    GVL.astAxes[1].stConfig.fHomePosition := 0.0;
+    GVL.astAxes[1].stConfig.fHomeFinishDistance := 0.0;
+    GVL.astAxes[1].stConfig.eRestorePosition := E_RestorePosition.eRestoreWithoutHome;
+END_IF*)
+
+//Define ACTIONS() or write exclusive code for an specific axis.
+(*Eg. Stop when temperature reaches certain values, reduce speed if  a signal is activated, etc.
+Eg. GVL.astAxes[x].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)
+</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM Axis_Template
+VAR
+//Outputs: Power for Limit switches, Home Sensors, etc.
+    //bPowerSwitchesAxis1 AT %Q*: BOOL:= TRUE;
+
+//Hardware interlocks
+    //bInterlockFwdOK AT %I*: BOOL;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>1a43acb4-bd2e-4637-97fb-9976d47292b6</ObjectId>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="Axis_Template" ObjectId="1a43acb4-bd2e-4637-97fb-9976d47292b6" />
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>

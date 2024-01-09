@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Axis_1" Id="{cfc76c27-4163-4958-93cd-2e6f194766b7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Axis_1
+VAR
+	bMovingFwd: BOOL := TRUE;
+	bFinishedOscillation: BOOL;
+	iSign: INT;
+	fVelocity: LREAL := GVL_APP.fFrequency * 2;
+
+//Hardware interlocks
+    bInterlockFwdOK AT %I*: BOOL;
+	bAllowed: BOOL:= FALSE;
+END_VAR
+
+VAR CONSTANT
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+//GVL.astAxes[1].stControl.bInterlockFwd := NOT bInterlockFwdOK;*)
+GVL.astAxes[1].stInputs.bLimitBwd := TRUE;
+GVL.astAxes[1].stInputs.bLimitFwd := TRUE;
+GVL.astAxes[1].stControl.bEnable := TRUE;
+
+// oscillating collimator logic here 
+
+IF bAllowed THEN
+IF bFinishedOscillation THEN
+	IF bMovingFwd THEN 
+		iSign := 1;
+	ELSE
+		iSign := -1;
+	END_IF
+	
+	GVL.astAxes[1].stControl.fPosition := (GVL_APP.fSweptAngle/2) * iSign; // maths here based on swept angle, frequency etc. 
+	GVL.astAxes[1].stControl.fVelocity := fVelocity;
+	GVL.astAxes[1].stControl.eCommand := 0;
+	GVL.astAxes[1].stControl.bExecute := TRUE;
+	bFinishedOscillation := FALSE;
+END_IF
+
+IF NOT GVL.astAxes[1].stStatus.bMoving THEN
+	bMovingFwd := NOT bMovingFwd;
+	bFinishedOscillation := TRUE;
+END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Axis_1">
+      <LineId Id="85" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="112" Count="1" />
+      <LineId Id="116" Count="1" />
+      <LineId Id="114" Count="1" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="105" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
